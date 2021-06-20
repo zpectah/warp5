@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { useForm, Controller } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import TextField from '@material-ui/core/TextField';
@@ -20,7 +20,6 @@ const LoginForm = () => {
 	const [processing, setProcessing] = useState<boolean>(false);
 	const [message, setMessage] = useState<string | null>(null);
 	const { Profile, userLogin, reloadProfile, userLogout } = useProfile();
-
 	const history = useHistory();
 	const { control, handleSubmit, formState } = useForm({
 		mode: 'all',
