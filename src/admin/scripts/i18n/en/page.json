@@ -1,0 +1,250 @@
+{
+
+	"Error404": {
+		"meta": {
+			"title": "Error 404"
+		},
+		"page": {
+			"title": "Error 404 page"
+		}
+	},
+
+	"Login": {
+		"meta": {
+			"title": "Login"
+		},
+		"page": {
+			"title": "Login page"
+		}
+	},
+
+	"LostPassword": {
+		"meta": {
+			"title": "Lost Password"
+		},
+		"page": {
+			"title": "Lost Password page"
+		}
+	},
+
+	"Dashboard": {
+		"meta": {
+			"title": "Dashboard"
+		},
+		"page": {
+			"title": "Dashboard page"
+		},
+		"label": "Dashboard"
+	},
+
+	"Posts": {
+		"meta": {
+			"title": "Posts"
+		},
+		"page": {
+			"title": "Posts page"
+		},
+		"label": "Posts"
+	},
+
+	"Settings": {
+		"meta": {
+			"title": "Settings"
+		},
+		"page": {
+			"title": "Settings page"
+		},
+		"label": "Settings"
+	},
+
+	"Users": {
+		"meta": {
+			"title": "Users"
+		},
+		"page": {
+			"title": "Users page"
+		},
+		"label": "Users"
+	},
+
+	"Tags": {
+		"meta": {
+			"title": "Tags"
+		},
+		"page": {
+			"title": "Tags page"
+		},
+		"label": "Tags"
+	},
+
+	"Translations": {
+		"meta": {
+			"title": "Translations"
+		},
+		"page": {
+			"title": "Translations page"
+		},
+		"label": "Translations"
+	},
+
+	"Categories": {
+		"meta": {
+			"title": "Categories"
+		},
+		"page": {
+			"title": "Categories page"
+		},
+		"label": "Categories"
+	},
+
+	"Pages": {
+		"meta": {
+			"title": "Pages"
+		},
+		"page": {
+			"title": "Pages page"
+		},
+		"label": "Pages"
+	},
+
+	"Menu": {
+		"meta": {
+			"title": "Menu"
+		},
+		"page": {
+			"title": "Menu page"
+		},
+		"label": "Menu"
+	},
+
+	"Uploads": {
+		"meta": {
+			"title": "Uploads"
+		},
+		"page": {
+			"title": "Uploads page"
+		},
+		"label": "Uploads"
+	},
+
+	"Messages": {
+		"meta": {
+			"title": "Messages"
+		},
+		"page": {
+			"title": "Messages page"
+		},
+		"label": "Messages"
+	},
+
+	"Requests": {
+		"meta": {
+			"title": "Requests"
+		},
+		"page": {
+			"title": "Requests page"
+		},
+		"label": "Requests"
+	},
+
+	"MembersDashboard": {
+		"meta": {
+			"title": "Members Dashboard"
+		},
+		"page": {
+			"title": "Members Dashboard"
+		},
+		"label": "Members Dashboard"
+	},
+
+	"Members": {
+		"meta": {
+			"title": "Members"
+		},
+		"page": {
+			"title": "Members page"
+		},
+		"label": "Members"
+	},
+
+	"MarketDashboard": {
+		"meta": {
+			"title": "Market Dashboard"
+		},
+		"page": {
+			"title": "Market Dashboard"
+		},
+		"label": "Market"
+	},
+
+	"Deliveries": {
+		"meta": {
+			"title": "Deliveries"
+		},
+		"page": {
+			"title": "Deliveries page"
+		},
+		"label": "Deliveries"
+	},
+
+	"Distributors": {
+		"meta": {
+			"title": "Distributors"
+		},
+		"page": {
+			"title": "Distributors page"
+		},
+		"label": "Distributors"
+	},
+
+	"Payments": {
+		"meta": {
+			"title": "Payments"
+		},
+		"page": {
+			"title": "Payments page"
+		},
+		"label": "Payments"
+	},
+
+	"Producers": {
+		"meta": {
+			"title": "Producers"
+		},
+		"page": {
+			"title": "Producers page"
+		},
+		"label": "Producers"
+	},
+
+	"Products": {
+		"meta": {
+			"title": "Products"
+		},
+		"page": {
+			"title": "Products page"
+		},
+		"label": "Products"
+	},
+
+	"ProductsOptions": {
+		"meta": {
+			"title": "Products Options"
+		},
+		"page": {
+			"title": "Products Options page"
+		},
+		"label": "Products Options"
+	},
+
+	"Stores": {
+		"meta": {
+			"title": "Stores"
+		},
+		"page": {
+			"title": "Stores page"
+		},
+		"label": "Stores"
+	}
+}
+
