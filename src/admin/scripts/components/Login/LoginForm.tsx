@@ -20,10 +20,10 @@ const LoginForm = () => {
 	const [processing, setProcessing] = useState<boolean>(false);
 	const [message, setMessage] = useState<string | null>(null);
 	const { Profile, userLogin, reloadProfile, userLogout } = useProfile();
-	const history = useHistory();
 	const { control, handleSubmit, formState } = useForm({
 		mode: 'all',
 	});
+	const history = useHistory();
 
 	const submitHandler = (data) => {
 		setProcessing(true);

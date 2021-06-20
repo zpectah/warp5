@@ -2,14 +2,16 @@ import React, { useState, useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { useForm, Controller } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import { useDispatch } from 'react-redux';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
 import styled from 'styled-components';
 
 import config from '../../config';
 import { useProfile } from '../../hooks/App';
 import { EMAIL_REGEX, ROUTES } from '../../constants';
 import { Form } from '../ui';
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
+import useUiToasts from '../../hooks/useUiToasts';
 
 const Wrapper = styled.div`
 	width: 50vw;
@@ -24,11 +26,12 @@ const LostPasswordForm = () => {
 	const [requestSend, setRequestSend] = useState<boolean>(false);
 	const { userLostPassword, userLostPasswordReset, reloadProfile } =
 		useProfile();
-
-	const history = useHistory();
+	const dispatch = useDispatch();
+	const { createToasts } = useUiToasts(dispatch);
 	const { control, handleSubmit, formState } = useForm({
 		mode: 'all',
 	});
+	const history = useHistory();
 
 	const submitHandler = (data) => {
 		setProcessing(true);
@@ -75,33 +78,48 @@ const LostPasswordForm = () => {
 			if (response?.data?.message) {
 				switch (response.data.message) {
 					case 'user_password_reset_error':
-						setMessage(
-							t('message:userLostPassword.reset.user_password_reset_error'),
-						); // TODO: Message Toast
+						createToasts({
+							title: t(
+								'message:userLostPassword.reset.user_password_reset_error',
+							),
+							context: 'error',
+						});
 						// history.push(CFG.CMS.UNAUTHORIZED_REDIRECT_TARGET);
 						break;
 
 					case 'token_not_found':
-						setMessage(t('message:userLostPassword.reset.token_not_found')); // TODO: Message Toast
+						createToasts({
+							title: t('message:userLostPassword.reset.token_not_found'),
+							context: 'error',
+						});
 						history.push(config.GLOBAL.CMS.UNAUTHORIZED_REDIRECT_TARGET);
 						break;
 
 					case 'request_not_found':
-						setMessage(t('message:userLostPassword.reset.request_not_found')); // TODO: Message Toast
+						createToasts({
+							title: t('message:userLostPassword.reset.request_not_found'),
+							context: 'error',
+						});
 						history.push(config.GLOBAL.CMS.UNAUTHORIZED_REDIRECT_TARGET);
 						break;
 
 					case 'user_password_already_reset':
-						setMessage(
-							t('message:userLostPassword.reset.user_password_already_reset'),
-						); // TODO: Message Toast
+						createToasts({
+							title: t(
+								'message:userLostPassword.reset.user_password_already_reset',
+							),
+							context: 'error',
+						});
 						history.push(config.GLOBAL.CMS.UNAUTHORIZED_REDIRECT_TARGET);
 						break;
 
 					case 'user_password_reset_success':
-						setMessage(
-							t('message:userLostPassword.reset.user_password_reset_success'),
-						); // TODO: Message Toast
+						createToasts({
+							title: t(
+								'message:userLostPassword.reset.user_password_reset_success',
+							),
+							context: 'success',
+						});
 						history.push(config.GLOBAL.CMS.UNAUTHORIZED_REDIRECT_TARGET);
 						break;
 				}

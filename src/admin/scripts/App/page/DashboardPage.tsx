@@ -1,15 +1,18 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 
 import { ROUTES } from '../../constants';
 import Layout from '../../components/Layout';
 import { Section } from '../../components/ui';
-import { addToast, addMessage } from '../../store/actions';
+import useUiToasts from '../../hooks/useUiToasts';
+import useUiMessages from '../../hooks/useUiMessages';
 
 const DashboardPage = () => {
 	const { t } = useTranslation('page');
 	const dispatch = useDispatch();
+	const { createToasts } = useUiToasts(dispatch);
+	const { createMessage } = useUiMessages(dispatch);
 
 	return (
 		<Layout.Default
@@ -25,12 +28,10 @@ const DashboardPage = () => {
 					<button
 						type="button"
 						onClick={() =>
-							dispatch(
-								addToast({
-									title: 'Toast title',
-									context: 'default',
-								}),
-							)
+							createToasts({
+								title: 'Toast title',
+								context: 'default',
+							})
 						}
 					>
 						open default
@@ -39,13 +40,11 @@ const DashboardPage = () => {
 					<button
 						type="button"
 						onClick={() =>
-							dispatch(
-								addToast({
-									title: 'Toast success title',
-									context: 'success',
-									timeout: 3500,
-								}),
-							)
+							createToasts({
+								title: 'Toast success title',
+								context: 'success',
+								timeout: 3500,
+							})
 						}
 					>
 						open success
@@ -54,13 +53,11 @@ const DashboardPage = () => {
 					<button
 						type="button"
 						onClick={() =>
-							dispatch(
-								addToast({
-									title: 'Toast error title',
-									context: 'error',
-									timeout: 3500,
-								}),
-							)
+							createToasts({
+								title: 'Toast error title',
+								context: 'error',
+								timeout: 3500,
+							})
 						}
 					>
 						open error
@@ -72,16 +69,14 @@ const DashboardPage = () => {
 					<button
 						type="button"
 						onClick={() =>
-							dispatch(
-								addMessage({
-									title: 'Toast new title',
-									content:
-										"Nulla tristique ipsum ac lacus lorem a leo at felis magna magna ac fermentum amet. Vestibulum morbi tincidunt orci luctus mullamcorper vestibulum ut faucibus luctus pellentesque accumsan tristique orci consectetur. Mullamcorper lacus cras venenatis vestibulum posuere ac sit venenatis ipsum tincidunt volutpat jak'tahla aliquam felis. Tellus et curae vestibulum a augue nulla eros felis posuere pellentesque mi adipiscing vel venenatis. ",
-									onConfirm: () => {
-										console.log('Callback from message');
-									},
-								}),
-							)
+							createMessage({
+								title: 'Toast new title',
+								content:
+									"Nulla tristique ipsum ac lacus lorem a leo at felis magna magna ac fermentum amet. Vestibulum morbi tincidunt orci luctus mullamcorper vestibulum ut faucibus luctus pellentesque accumsan tristique orci consectetur. Mullamcorper lacus cras venenatis vestibulum posuere ac sit venenatis ipsum tincidunt volutpat jak'tahla aliquam felis. Tellus et curae vestibulum a augue nulla eros felis posuere pellentesque mi adipiscing vel venenatis. ",
+								onConfirm: () => {
+									console.log('Callback from message');
+								},
+							})
 						}
 					>
 						open default message with callback
