@@ -13,6 +13,8 @@ import {
 import ThemeService from '../service/ThemeService';
 import HelpService from '../service/HelpService';
 
+import ToastsList from '../components/Toasts';
+import MessagesList from '../components/Messages';
 import AuthRoute from '../utils/AuthRoute';
 //
 import Error404Page from './page/Error404Page';
@@ -81,6 +83,8 @@ const App = () => {
 						<Route component={Error404Page} />
 					</Switch>
 				</Router>
+				<ToastsList />
+				<MessagesList />
 			</>
 		</ThemeProvider>
 	);

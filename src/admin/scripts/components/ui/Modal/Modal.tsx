@@ -6,7 +6,7 @@ import Paper from '@material-ui/core/Paper';
 import styled from 'styled-components';
 
 import { modalBase } from '../../../styles/mixins';
-import Button from '../Button';
+import CloseButton from '../Button';
 
 const Wrapper = styled(Modal)`
 	${modalBase}
@@ -65,7 +65,7 @@ const UiModal: React.FC<ModalProps> = ({
 				<Fade in={isOpen}>
 					<ModalContainer size={size}>
 						{children}
-						<Button.Close onClick={() => setOpen(false)} />
+						<CloseButton onClick={() => setOpen(false)} />
 					</ModalContainer>
 				</Fade>
 			}

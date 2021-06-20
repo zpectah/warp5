@@ -1,8 +1,24 @@
+export interface toastItemProps {
+	id?: string;
+	title: string;
+	context: 'default' | 'success' | 'error';
+	timeout?: number;
+}
+
+export interface messageItemProps {
+	id?: string;
+	title?: string;
+	content?: string;
+	onConfirm?: () => void;
+}
+
 export interface storeProps {
 	language: string;
 	theme: string;
 	help: string;
 	sideBarOpen: boolean;
+	toasts: toastItemProps[];
+	messages?: messageItemProps[];
 }
 
 export interface appProps {

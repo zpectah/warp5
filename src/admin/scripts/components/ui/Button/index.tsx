@@ -1,5 +1,1 @@
-import CloseButton from './CloseButton';
-
-export default {
-	Close: CloseButton,
-};
+export { default } from './CloseButton';

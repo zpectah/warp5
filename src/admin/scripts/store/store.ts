@@ -10,6 +10,8 @@ const UiStoreState: storeProps = {
 	theme: ThemeService.get(),
 	help: HelpService.get(),
 	sideBarOpen: storage.get(config.GLOBAL.CMS.STORAGE_KEY_UI_SIDEBAR) === 'true',
+	toasts: [],
+	messages: [],
 };
 
 export default UiStoreState;

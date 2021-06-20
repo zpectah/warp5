@@ -20,4 +20,26 @@ export default {
 			width: '200px',
 		},
 	},
+	messages: {
+		zIndex: 200,
+		default: {
+			color: palette.white,
+			bg: palette.grey,
+		},
+	},
+	toasts: {
+		zIndex: 250,
+		default: {
+			color: palette.white,
+			bg: palette.grey,
+		},
+		success: {
+			color: palette.white,
+			bg: palette.green,
+		},
+		error: {
+			color: palette.white,
+			bg: palette.red,
+		},
+	},
 };
