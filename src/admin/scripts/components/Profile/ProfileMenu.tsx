@@ -7,7 +7,9 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 
+import ProfileModal from './ProfileModal';
 import LogoutConfirm from './LogoutConfirm';
+import HelpModal from '../Help';
 
 const Outer = styled.div``;
 const Button = styled.button`
@@ -21,6 +23,8 @@ interface ProfileMenuProps {
 const ProfileMenu: React.FC<ProfileMenuProps> = ({ id = 'profileMenu' }) => {
 	const [anchorEl, setAnchorEl] = useState(null);
 	const [confirmOpen, setConfirmOpen] = useState(false);
+	const [profileOpen, setProfileOpen] = useState(false);
+	const [helpOpen, setHelpOpen] = useState(false);
 
 	const openHandler = (e) => setAnchorEl(e.currentTarget);
 
@@ -28,14 +32,12 @@ const ProfileMenu: React.FC<ProfileMenuProps> = ({ id = 'profileMenu' }) => {
 
 	const helpHandler = () => {
 		setAnchorEl(null);
-
-		// TODO
+		setHelpOpen(true);
 	};
 
 	const profileHandler = () => {
 		setAnchorEl(null);
-
-		// TODO
+		setProfileOpen(true);
 	};
 
 	const logoutHandler = () => {
@@ -66,6 +68,11 @@ const ProfileMenu: React.FC<ProfileMenuProps> = ({ id = 'profileMenu' }) => {
 					<MenuItem onClick={logoutHandler}>Logout</MenuItem>
 				</Menu>
 			</Outer>
+			<ProfileModal
+				open={profileOpen}
+				onToggle={(open) => setProfileOpen(open)}
+			/>
+			<HelpModal open={helpOpen} onToggle={(open) => setHelpOpen(open)} />
 			<LogoutConfirm
 				open={confirmOpen}
 				onToggle={(open) => setConfirmOpen(open)}
