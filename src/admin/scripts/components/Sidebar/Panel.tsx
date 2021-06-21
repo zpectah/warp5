@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { Scrollable } from '../ui';
+import Navbar from './Navbar';
 
 const Wrapper = styled.div<{ open: boolean }>`
 	width: ${(props) => props.theme.sidebar.panel.width};
@@ -30,17 +31,16 @@ const Block = styled.div``;
 
 interface PanelProps {
 	open: boolean;
+	sidebarToggle: Function;
 }
 
-const Panel: React.FC<PanelProps> = ({ children, open }) => {
+const Panel: React.FC<PanelProps> = ({ children, open, sidebarToggle }) => {
 	return (
 		<Wrapper open={open}>
 			<Scrollable>
 				<Inner>
 					<Block>
-						<>menu: app</>
-						<>menu: members</>
-						<>menu: market</>
+						<Navbar sidebarToggle={sidebarToggle} />
 					</Block>
 					{children && <Block>{children}</Block>}
 				</Inner>

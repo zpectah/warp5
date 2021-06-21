@@ -25,7 +25,7 @@ const Sidebar = () => {
 
 	return (
 		<Wrapper open={sidebarOpen}>
-			<Panel open={sidebarOpen} />
+			<Panel open={sidebarOpen} sidebarToggle={() => setSidebarOpen(false)} />
 			<Bar open={sidebarOpen} />
 		</Wrapper>
 	);
