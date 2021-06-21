@@ -16,6 +16,7 @@ const SettingsPage = () => {
 		>
 			<Section>
 				<div>...Settings...</div>
+				<div>form</div>
 			</Section>
 		</Layout.Default>
 	);

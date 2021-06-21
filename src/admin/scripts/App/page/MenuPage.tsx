@@ -16,6 +16,9 @@ const MenuPage = () => {
 		>
 			<Section>
 				<div>...Menu...</div>
+				<div>table</div>
+				<div>detail</div>
+				<div>confirm</div>
 			</Section>
 		</Layout.Default>
 	);

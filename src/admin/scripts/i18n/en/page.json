@@ -147,16 +147,6 @@
 		"label": "Requests"
 	},
 
-	"MembersDashboard": {
-		"meta": {
-			"title": "Members Dashboard"
-		},
-		"page": {
-			"title": "Members Dashboard"
-		},
-		"label": "Members Dashboard"
-	},
-
 	"Members": {
 		"meta": {
 			"title": "Members"

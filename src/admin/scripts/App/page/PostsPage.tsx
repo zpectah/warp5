@@ -16,6 +16,9 @@ const PostsPage = () => {
 		>
 			<Section>
 				<div>...Posts...</div>
+				<div>table</div>
+				<div>detail</div>
+				<div>confirm</div>
 			</Section>
 		</Layout.Default>
 	);

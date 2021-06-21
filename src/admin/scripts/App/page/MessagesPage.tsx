@@ -16,6 +16,9 @@ const MessagesPage = () => {
 		>
 			<Section>
 				<div>...Messages...</div>
+				<div>table</div>
+				<div>detail</div>
+				<div>confirm</div>
 			</Section>
 		</Layout.Default>
 	);

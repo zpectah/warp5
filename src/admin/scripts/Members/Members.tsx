@@ -3,7 +3,6 @@ import { Switch } from 'react-router-dom';
 
 import { ROUTE_PATH_ATTR_DETAIL_ID, ROUTES } from '../constants';
 import AuthRoute from '../utils/AuthRoute';
-import DashboardPage from './page/DashboardPage';
 import MembersPage from './page/MembersPage';
 
 const Members = () => {
@@ -17,13 +16,6 @@ const Members = () => {
 					]}
 					component={MembersPage}
 					auth={ROUTES.members.members.auth}
-					exact
-				/>
-
-				<AuthRoute
-					path={ROUTES.members.dashboard.path}
-					component={DashboardPage}
-					auth={ROUTES.members.dashboard.auth}
 					exact
 				/>
 			</Switch>

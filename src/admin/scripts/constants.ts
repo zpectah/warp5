@@ -8,7 +8,8 @@ export const BREAKPOINTS = {
 	xl: 1200,
 	xxl: 1400,
 };
-export const EMAIL_REGEX = /^(?:(?!.*?[.]{2})[a-zA-Z0-9](?:[a-zA-Z0-9.+!%-]{1,64}|)|\"[a-zA-Z0-9.+!% -]{1,64}\")@[a-zA-Z0-9][a-zA-Z0-9.-]+(.[a-z]{2,}|.[0-9]{1,})$/;
+export const EMAIL_REGEX =
+	/^(?:(?!.*?[.]{2})[a-zA-Z0-9](?:[a-zA-Z0-9.+!%-]{1,64}|)|\"[a-zA-Z0-9.+!% -]{1,64}\")@[a-zA-Z0-9][a-zA-Z0-9.-]+(.[a-z]{2,}|.[0-9]{1,})$/;
 export const SUBMIT_TIMEOUT = 750;
 export const RELOAD_HOOK_TIMEOUT = 125;
 export const MESSAGE_SUCCESS_DURATION = 2.5;
@@ -173,14 +174,8 @@ export const ROUTES = {
 		},
 	},
 	members: {
-		dashboard: {
-			path: '/admin/members',
-			name: 'dashboard',
-			label: 'MembersDashboard.label',
-			auth: USER_LEVEL.chief_redactor.id,
-		},
 		members: {
-			path: '/admin/members/items',
+			path: '/admin/members',
 			name: 'members',
 			label: 'Members.label',
 			auth: USER_LEVEL.chief_redactor.id,
@@ -326,13 +321,6 @@ export const NAV_ITEMS = {
 		},
 	],
 	members: [
-		{
-			key: 1,
-			label: ROUTES.members.dashboard.label,
-			path: ROUTES.members.dashboard.path,
-			active: false,
-			auth: USER_LEVEL.chief_redactor.id,
-		},
 		{
 			key: 2,
 			label: ROUTES.members.members.label,

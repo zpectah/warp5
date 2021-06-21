@@ -16,6 +16,9 @@ const ProductsPage = () => {
 		>
 			<Section>
 				<div>...Products...</div>
+				<div>table</div>
+				<div>detail</div>
+				<div>confirm</div>
 			</Section>
 		</Layout.Default>
 	);

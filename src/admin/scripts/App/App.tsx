@@ -13,7 +13,6 @@ import {
 } from '../constants';
 import ThemeService from '../service/ThemeService';
 import HelpService from '../service/HelpService';
-
 import ToastsList from '../components/Toasts';
 import MessagesList from '../components/Messages';
 import AuthRoute from '../utils/AuthRoute';
@@ -61,15 +60,15 @@ const App = () => {
 				<Router>
 					<Switch>
 						<AuthRoute
-							path={['/admin/members']}
+							path={[ROUTES.members.members.path]}
 							component={Members}
-							auth={ROUTES.app.dashboard.auth}
+							auth={ROUTES.members.members.auth}
 						/>
 
 						<AuthRoute
-							path={['/admin/market']}
+							path={[ROUTES.market.dashboard.path]}
 							component={Market}
-							auth={ROUTES.app.dashboard.auth}
+							auth={ROUTES.market.dashboard.auth}
 						/>
 
 						<Route

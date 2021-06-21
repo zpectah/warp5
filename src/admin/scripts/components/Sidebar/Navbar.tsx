@@ -29,7 +29,6 @@ const Navbar = ({ sidebarClose }: NavbarProps) => {
 		if (
 			(!(
 				path == ROUTES.app.dashboard.path ||
-				path == ROUTES.members.dashboard.path ||
 				path == ROUTES.market.dashboard.path
 			) &&
 				location.pathname.includes(path + '/')) ||

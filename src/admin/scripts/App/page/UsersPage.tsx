@@ -16,6 +16,9 @@ const UsersPage = () => {
 		>
 			<Section>
 				<div>...Users...</div>
+				<div>table</div>
+				<div>detail</div>
+				<div>confirm</div>
 			</Section>
 		</Layout.Default>
 	);

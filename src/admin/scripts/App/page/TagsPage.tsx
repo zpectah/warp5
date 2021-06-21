@@ -16,6 +16,9 @@ const TagsPage = () => {
 		>
 			<Section>
 				<div>...Tags...</div>
+				<div>table</div>
+				<div>detail</div>
+				<div>confirm</div>
 			</Section>
 		</Layout.Default>
 	);
