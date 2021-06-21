@@ -10,7 +10,7 @@ import { string } from '../../../../../libs/utils';
 interface UiDialogProps {
 	open: boolean;
 	onToggle: (open: boolean) => void;
-	size?: 'sm' | 'md' | 'lg' | 'xl' | false;
+	size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | false;
 	headerChildren?: React.ReactElement | React.ReactElement[];
 	footerChildren?: React.ReactElement | React.ReactElement[];
 	customContent?: React.ReactElement;

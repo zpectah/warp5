@@ -21,6 +21,7 @@ const ProfileModal = ({ open, onToggle }: ProfileModalProps) => {
 				onToggle={(open) => setOpen(open)}
 				headerChildren={<>My Profile</>}
 				customContent={<ProfileForm afterSubmit={() => setOpen(false)} />}
+				size={'sm'}
 			/>
 		</>
 	);

@@ -51,6 +51,8 @@ const UiDialog: React.FC<DialogProps> = ({
 			onClose={closeHandler}
 			aria-labelledby={`${id}_title`}
 			aria-describedby={`${id}_description`}
+			maxWidth={'xs'}
+			fullWidth
 		>
 			<DialogTitle id={`${id}_title`}>{title}</DialogTitle>
 			<DialogContent>
