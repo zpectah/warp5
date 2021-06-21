@@ -1,1 +1,1 @@
-export { default } from './HelpModal';
+export { default } from './HelpDialog';

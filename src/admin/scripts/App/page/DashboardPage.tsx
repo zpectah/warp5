@@ -7,6 +7,7 @@ import Layout from '../../components/Layout';
 import { Section } from '../../components/ui';
 // import useUiToasts from '../../hooks/useUiToasts';
 // import useUiMessages from '../../hooks/useUiMessages';
+import Dashboard from '../../components/Dashboard';
 
 const DashboardPage = () => {
 	const { t } = useTranslation('page');
@@ -21,7 +22,7 @@ const DashboardPage = () => {
 			titleMeta={t('page:Dashboard.meta.title')}
 		>
 			<Section>
-				<div>...DashboardPage...</div>
+				<Dashboard.App />
 			</Section>
 			{/*
 			<Section>
@@ -83,6 +84,20 @@ const DashboardPage = () => {
 						}
 					>
 						open default message with callback
+					</button>
+				</div>
+				<div>
+					<button
+						type="button"
+						onClick={() =>
+							createMessage({
+								title: 'Toast new title',
+								content:
+									"Nulla tristique ipsum ac lacus lorem a leo at felis magna magna ac fermentum amet. Vestibulum morbi tincidunt orci luctus mullamcorper vestibulum ut faucibus luctus pellentesque accumsan tristique orci consectetur. Mullamcorper lacus cras venenatis vestibulum posuere ac sit venenatis ipsum tincidunt volutpat jak'tahla aliquam felis. Tellus et curae vestibulum a augue nulla eros felis posuere pellentesque mi adipiscing vel venenatis. ",
+							})
+						}
+					>
+						open default message
 					</button>
 				</div>
 			</Section>

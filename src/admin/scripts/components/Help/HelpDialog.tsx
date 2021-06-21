@@ -8,7 +8,7 @@ interface HelpModalProps {
 	onToggle: (open: boolean) => void;
 }
 
-const HelpModal = ({ open, onToggle }: HelpModalProps) => {
+const HelpDialog = ({ open, onToggle }: HelpModalProps) => {
 	const [isOpen, setOpen] = useState(open);
 
 	useEffect(() => setOpen(open), [open]);
@@ -195,4 +195,4 @@ const HelpModal = ({ open, onToggle }: HelpModalProps) => {
 	);
 };
 
-export default HelpModal;
+export default HelpDialog;

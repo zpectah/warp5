@@ -8,7 +8,7 @@ interface ProfileModalProps {
 	onToggle: (open: boolean) => void;
 }
 
-const ProfileModal = ({ open, onToggle }: ProfileModalProps) => {
+const ProfileDialog = ({ open, onToggle }: ProfileModalProps) => {
 	const [isOpen, setOpen] = useState(open);
 
 	useEffect(() => setOpen(open), [open]);
@@ -27,4 +27,4 @@ const ProfileModal = ({ open, onToggle }: ProfileModalProps) => {
 	);
 };
 
-export default ProfileModal;
+export default ProfileDialog;

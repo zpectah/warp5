@@ -7,9 +7,9 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 
-import ProfileModal from './ProfileModal';
+import ProfileDialog from './ProfileDialog';
 import LogoutConfirm from './LogoutConfirm';
-import HelpModal from '../Help';
+import HelpDialog from '../Help';
 
 const Outer = styled.div``;
 const Button = styled.button`
@@ -68,11 +68,11 @@ const ProfileMenu: React.FC<ProfileMenuProps> = ({ id = 'profileMenu' }) => {
 					<MenuItem onClick={logoutHandler}>Logout</MenuItem>
 				</Menu>
 			</Outer>
-			<ProfileModal
+			<ProfileDialog
 				open={profileOpen}
 				onToggle={(open) => setProfileOpen(open)}
 			/>
-			<HelpModal open={helpOpen} onToggle={(open) => setHelpOpen(open)} />
+			<HelpDialog open={helpOpen} onToggle={(open) => setHelpOpen(open)} />
 			<LogoutConfirm
 				open={confirmOpen}
 				onToggle={(open) => setConfirmOpen(open)}

@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { ROUTES } from '../../constants';
 import Layout from '../../components/Layout';
+import Dashboard from '../../components/Dashboard';
 import { Section } from '../../components/ui';
 
 const DashboardPage = () => {
@@ -15,7 +16,7 @@ const DashboardPage = () => {
 			titleMeta={t('page:MarketDashboard.meta.title')}
 		>
 			<Section>
-				<div>...MarketDashboard Page...</div>
+				<Dashboard.Market />
 			</Section>
 		</Layout.Default>
 	);

@@ -30,7 +30,7 @@ const Wrapper = styled.article`
 `;
 const Inner = styled.div`
 	height: auto;
-	padding: 1rem;
+	padding: 2rem;
 	display: flex;
 	flex-direction: column;
 `;
@@ -44,6 +44,7 @@ const Content = styled.div`
 const Footer = styled.div`
 	padding: 1rem 0 0;
 	display: flex;
+	justify-content: flex-end;
 `;
 
 interface MessageItemProps {
@@ -59,32 +60,42 @@ const MessageItem = ({ data, onRemove }: MessageItemProps) => {
 			<Inner>
 				{data.title && <Title>{data.title}</Title>}
 				{data.content && <Content>{data.content}</Content>}
-				{data.onConfirm && (
-					<Footer>
-						<Button
-							type="button"
-							onClick={() => {
-								data.onConfirm();
-								onRemove(data);
-							}}
-							variant="contained"
-							color="primary"
-						>
-							{t('btn.confirm')}
-						</Button>
-						<Button
-							type="button"
-							onClick={() => onRemove(data)}
-							variant="outlined"
-							color="inherit"
-							style={{ marginLeft: '.5rem' }}
-						>
-							{t('btn.cancel')}
-						</Button>
-					</Footer>
-				)}
+				<Footer>
+					{data.onConfirm ? (
+						<>
+							<Button
+								type="button"
+								onClick={() => onRemove(data)}
+								color="inherit"
+							>
+								{t('btn.cancel')}
+							</Button>
+							<Button
+								type="button"
+								onClick={() => {
+									data.onConfirm();
+									onRemove(data);
+								}}
+								variant="contained"
+								color="primary"
+								style={{ marginLeft: '.5rem' }}
+							>
+								{t('btn.confirm')}
+							</Button>
+						</>
+					) : (
+						<>
+							<Button
+								type="button"
+								onClick={() => onRemove(data)}
+								color="inherit"
+							>
+								{t('btn.close')}
+							</Button>
+						</>
+					)}
+				</Footer>
 			</Inner>
-			<CloseButton onClick={() => onRemove(data)} />
 		</Wrapper>
 	);
 };
