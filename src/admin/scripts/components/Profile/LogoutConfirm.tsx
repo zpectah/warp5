@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import { ROUTES } from '../../constants';
-import Confirm from '../Confirm';
+import { Dialog } from '../ui';
 import { useProfile } from '../../hooks/App';
 import { useHistory } from 'react-router-dom';
 
@@ -28,7 +28,7 @@ const LogoutConfirm: React.FC<LogoutConfirmProps> = ({ open, onToggle }) => {
 
 	return (
 		<>
-			<Confirm
+			<Dialog.Confirm
 				open={modalOpen}
 				onToggle={(open) => setModalOpen(open)}
 				onConfirm={logoutHandler}

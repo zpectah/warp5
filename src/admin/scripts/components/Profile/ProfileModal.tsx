@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
-import { Modal } from '../ui';
 import ProfileForm from './ProfileForm';
+import { Dialog } from '../ui';
 
 interface ProfileModalProps {
 	open: boolean;
@@ -16,12 +16,12 @@ const ProfileModal = ({ open, onToggle }: ProfileModalProps) => {
 
 	return (
 		<>
-			<Modal.Wrapper open={isOpen} onToggle={(open) => setOpen(open)}>
-				<Modal.Header>header</Modal.Header>
-				<Modal.Content>
-					<ProfileForm />
-				</Modal.Content>
-			</Modal.Wrapper>
+			<Dialog.Wrapper
+				open={isOpen}
+				onToggle={(open) => setOpen(open)}
+				headerChildren={<>My Profile</>}
+				customContent={<ProfileForm afterSubmit={() => setOpen(false)} />}
+			/>
 		</>
 	);
 };

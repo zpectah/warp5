@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { ROUTES } from '../../constants';
 import Layout from '../../components/Layout';
 import { Section } from '../../components/ui';
-import Confirm from '../../components/Confirm';
+import Dialog from '../../components/ui/Dialog';
 
 const DashboardPage = () => {
 	const [modalOpen, setModalOpen] = useState(false);
@@ -27,7 +27,7 @@ const DashboardPage = () => {
 					<button type="button" onClick={toggleModal}>
 						open modal
 					</button>
-					<Confirm
+					<Dialog.Confirm
 						open={modalOpen}
 						onToggle={(open) => setModalOpen(open)}
 						onConfirm={() => {
@@ -76,7 +76,7 @@ const DashboardPage = () => {
 								maximus mullamcorper ante ac venenatis dictum nisi nulla.
 							</p>
 						</>
-					</Confirm>
+					</Dialog.Confirm>
 				</div>
 			</Section>
 			{/* =========== DEMO =========== */}
