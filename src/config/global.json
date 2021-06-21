@@ -24,8 +24,8 @@
 	},
 	"PROJECT": {
 		"META": {
-			"name": "PROJECT NAME",
-			"description": "PROJECT DESCRIPTION",
+			"name": "DEFAULT PROJECT NAME",
+			"description": "DEFAULT PROJECT DESCRIPTION",
 			"keywords": "",
 			"lang": "en",
 			"author": null,
@@ -49,7 +49,7 @@
 		"cache": "cache/"
 	},
 	"@COPYRIGHT": {
-		"cms_name": "WarpCMS",
+		"cms_name": "Warp5",
 		"author_name": "zpecter",
 		"author_url": "http://www.zpecter.com/",
 		"author_meta": "Tomas Sychra | zpecter.com"
