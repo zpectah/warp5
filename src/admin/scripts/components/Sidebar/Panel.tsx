@@ -31,16 +31,16 @@ const Block = styled.div``;
 
 interface PanelProps {
 	open: boolean;
-	sidebarToggle: Function;
+	sidebarClose: Function;
 }
 
-const Panel: React.FC<PanelProps> = ({ children, open, sidebarToggle }) => {
+const Panel: React.FC<PanelProps> = ({ children, open, sidebarClose }) => {
 	return (
 		<Wrapper open={open}>
 			<Scrollable>
 				<Inner>
 					<Block>
-						<Navbar sidebarToggle={sidebarToggle} />
+						<Navbar sidebarClose={sidebarClose} />
 					</Block>
 					{children && <Block>{children}</Block>}
 				</Inner>

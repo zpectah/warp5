@@ -10,10 +10,10 @@ import { NAV_ITEMS, ROUTES } from '../../constants';
 import { useProfile, useSettings } from '../../hooks/App';
 
 interface NavbarProps {
-	sidebarToggle: Function;
+	sidebarClose: Function;
 }
 
-const Navbar = ({ sidebarToggle }: NavbarProps) => {
+const Navbar = ({ sidebarClose }: NavbarProps) => {
 	const { t } = useTranslation(['page']);
 	const location = useLocation();
 	const { userShouldShow } = useProfile();
@@ -40,7 +40,7 @@ const Navbar = ({ sidebarToggle }: NavbarProps) => {
 	};
 
 	const linkTrigger = () => {
-		isMobileOnly && sidebarToggle();
+		isMobileOnly && sidebarClose();
 	};
 
 	return (
