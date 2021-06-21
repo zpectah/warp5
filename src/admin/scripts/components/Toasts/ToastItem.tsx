@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import styled from 'styled-components';
 
 import { toastItemProps } from '../../types/types';
-import CloseButton from '../ui/Button';
+import CloseButton from '../ui/Button/CloseButton';
 
 const Wrapper = styled.article<{ context: toastItemProps['context'] }>`
 	height: auto;

@@ -1,6 +1,7 @@
 import React from 'react';
 import Helmet from 'react-helmet';
 import Typography from '@material-ui/core/Typography';
+import Container from '@material-ui/core/Container';
 import styled from 'styled-components';
 
 import {
@@ -15,7 +16,7 @@ import config from '../../config';
 const Wrapper = styled.div`
 	${layoutBase}
 `;
-const Container = styled.div`
+const WrapperContainer = styled.div`
 	${layoutContainerBase}
 
 	align-items: center;
@@ -37,6 +38,7 @@ interface MinimalLayoutProps {
 	titleMeta?: string;
 	titlePage?: string;
 	noFooter?: boolean;
+	maxWidth?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 }
 
 const MinimalLayout: React.FC<MinimalLayoutProps> = ({
@@ -46,6 +48,7 @@ const MinimalLayout: React.FC<MinimalLayoutProps> = ({
 	titleMeta,
 	titlePage,
 	noFooter = false,
+	maxWidth = 'md',
 }) => {
 	return (
 		<>
@@ -56,17 +59,19 @@ const MinimalLayout: React.FC<MinimalLayoutProps> = ({
 				</title>
 			</Helmet>
 			<Wrapper>
-				<Container>
-					<Content>
-						{titlePage && (
-							<Typography variant="h4" component="h1">
-								{titlePage}
-							</Typography>
-						)}
-						{children}
-					</Content>
-					{!noFooter && <Footer />}
-				</Container>
+				<WrapperContainer>
+					<Container maxWidth={maxWidth}>
+						<Content>
+							{titlePage && (
+								<Typography variant="h4" component="h1">
+									{titlePage}
+								</Typography>
+							)}
+							{children}
+						</Content>
+						{!noFooter && <Footer />}
+					</Container>
+				</WrapperContainer>
 			</Wrapper>
 		</>
 	);

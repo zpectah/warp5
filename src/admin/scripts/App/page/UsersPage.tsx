@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { ROUTES } from '../../constants';
 import Layout from '../../components/Layout';
 import { Section } from '../../components/ui';
+import CreateButton from '../../components/ui/Button/CreateButton';
 
 const UsersPage = () => {
 	const { t } = useTranslation('page');
@@ -13,6 +14,17 @@ const UsersPage = () => {
 			route={ROUTES.app.users}
 			titlePage={t('page:Users.page.title')}
 			titleMeta={t('page:Users.meta.title')}
+			headerChildren={
+				<>
+					<CreateButton
+						onClick={() => {
+							console.log('Create callback');
+						}}
+					>
+						Create .-.-.
+					</CreateButton>
+				</>
+			}
 		>
 			<Section>
 				<div>...Users...</div>

@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { ROUTES } from '../../constants';
 import Layout from '../../components/Layout';
 import { Section } from '../../components/ui';
+import CreateButton from '../../components/ui/Button/CreateButton';
 
 const ProductsOptionsPage = () => {
 	const { t } = useTranslation('page');
@@ -13,6 +14,17 @@ const ProductsOptionsPage = () => {
 			route={ROUTES.market['products-options']}
 			titlePage={t('page:ProductsOptions.page.title')}
 			titleMeta={t('page:ProductsOptions.meta.title')}
+			headerChildren={
+				<>
+					<CreateButton
+						onClick={() => {
+							console.log('Create callback');
+						}}
+					>
+						Create .-.-.
+					</CreateButton>
+				</>
+			}
 		>
 			<Section>
 				<div>...ProductsOptions...</div>

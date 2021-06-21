@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { ROUTES } from '../../constants';
 import Layout from '../../components/Layout';
 import { Section } from '../../components/ui';
+import CreateButton from '../../components/ui/Button/CreateButton';
 
 const CategoriesPage = () => {
 	const { t } = useTranslation('page');
@@ -13,6 +14,17 @@ const CategoriesPage = () => {
 			route={ROUTES.app.categories}
 			titlePage={t('page:Categories.page.title')}
 			titleMeta={t('page:Categories.meta.title')}
+			headerChildren={
+				<>
+					<CreateButton
+						onClick={() => {
+							console.log('Create callback');
+						}}
+					>
+						Create .-.-.
+					</CreateButton>
+				</>
+			}
 		>
 			<Section>
 				<div>...Categories...</div>

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Helmet from 'react-helmet';
+import Container from '@material-ui/core/Container';
 import styled from 'styled-components';
 
 import {
@@ -17,7 +18,7 @@ import { useSelector } from 'react-redux';
 const Wrapper = styled.div`
 	${layoutBase}
 `;
-const Container = styled.div<{ open: boolean }>`
+const WrapperContainer = styled.div<{ open: boolean }>`
 	${layoutContainerBase}
 
 	top: 0;
@@ -46,6 +47,8 @@ interface DefaultLayoutProps {
 	titleMeta?: string;
 	titlePage?: string;
 	headerChildren?: React.ReactElement | React.ReactElement[];
+	maxWidth?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+	overrideMaxWidthDefault?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 }
 
 const DefaultLayout: React.FC<DefaultLayoutProps> = ({
@@ -55,6 +58,8 @@ const DefaultLayout: React.FC<DefaultLayoutProps> = ({
 	titleMeta,
 	titlePage,
 	headerChildren,
+	maxWidth = 'lg',
+	overrideMaxWidthDefault = 'lg',
 }) => {
 	const store = useSelector((store: any) => store);
 
@@ -73,16 +78,22 @@ const DefaultLayout: React.FC<DefaultLayoutProps> = ({
 				</title>
 			</Helmet>
 			<Wrapper>
-				<Container open={sidebarOpen}>
-					<Header
-						route={route}
-						app={app}
-						titlePage={titlePage}
-						children={headerChildren}
-					/>
-					<Content>{children}</Content>
-					<Footer />
-				</Container>
+				<WrapperContainer open={sidebarOpen}>
+					<Container maxWidth={overrideMaxWidthDefault}>
+						<Header
+							route={route}
+							app={app}
+							titlePage={titlePage}
+							children={headerChildren}
+						/>
+					</Container>
+					<Container maxWidth={maxWidth}>
+						<Content>{children}</Content>
+					</Container>
+					<Container maxWidth={overrideMaxWidthDefault}>
+						<Footer />
+					</Container>
+				</WrapperContainer>
 				<Sidebar />
 			</Wrapper>
 		</>
