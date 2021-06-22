@@ -15,5 +15,11 @@
 		"btn_logIn": "Log in",
 		"btn_submit": "Submit request",
 		"input_email_placeholder": "E-mail"
+	},
+	"ThemeDialog": {
+		"title": "Select theme"
+	},
+	"LocalesDialog": {
+		"title": "Select language"
 	}
 }

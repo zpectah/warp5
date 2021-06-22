@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import styled from 'styled-components';
-
-import { buttonTrigger } from '../../styles/mixins';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import AccountCircle from '@material-ui/icons/AccountCircle';
+import Chip from '@material-ui/core/Chip';
+import styled from 'styled-components';
 
+import { buttonTrigger } from '../../styles/mixins';
 import ThemesDialog from '../Themes/ThemesDialog';
 import LocalesDialog from '../Locales/LocalesDialog';
 import ProfileDialog from './ProfileDialog';
@@ -80,9 +80,13 @@ const ProfileMenu: React.FC<ProfileMenuProps> = ({ id = 'profileMenu' }) => {
 					open={Boolean(anchorEl)}
 					onClose={closeHandler}
 				>
-					<MenuItem onClick={themeHandler}>Theme ({store.ui.theme})</MenuItem>
+					<MenuItem onClick={themeHandler}>
+						Theme&nbsp;&nbsp;
+						<Chip size="small" label={store.ui.theme} variant="outlined" />
+					</MenuItem>
 					<MenuItem onClick={localesHandler}>
-						Language ({i18n.language})
+						Language&nbsp;&nbsp;
+						<Chip size="small" label={i18n.language} variant="outlined" />
 					</MenuItem>
 					<MenuItem onClick={helpHandler}>Help</MenuItem>
 					<MenuItem onClick={profileHandler}>Profile</MenuItem>

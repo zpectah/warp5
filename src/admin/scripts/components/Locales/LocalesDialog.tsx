@@ -4,6 +4,13 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import { useTranslation } from 'react-i18next';
+
+import config from '../../config';
+import LanguageService from '../../service/LanguageService';
 
 interface LocalesDialogProps {
 	open: boolean;
@@ -12,7 +19,19 @@ interface LocalesDialogProps {
 }
 
 const LocalesDialog = ({ open, onToggle, onCancel }: LocalesDialogProps) => {
-	const [isOpen, setOpen] = useState(open);
+	const { i18n, t } = useTranslation(['common', 'components']);
+	const [isOpen, setOpen] = useState<boolean>(open);
+	const [lang, setLang] = useState<string>(i18n.language);
+	const [langList, setLangList] = useState<string[]>(
+		config.GLOBAL.CMS.LANG_LIST,
+	);
+
+	const changeHandler = (language: string) => {
+		setLang(language);
+		LanguageService.set(language);
+		i18n.changeLanguage(language);
+		closeHandler();
+	};
 
 	const closeHandler = () => {
 		setOpen(false);
@@ -30,13 +49,29 @@ const LocalesDialog = ({ open, onToggle, onCancel }: LocalesDialogProps) => {
 			onClose={closeHandler}
 			fullWidth
 		>
-			<DialogTitle id="locales-dialog-title">Select language</DialogTitle>
+			<DialogTitle id="locales-dialog-title">
+				{t('components:LocalesDialog.title')}
+			</DialogTitle>
 			<DialogContent dividers>
-				radio group ... or click to change ...
+				<List component="nav">
+					{langList.map((lng) => (
+						<ListItem
+							key={lng}
+							button
+							onClick={() => changeHandler(lng)}
+							selected={lng == lang}
+						>
+							<ListItemText
+								primary={config.LOCALES_LIST[lng].label}
+								secondary={lng}
+							/>
+						</ListItem>
+					))}
+				</List>
 			</DialogContent>
 			<DialogActions>
 				<Button autoFocus onClick={closeHandler} color="primary">
-					Cancel
+					{t('btn.cancel')}
 				</Button>
 			</DialogActions>
 		</Dialog>
