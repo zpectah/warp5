@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 
 import { ROUTES } from '../../constants';
 import Layout from '../../components/Layout';
-import { Section, CreateButton } from '../../components/ui';
+import { Section } from '../../components/ui';
 
 const RequestsPage = () => {
 	const { t } = useTranslation('page');
@@ -13,17 +13,6 @@ const RequestsPage = () => {
 			route={ROUTES.app.requests}
 			titlePage={t('page:Requests.page.title')}
 			titleMeta={t('page:Requests.meta.title')}
-			headerChildren={
-				<>
-					<CreateButton
-						onClick={() => {
-							console.log('Create callback');
-						}}
-					>
-						Create .-.-.
-					</CreateButton>
-				</>
-			}
 		>
 			<Section>
 				<div>...Requests...</div>

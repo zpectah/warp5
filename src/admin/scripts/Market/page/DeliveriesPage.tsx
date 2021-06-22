@@ -6,7 +6,7 @@ import Layout from '../../components/Layout';
 import { Section, CreateButton } from '../../components/ui';
 
 const DeliveriesPage = () => {
-	const { t } = useTranslation('page');
+	const { t } = useTranslation(['common', 'page']);
 
 	return (
 		<Layout.Default
@@ -15,12 +15,8 @@ const DeliveriesPage = () => {
 			titleMeta={t('page:Deliveries.meta.title')}
 			headerChildren={
 				<>
-					<CreateButton
-						onClick={() => {
-							console.log('Create callback');
-						}}
-					>
-						Create .-.-.
+					<CreateButton href={ROUTES.market.deliveries.path} newDetailSuffix>
+						{t('btn_new.Deliveries')}
 					</CreateButton>
 				</>
 			}

@@ -6,7 +6,7 @@ import Layout from '../../components/Layout';
 import { Section, CreateButton } from '../../components/ui';
 
 const ProductsOptionsPage = () => {
-	const { t } = useTranslation('page');
+	const { t } = useTranslation(['common', 'page']);
 
 	return (
 		<Layout.Default
@@ -16,11 +16,10 @@ const ProductsOptionsPage = () => {
 			headerChildren={
 				<>
 					<CreateButton
-						onClick={() => {
-							console.log('Create callback');
-						}}
+						href={ROUTES.market['products-options'].path}
+						newDetailSuffix
 					>
-						Create .-.-.
+						{t('btn_new.ProductsOptions')}
 					</CreateButton>
 				</>
 			}

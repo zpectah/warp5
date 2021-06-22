@@ -37,5 +37,9 @@
 	"ProductsOptions": "Products option",
 	"ProductsOptions_plural": "Products options",
 	"Stores": "Store",
-	"Stores_plural": "Stores"
+	"Stores_plural": "Stores",
+	"Orders": "Store",
+	"Orders_plural": "Stores",
+	"Baskets": "Store",
+	"Baskets_plural": "Stores"
 }
