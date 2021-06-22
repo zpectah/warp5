@@ -5,9 +5,14 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import { isMobileOnly } from 'react-device-detect';
+import styled from 'styled-components';
 
 import { NAV_ITEMS, ROUTES } from '../../constants';
 import { useProfile, useSettings } from '../../hooks/App';
+
+const Wrapper = styled.div`
+	padding: 0 0.5rem;
+`;
 
 interface NavbarProps {
 	sidebarClose: Function;
@@ -65,13 +70,13 @@ const Navbar = ({ sidebarClose }: NavbarProps) => {
 	};
 
 	return (
-		<>
+		<Wrapper>
 			<List aria-label="main-menu" style={{ paddingTop: 0 }}>
 				{renderItems(NAV_ITEMS.app)}
 				{modules.Members && renderItems(NAV_ITEMS.members)}
 				{modules.Market && renderItems(NAV_ITEMS.market)}
 			</List>
-		</>
+		</Wrapper>
 	);
 };
 
