@@ -54,9 +54,9 @@ const UiDialog: React.FC<UiDialogProps> = ({
 			)}
 			<>
 				{customContent ? (
-					<DialogContent>{customContent}</DialogContent>
+					<DialogContent dividers>{customContent}</DialogContent>
 				) : (
-					<DialogContent>
+					<DialogContent dividers>
 						<DialogContentText id={`${id}_description`}>
 							{children}
 						</DialogContentText>
