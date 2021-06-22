@@ -13,16 +13,24 @@ const SettingsForm = ({}: SettingsFormProps) => {
 
 	const tabList = [
 		{
-			name: 'tab-1',
-			label: 'Tab 1',
+			name: 'global',
+			label: 'Global',
 		},
 		{
-			name: 'tab-2',
-			label: 'Tab 2',
+			name: 'web',
+			label: 'Web',
 		},
 		{
-			name: 'tab-3',
-			label: 'Tab 3',
+			name: 'content',
+			label: 'Content',
+		},
+		{
+			name: 'module',
+			label: 'Module',
+		},
+		{
+			name: 'maintenance',
+			label: 'Maintenance',
 		},
 	];
 
@@ -48,9 +56,11 @@ const SettingsForm = ({}: SettingsFormProps) => {
 				onChange={panelChangeHandler}
 				ariaLabel="Form Settings"
 			>
-				<Tabs.Panel>tab 1</Tabs.Panel>
-				<Tabs.Panel>tab 2</Tabs.Panel>
-				<Tabs.Panel>tab 3</Tabs.Panel>
+				<Tabs.Panel>Global</Tabs.Panel>
+				<Tabs.Panel>Web</Tabs.Panel>
+				<Tabs.Panel>Content</Tabs.Panel>
+				<Tabs.Panel>Module</Tabs.Panel>
+				<Tabs.Panel>Maintenance</Tabs.Panel>
 			</Tabs.Wrapper>
 		</>
 	);
