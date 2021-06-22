@@ -235,6 +235,26 @@
 			"title": "Stores page"
 		},
 		"label": "Stores"
+	},
+
+	"Orders": {
+		"meta": {
+			"title": "Orders"
+		},
+		"page": {
+			"title": "Orders page"
+		},
+		"label": "Orders"
+	},
+
+	"Baskets": {
+		"meta": {
+			"title": "Baskets"
+		},
+		"page": {
+			"title": "Baskets page"
+		},
+		"label": "Baskets"
 	}
 }
 

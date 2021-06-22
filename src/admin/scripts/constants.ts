@@ -230,6 +230,18 @@ export const ROUTES = {
 			label: 'Producers.label',
 			auth: USER_LEVEL.chief_redactor.id,
 		},
+		orders: {
+			path: '/admin/market/orders',
+			name: 'orders',
+			label: 'Orders.label',
+			auth: USER_LEVEL.chief_redactor.id,
+		},
+		baskets: {
+			path: '/admin/market/baskets',
+			name: 'baskets',
+			label: 'Baskets.label',
+			auth: USER_LEVEL.chief_redactor.id,
+		},
 	},
 };
 
@@ -383,6 +395,20 @@ export const NAV_ITEMS = {
 			key: 8,
 			label: ROUTES.market.stores.label,
 			path: ROUTES.market.stores.path,
+			active: true,
+			auth: USER_LEVEL.chief_redactor.id,
+		},
+		{
+			key: 9,
+			label: ROUTES.market.orders.label,
+			path: ROUTES.market.orders.path,
+			active: true,
+			auth: USER_LEVEL.chief_redactor.id,
+		},
+		{
+			key: 10,
+			label: ROUTES.market.baskets.label,
+			path: ROUTES.market.baskets.path,
 			active: true,
 			auth: USER_LEVEL.chief_redactor.id,
 		},

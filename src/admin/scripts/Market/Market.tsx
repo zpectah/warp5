@@ -11,11 +11,33 @@ import ProducersPage from './page/ProducersPage';
 import ProductsPage from './page/ProductsPage';
 import ProductsOptionsPage from './page/ProductsOptionsPage';
 import StoresPage from './page/StoresPage';
+import OrdersPage from './page/OrdersPage';
+import BasketsPage from './page/BasketsPage';
 
 const Market = () => {
 	return (
 		<>
 			<Switch>
+				<AuthRoute
+					path={[
+						ROUTES.market.orders.path,
+						ROUTES.market.orders.path + ROUTE_PATH_ATTR_DETAIL_ID,
+					]}
+					component={OrdersPage}
+					auth={ROUTES.market.orders.auth}
+					exact
+				/>
+
+				<AuthRoute
+					path={[
+						ROUTES.market.baskets.path,
+						ROUTES.market.baskets.path + ROUTE_PATH_ATTR_DETAIL_ID,
+					]}
+					component={BasketsPage}
+					auth={ROUTES.market.baskets.auth}
+					exact
+				/>
+
 				<AuthRoute
 					path={[
 						ROUTES.market.products.path,
