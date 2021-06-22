@@ -6,7 +6,7 @@ import Breadcrumbs from '../Breadcrumbs';
 import Typography from '@material-ui/core/Typography';
 
 const Wrapper = styled.header`
-	padding-bottom: 1rem;
+	padding-bottom: 2rem;
 	display: flex;
 	flex-direction: column;
 `;

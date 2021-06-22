@@ -1,11 +1,5 @@
 import React from 'react';
-import clsx from 'clsx';
-import {
-	createStyles,
-	lighten,
-	makeStyles,
-	Theme,
-} from '@material-ui/core/styles';
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -14,18 +8,14 @@ import TableHead from '@material-ui/core/TableHead';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import TableSortLabel from '@material-ui/core/TableSortLabel';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import Checkbox from '@material-ui/core/Checkbox';
-import IconButton from '@material-ui/core/IconButton';
-import Tooltip from '@material-ui/core/Tooltip';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Switch from '@material-ui/core/Switch';
-import DeleteIcon from '@material-ui/icons/Delete';
-import FilterListIcon from '@material-ui/icons/FilterList';
 
-interface Data {
+import { appProps } from '../../types/types';
+import { getComparator, stableSort, Order } from './utils';
+
+interface DataProps {
+	id: number;
 	calories: number;
 	carbs: number;
 	fat: number;
@@ -34,68 +24,35 @@ interface Data {
 }
 
 function createData(
+	id: number,
 	name: string,
 	calories: number,
 	fat: number,
 	carbs: number,
 	protein: number,
-): Data {
-	return { name, calories, fat, carbs, protein };
+): DataProps {
+	return { id, name, calories, fat, carbs, protein };
 }
 
 const rows = [
-	createData('Cupcake', 305, 3.7, 67, 4.3),
-	createData('Donut', 452, 25.0, 51, 4.9),
-	createData('Eclair', 262, 16.0, 24, 6.0),
-	createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-	createData('Gingerbread', 356, 16.0, 49, 3.9),
-	createData('Honeycomb', 408, 3.2, 87, 6.5),
-	createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-	createData('Jelly Bean', 375, 0.0, 94, 0.0),
-	createData('KitKat', 518, 26.0, 65, 7.0),
-	createData('Lollipop', 392, 0.2, 98, 0.0),
-	createData('Marshmallow', 318, 0, 81, 2.0),
-	createData('Nougat', 360, 19.0, 9, 37.0),
-	createData('Oreo', 437, 18.0, 63, 4.0),
+	createData(1, 'Cupcake', 305, 3.7, 67, 4.3),
+	createData(2, 'Donut', 452, 25.0, 51, 4.9),
+	createData(3, 'Eclair', 262, 16.0, 24, 6.0),
+	createData(4, 'Frozen yoghurt', 159, 6.0, 24, 4.0),
+	createData(5, 'Gingerbread', 356, 16.0, 49, 3.9),
+	createData(6, 'Honeycomb', 408, 3.2, 87, 6.5),
+	createData(7, 'Ice cream sandwich', 237, 9.0, 37, 4.3),
+	createData(8, 'Jelly Bean', 375, 0.0, 94, 0.0),
+	createData(9, 'KitKat', 518, 26.0, 65, 7.0),
+	createData(10, 'Lollipop', 392, 0.2, 98, 0.0),
+	createData(11, 'Marshmallow', 318, 0, 81, 2.0),
+	createData(12, 'Nougat', 360, 19.0, 9, 37.0),
+	createData(13, 'Oreo', 437, 18.0, 63, 4.0),
 ];
-
-function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
-	if (b[orderBy] < a[orderBy]) {
-		return -1;
-	}
-	if (b[orderBy] > a[orderBy]) {
-		return 1;
-	}
-	return 0;
-}
-
-type Order = 'asc' | 'desc';
-
-function getComparator<Key extends keyof any>(
-	order: Order,
-	orderBy: Key,
-): (
-	a: { [key in Key]: number | string },
-	b: { [key in Key]: number | string },
-) => number {
-	return order === 'desc'
-		? (a, b) => descendingComparator(a, b, orderBy)
-		: (a, b) => -descendingComparator(a, b, orderBy);
-}
-
-function stableSort<T>(array: T[], comparator: (a: T, b: T) => number) {
-	const stabilizedThis = array.map((el, index) => [el, index] as [T, number]);
-	stabilizedThis.sort((a, b) => {
-		const order = comparator(a[0], b[0]);
-		if (order !== 0) return order;
-		return a[1] - b[1];
-	});
-	return stabilizedThis.map((el) => el[0]);
-}
 
 interface HeadCell {
 	disablePadding: boolean;
-	id: keyof Data;
+	id: keyof DataProps;
 	label: string;
 	numeric: boolean;
 }
@@ -118,7 +75,7 @@ interface EnhancedTableProps {
 	numSelected: number;
 	onRequestSort: (
 		event: React.MouseEvent<unknown>,
-		property: keyof Data,
+		property: keyof DataProps,
 	) => void;
 	onSelectAllClick: (event: React.ChangeEvent<HTMLInputElement>) => void;
 	order: Order;
@@ -137,7 +94,7 @@ function EnhancedTableHead(props: EnhancedTableProps) {
 		onRequestSort,
 	} = props;
 	const createSortHandler =
-		(property: keyof Data) => (event: React.MouseEvent<unknown>) => {
+		(property: keyof DataProps) => (event: React.MouseEvent<unknown>) => {
 			onRequestSort(event, property);
 		};
 
@@ -204,17 +161,59 @@ const useStyles = makeStyles((theme: Theme) =>
 	}),
 );
 
-const EnhancedTable = () => {
+interface DataTableProps {
+	model:
+		| appProps['modelApp']
+		| appProps['modelMembers']
+		| appProps['modelMarket'];
+	data: any[];
+	columnsLayout?: {
+		name?: boolean;
+		email?: boolean;
+		nickname?: boolean;
+		level?: boolean;
+		title?: boolean;
+		title_lang?: boolean;
+		tags?: boolean;
+		category?: boolean;
+		active?: boolean;
+		sender?: boolean;
+		file_name?: boolean;
+		type?: boolean;
+		user_group?: boolean;
+		member_group?: boolean;
+		file_size?: boolean;
+		t_value?: boolean;
+		context?: boolean;
+		r_value?: boolean;
+		authorized?: boolean;
+		// TODO: new columns
+	};
+	onRowDetailCallback: (id: number) => void;
+	onRowToggleCallback: (id: number) => void;
+	onRowDeleteCallback: (id: number) => void;
+	onSelect: (data: any) => void;
+}
+
+const DataTable = ({
+	model,
+	data,
+	columnsLayout,
+	onRowDetailCallback,
+	onRowToggleCallback,
+	onRowDeleteCallback,
+	onSelect,
+}: DataTableProps) => {
 	const classes = useStyles();
 	const [order, setOrder] = React.useState<Order>('asc');
-	const [orderBy, setOrderBy] = React.useState<keyof Data>('calories');
+	const [orderBy, setOrderBy] = React.useState<keyof DataProps>('id');
 	const [selected, setSelected] = React.useState<string[]>([]);
 	const [page, setPage] = React.useState(0);
 	const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
 	const handleRequestSort = (
 		event: React.MouseEvent<unknown>,
-		property: keyof Data,
+		property: keyof DataProps,
 	) => {
 		const isAsc = orderBy === property && order === 'asc';
 		setOrder(isAsc ? 'desc' : 'asc');
@@ -263,9 +262,6 @@ const EnhancedTable = () => {
 
 	const isSelected = (name: any) => selected.indexOf(name) !== -1;
 
-	const emptyRows =
-		rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
-
 	return (
 		<div className={classes.root}>
 			<Paper className={classes.paper}>
@@ -273,7 +269,6 @@ const EnhancedTable = () => {
 					<Table
 						className={classes.table}
 						aria-labelledby="tableTitle"
-						size={'medium'}
 						aria-label="enhanced table"
 					>
 						<EnhancedTableHead
@@ -295,7 +290,6 @@ const EnhancedTable = () => {
 									return (
 										<TableRow
 											hover
-											onClick={(event) => handleClick(event, row.name)}
 											role="checkbox"
 											aria-checked={isItemSelected}
 											tabIndex={-1}
@@ -306,6 +300,7 @@ const EnhancedTable = () => {
 												<Checkbox
 													checked={isItemSelected}
 													inputProps={{ 'aria-labelledby': labelId }}
+													onClick={(event) => handleClick(event, row.name)}
 												/>
 											</TableCell>
 											<TableCell
@@ -323,11 +318,6 @@ const EnhancedTable = () => {
 										</TableRow>
 									);
 								})}
-							{emptyRows > 0 && (
-								<TableRow style={{ height: 53 * emptyRows }}>
-									<TableCell colSpan={6} />
-								</TableRow>
-							)}
 						</TableBody>
 					</Table>
 				</TableContainer>
@@ -345,4 +335,4 @@ const EnhancedTable = () => {
 	);
 };
 
-export default EnhancedTable;
+export default DataTable;
