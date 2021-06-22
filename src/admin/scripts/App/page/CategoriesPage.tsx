@@ -9,6 +9,30 @@ import DataTable from '../../components/Table';
 const CategoriesPage = () => {
 	const { t } = useTranslation(['common', 'page']);
 
+	const columnsLayout = {
+		name: true,
+		calories: true,
+		fat: true,
+		carbs: true,
+		protein: true,
+	};
+
+	const onRowDetail = (id: number) => {
+		console.log('onRowDetailCallback', id);
+	};
+
+	const onRowToggle = (id: number) => {
+		console.log('onRowToggleCallback', id);
+	};
+
+	const onRowDelete = (id: number) => {
+		console.log('onRowDeleteCallback', id);
+	};
+
+	const onSelect = (ids: number[]) => {
+		console.log('onSelect', ids);
+	};
+
 	return (
 		<Layout.Default
 			route={ROUTES.app.categories}
@@ -24,21 +48,15 @@ const CategoriesPage = () => {
 		>
 			<Section>
 				<DataTable
-					data={[]}
-					columnsLayout={{ name: true }}
 					model={'Categories'}
-					onRowDetailCallback={(id) => {
-						console.log('onRowDetailCallback', id);
-					}}
-					onRowToggleCallback={(id) => {
-						console.log('onRowToggleCallback', id);
-					}}
-					onRowDeleteCallback={(id) => {
-						console.log('onRowDeleteCallback', id);
-					}}
-					onSelect={(data) => {
-						console.log('onSelect', data);
-					}}
+					data={[]}
+					columnsLayout={columnsLayout}
+					onRowDetailCallback={onRowDetail}
+					onRowToggleCallback={onRowToggle}
+					onRowDeleteCallback={onRowDelete}
+					onSelect={onSelect}
+					allowSelect={true}
+					allowDetail={true}
 				/>
 				<div>detail</div>
 				<div>confirm</div>
