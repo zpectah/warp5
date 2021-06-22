@@ -21,5 +21,12 @@
 	},
 	"LocalesDialog": {
 		"title": "Select language"
+	},
+	"ProfileMenu": {
+		"theme_link": "Theme",
+		"locale_link": "Language",
+		"help_link": "Help",
+		"profile_link": "Profile",
+		"logout_link": "Log out"
 	}
 }

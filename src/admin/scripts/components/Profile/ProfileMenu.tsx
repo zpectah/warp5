@@ -3,10 +3,13 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
+import Divider from '@material-ui/core/Divider';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import Chip from '@material-ui/core/Chip';
 import styled from 'styled-components';
 
+import config from '../../config';
+import { THEMES } from '../../constants';
 import { buttonTrigger } from '../../styles/mixins';
 import ThemesDialog from '../Themes/ThemesDialog';
 import LocalesDialog from '../Locales/LocalesDialog';
@@ -24,7 +27,7 @@ interface ProfileMenuProps {
 }
 
 const ProfileMenu: React.FC<ProfileMenuProps> = ({ id = 'profileMenu' }) => {
-	const { i18n } = useTranslation();
+	const { t, i18n } = useTranslation(['types', 'component']);
 	const store = useSelector((store: any) => store);
 	const [anchorEl, setAnchorEl] = useState(null);
 	const [confirmOpen, setConfirmOpen] = useState(false);
@@ -80,17 +83,36 @@ const ProfileMenu: React.FC<ProfileMenuProps> = ({ id = 'profileMenu' }) => {
 					open={Boolean(anchorEl)}
 					onClose={closeHandler}
 				>
-					<MenuItem onClick={themeHandler}>
-						Theme&nbsp;&nbsp;
-						<Chip size="small" label={store.ui.theme} variant="outlined" />
+					{THEMES.length > 1 && (
+						<MenuItem onClick={themeHandler}>
+							{t('component:ProfileMenu.theme_link')}&nbsp;&nbsp;
+							<Chip
+								size="small"
+								label={t(`types:${store.ui.theme}`)}
+								variant="default"
+							/>
+						</MenuItem>
+					)}
+					{config.GLOBAL.CMS.LANG_LIST.length > 1 && (
+						<MenuItem onClick={localesHandler}>
+							{t('component:ProfileMenu.locale_link')}&nbsp;&nbsp;
+							<Chip
+								size="small"
+								label={config.LOCALES_LIST[i18n.language].label}
+								variant="default"
+							/>
+						</MenuItem>
+					)}
+					<Divider />
+					<MenuItem onClick={helpHandler}>
+						{t('component:ProfileMenu.help_link')}
 					</MenuItem>
-					<MenuItem onClick={localesHandler}>
-						Language&nbsp;&nbsp;
-						<Chip size="small" label={i18n.language} variant="outlined" />
+					<MenuItem onClick={profileHandler}>
+						{t('component:ProfileMenu.profile_link')}
 					</MenuItem>
-					<MenuItem onClick={helpHandler}>Help</MenuItem>
-					<MenuItem onClick={profileHandler}>Profile</MenuItem>
-					<MenuItem onClick={logoutHandler}>Logout</MenuItem>
+					<MenuItem onClick={logoutHandler}>
+						{t('component:ProfileMenu.logout_link')}
+					</MenuItem>
 				</Menu>
 			</Outer>
 			<ThemesDialog open={themeOpen} onToggle={(open) => setThemeOpen(open)} />

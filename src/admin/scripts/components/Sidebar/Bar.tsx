@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import media from '../../styles/responsive';
 import SidebarToggle from './SidebarToggle';
 import ProfileMenu from '../Profile/ProfileMenu';
+import CreateMenu from '../Create/CreateMenu';
 
 const Wrapper = styled.div`
 	width: 100vw;
@@ -31,7 +32,15 @@ const Inner = styled.div`
 		flex-direction: column;
 	}
 `;
-const Block = styled.div``;
+const Block = styled.div`
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+
+	${media.min.sm} {
+		flex-direction: column;
+	}
+`;
 
 interface BarProps {
 	open: boolean;
@@ -43,6 +52,7 @@ const Bar: React.FC<BarProps> = ({ open }) => {
 			<Inner>
 				<Block>
 					<SidebarToggle />
+					<CreateMenu />
 				</Block>
 				<Block>
 					<ProfileMenu />
