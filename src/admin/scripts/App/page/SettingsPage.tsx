@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { ROUTES } from '../../constants';
 import Layout from '../../components/Layout';
 import { Section } from '../../components/ui';
+import SettingsForm from '../../components/Settings';
 
 const SettingsPage = () => {
 	const { t } = useTranslation('page');
@@ -15,8 +16,7 @@ const SettingsPage = () => {
 			titleMeta={t('page:Settings.meta.title')}
 		>
 			<Section>
-				<div>...Settings...</div>
-				<div>form</div>
+				<SettingsForm />
 			</Section>
 		</Layout.Default>
 	);
