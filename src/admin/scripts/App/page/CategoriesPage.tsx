@@ -23,7 +23,23 @@ const CategoriesPage = () => {
 			}
 		>
 			<Section>
-				<DataTable rows={[]} columnsLayout={{}} model={'Categories'} />
+				<DataTable
+					data={[]}
+					columnsLayout={{ name: true }}
+					model={'Categories'}
+					onRowDetailCallback={(id) => {
+						console.log('onRowDetailCallback', id);
+					}}
+					onRowToggleCallback={(id) => {
+						console.log('onRowToggleCallback', id);
+					}}
+					onRowDeleteCallback={(id) => {
+						console.log('onRowDeleteCallback', id);
+					}}
+					onSelect={(data) => {
+						console.log('onSelect', data);
+					}}
+				/>
 				<div>detail</div>
 				<div>confirm</div>
 			</Section>
