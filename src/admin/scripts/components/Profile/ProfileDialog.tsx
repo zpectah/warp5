@@ -16,13 +16,13 @@ const ProfileDialog = ({ open, onToggle }: ProfileModalProps) => {
 
 	return (
 		<>
-			<Dialog.Wrapper
+			<Dialog.Blank
 				open={isOpen}
 				onToggle={(open) => setOpen(open)}
-				headerChildren={<>My Profile</>}
-				customContent={<ProfileForm afterSubmit={() => setOpen(false)} />}
 				size={'sm'}
-			/>
+			>
+				<ProfileForm afterSubmit={() => setOpen(false)} />
+			</Dialog.Blank>
 		</>
 	);
 };

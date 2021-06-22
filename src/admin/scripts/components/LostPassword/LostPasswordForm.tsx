@@ -137,7 +137,7 @@ const LostPasswordForm = () => {
 
 	return (
 		<Wrapper>
-			<Form.Wrapper name="lostPasswordForm">
+			<Form.Base name="lostPasswordForm">
 				{token ? (
 					<>
 						<Form.Row>{t('component:LostPasswordForm.processing')}</Form.Row>
@@ -185,7 +185,7 @@ const LostPasswordForm = () => {
 						</Form.Row>
 					</>
 				)}
-			</Form.Wrapper>
+			</Form.Base>
 		</Wrapper>
 	);
 };

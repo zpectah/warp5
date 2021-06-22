@@ -78,7 +78,7 @@ const LoginForm = () => {
 
 	return (
 		<Wrapper>
-			<Form.Wrapper name="loginForm">
+			<Form.Base name="loginForm">
 				{Profile ? (
 					<>
 						<Form.Row>
@@ -164,7 +164,7 @@ const LoginForm = () => {
 						</Form.Row>
 					</>
 				)}
-			</Form.Wrapper>
+			</Form.Base>
 		</Wrapper>
 	);
 };

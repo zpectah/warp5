@@ -1,39 +1,38 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogTitle from '@material-ui/core/DialogTitle';
+
+import { Form } from '../ui';
 
 interface ProfileFormProps {
-	afterSubmit?: () => void;
+	afterSubmit: (method: string) => void;
 }
 
 const ProfileForm = ({ afterSubmit }: ProfileFormProps) => {
 	const cancelHandler = () => {
-		if (afterSubmit) afterSubmit();
+		afterSubmit('cancel');
 	};
 
 	const submitHandler = () => {
-		if (afterSubmit) afterSubmit();
+		afterSubmit('submit');
 	};
 
 	return (
 		<>
-			<form>
-				<div>...ProfileForm...</div>
-			</form>
-			<div
-				style={{
-					display: 'flex',
-					justifyContent: 'flex-end',
-					marginLeft: '-1rem',
-					marginRight: '-1rem',
-				}}
-			>
+			<DialogTitle>title</DialogTitle>
+			<DialogContent dividers>
+				<Form.Base>...ProfileForm elements...</Form.Base>
+			</DialogContent>
+			<DialogActions>
 				<Button onClick={cancelHandler} color="primary">
 					Cancel
 				</Button>
 				<Button onClick={submitHandler} color="primary" autoFocus>
 					Submit
 				</Button>
-			</div>
+			</DialogActions>
 		</>
 	);
 };
