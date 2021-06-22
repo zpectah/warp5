@@ -13,7 +13,7 @@ import { useTranslation } from 'react-i18next';
 import styled, { css } from 'styled-components';
 
 import config from '../../config';
-import { appProps } from '../../types/types';
+import { appProps, routeProps } from '../../types/types';
 import { getComparator, stableSort, Order } from './utils';
 import TableHead from './TableHead';
 import { useProfile, useSettings } from '../../hooks/App';
@@ -472,14 +472,14 @@ const DataTable = ({
 						disabled={selected.length == 0}
 						onClick={() => onToggle(selected)}
 					>
-						Toggle selected
+						Toggle selected ({selected.length})
 					</Button>
 					<Button
 						type="button"
 						disabled={selected.length == 0}
 						onClick={() => onDelete(selected)}
 					>
-						Delete selected
+						Delete selected ({selected.length})
 					</Button>
 				</TableHeading>
 				<Paper className={classes.paper}>

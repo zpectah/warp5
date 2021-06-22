@@ -6,6 +6,7 @@ interface BlankDialogProps {
 	onToggle: (open: boolean) => void;
 	size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | false;
 	fullWidth?: boolean;
+	onClose?: () => void;
 }
 
 const BlankDialog: React.FC<BlankDialogProps> = ({
@@ -14,15 +15,19 @@ const BlankDialog: React.FC<BlankDialogProps> = ({
 	onToggle,
 	size = 'md',
 	fullWidth = true,
+	onClose,
 }) => {
 	const [isOpen, setOpen] = useState(open);
 	const [scroll, setScroll] = React.useState<DialogProps['scroll']>('paper');
 
 	const closeHandler = () => {
 		setOpen(false);
+		if (onClose) onClose();
 	};
 
-	useEffect(() => setOpen(open), [open]);
+	useEffect(() => {
+		setOpen(open);
+	}, [open]);
 	useEffect(() => onToggle(isOpen), [isOpen]);
 
 	return (
