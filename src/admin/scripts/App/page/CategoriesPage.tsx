@@ -5,28 +5,28 @@ import { ROUTES } from '../../constants';
 import Layout from '../../components/Layout';
 import { Section, CreateButton } from '../../components/ui';
 import DataTable from '../../components/Table';
+import { useCategories } from '../../hooks/App';
 
 const CategoriesPage = () => {
 	const { t } = useTranslation(['common', 'page']);
+	const { Categories } = useCategories();
 
 	const columnsLayout = {
-		name: true,
-		calories: true,
-		fat: true,
-		carbs: true,
-		protein: true,
+		title_lang: true,
+		type: true,
+		active: true,
 	};
 
 	const onRowDetail = (id: number) => {
 		console.log('onRowDetailCallback', id);
 	};
 
-	const onRowToggle = (id: number) => {
-		console.log('onRowToggleCallback', id);
+	const onToggle = (ids: number[]) => {
+		console.log('onToggleCallback', ids);
 	};
 
-	const onRowDelete = (id: number) => {
-		console.log('onRowDeleteCallback', id);
+	const onDelete = (ids: number[]) => {
+		console.log('onDeleteCallback', ids);
 	};
 
 	const onSelect = (ids: number[]) => {
@@ -49,11 +49,11 @@ const CategoriesPage = () => {
 			<Section>
 				<DataTable
 					model={'Categories'}
-					data={[]}
+					data={Categories}
 					columnsLayout={columnsLayout}
 					onRowDetailCallback={onRowDetail}
-					onRowToggleCallback={onRowToggle}
-					onRowDeleteCallback={onRowDelete}
+					onToggleCallback={onToggle}
+					onDeleteCallback={onDelete}
 					onSelect={onSelect}
 					allowSelect={true}
 					allowDetail={true}

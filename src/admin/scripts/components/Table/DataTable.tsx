@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -8,52 +8,32 @@ import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Checkbox from '@material-ui/core/Checkbox';
-import styled from 'styled-components';
+import { Button } from '@material-ui/core';
+import { useTranslation } from 'react-i18next';
+import styled, { css } from 'styled-components';
 
+import config from '../../config';
 import { appProps } from '../../types/types';
 import { getComparator, stableSort, Order } from './utils';
 import TableHead from './TableHead';
-import { Button } from '@material-ui/core';
+import { useProfile, useSettings } from '../../hooks/App';
 
-const ItemLink = styled.span`
-	cursor: pointer;
+const columnBase = css`
+	display: flex;
+	flex-direction: column;
 `;
 
-interface DataProps {
-	id: number;
-	calories: number;
-	carbs: number;
-	fat: number;
-	name: string;
-	protein: number;
-}
+const ItemRowLink = styled.span`
+	${columnBase}
 
-function createData(
-	id: number,
-	name: string,
-	calories: number,
-	fat: number,
-	carbs: number,
-	protein: number,
-): DataProps {
-	return { id, name, calories, fat, carbs, protein };
-}
-
-const rows = [
-	createData(1, 'Cupcake', 305, 3.7, 67, 4.3),
-	createData(2, 'Donut', 452, 25.0, 51, 4.9),
-	createData(3, 'Eclair', 262, 16.0, 24, 6.0),
-	createData(4, 'Frozen yoghurt', 159, 6.0, 24, 4.0),
-	createData(5, 'Gingerbread', 356, 16.0, 49, 3.9),
-	createData(6, 'Honeycomb', 408, 3.2, 87, 6.5),
-	createData(7, 'Ice cream sandwich', 237, 9.0, 37, 4.3),
-	createData(8, 'Jelly Bean', 375, 0.0, 94, 0.0),
-	createData(9, 'KitKat', 518, 26.0, 65, 7.0),
-	createData(10, 'Lollipop', 392, 0.2, 98, 0.0),
-	createData(11, 'Marshmallow', 318, 0, 81, 2.0),
-	createData(12, 'Nougat', 360, 19.0, 9, 37.0),
-	createData(13, 'Oreo', 437, 18.0, 63, 4.0),
-];
+	cursor: pointer;
+`;
+const ItemRowText = styled.span`
+	${columnBase}
+`;
+const TableHeading = styled.div`
+	padding-bottom: 1rem;
+`;
 
 const useStyles = makeStyles((theme: Theme) =>
 	createStyles({
@@ -106,50 +86,59 @@ interface DataTableProps {
 		context?: boolean;
 		authorized?: boolean;
 		// TODO: new columns
-		calories?: boolean;
-		fat?: boolean;
-		carbs?: boolean;
-		protein?: boolean;
 	};
-	onRowDetailCallback: (id: number) => void;
-	onRowToggleCallback: (id: number) => void;
-	onRowDeleteCallback: (id: number) => void;
+	onRowDetailCallback?: (id: number) => void;
+	onToggleCallback?: (ids: number[]) => void;
+	onDeleteCallback?: (ids: number[]) => void;
 	onSelect: (ids: string[] | number[]) => void;
 	allowSelect?: boolean;
 	allowDetail?: boolean;
 	prefix?: string;
 	ariaLabel?: string;
 	//
-	authorId?: number;
 	languageContent?: boolean;
 }
 
 const DataTable = ({
-	// model,
-	data,
+	data = [],
 	columnsLayout,
 	onRowDetailCallback,
-	onRowToggleCallback,
-	onRowDeleteCallback,
+	onToggleCallback,
+	onDeleteCallback,
 	onSelect,
 	allowSelect = false,
 	allowDetail = false,
 	prefix = 'data-table',
 	ariaLabel = 'data table',
-	//
-	authorId,
-	languageContent = false,
+	model,
+	languageContent = false, // TODO ???
 }: DataTableProps) => {
+	const { t } = useTranslation(['common', 'component']);
+	const { Profile } = useProfile();
+	const { Settings } = useSettings();
 	const classes = useStyles();
-	const [order, setOrder] = React.useState<Order>('asc');
-	const [orderBy, setOrderBy] = React.useState<keyof DataProps>('id');
-	const [selected, setSelected] = React.useState<any[]>([]);
-	const [page, setPage] = React.useState(0);
-	const [rowsPerPage, setRowsPerPage] = React.useState(5);
+	const [order, setOrder] = useState<Order>('asc');
+	const [orderBy, setOrderBy] = useState<'id' | 'name'>('id');
+	const [selected, setSelected] = useState<any[]>([]);
+	const [page, setPage] = useState(0);
+	const [rowsPerPage, setRowsPerPage] = useState(5);
+	const [items, setItems] = useState<any[]>(data);
+	const [lang, setLang] = useState(config.GLOBAL.PROJECT.LANG_DEFAULT);
+
+	const authorId: number = Profile?.id; // TODO
+	const langList: string[] = Settings?.language_active; // TODO
+
+	useEffect(() => {
+		if (onSelect && allowSelect) onSelect(selected);
+	}, [selected]);
+
+	useEffect(() => {
+		setItems(data);
+	}, [data]);
 
 	const handleRequestSort = (
 		event: React.MouseEvent<unknown>,
-		property: keyof DataProps,
+		property: any, // TODO ?
 	) => {
 		const isAsc = orderBy === property && order === 'asc';
 
@@ -159,7 +148,7 @@ const DataTable = ({
 
 	const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
 		if (allowSelect && event.target.checked) {
-			const newSelecteds = rows.map((n) => n.id);
+			const newSelecteds = items.map((n) => n.id);
 			setSelected(newSelecteds);
 			return;
 		}
@@ -200,13 +189,13 @@ const DataTable = ({
 		setPage(0);
 	};
 
-	const isSelected = (id: any) => selected.indexOf(id) !== -1;
+	const onDetailHandler = (id) => {
+		if (allowDetail) {
+			onRowDetailCallback(id);
+		}
+	};
 
-	useEffect(() => {
-		if (onSelect && allowSelect) onSelect(selected);
-	}, [selected]);
-
-	const getColumns = () => {
+	const getColumns = useCallback(() => {
 		const columns = [];
 
 		if (columnsLayout.name)
@@ -230,8 +219,13 @@ const DataTable = ({
 				disablePadding: true,
 				label: 'Title',
 			});
-		if (columnsLayout.title_lang) {
-		}
+		if (columnsLayout.title_lang)
+			columns.push({
+				id: `lang[${lang}].title`,
+				numeric: false,
+				disablePadding: true,
+				label: 'Title',
+			});
 		if (columnsLayout.sender)
 			columns.push({
 				id: 'sender',
@@ -316,43 +310,22 @@ const DataTable = ({
 				disablePadding: true,
 				label: 'Authorized',
 			});
-		//
-		if (columnsLayout.calories)
-			columns.push({
-				id: 'calories',
-				numeric: true,
-				disablePadding: false,
-				label: 'Calories',
-			});
-		if (columnsLayout.fat)
-			columns.push({
-				id: 'fat',
-				numeric: true,
-				disablePadding: false,
-				label: 'Fat (g)',
-			});
-		if (columnsLayout.carbs)
-			columns.push({
-				id: 'carbs',
-				numeric: true,
-				disablePadding: false,
-				label: 'Carbs (g)',
-			});
-		if (columnsLayout.protein)
-			columns.push({
-				id: 'protein',
-				numeric: true,
-				disablePadding: false,
-				label: 'Protein (g)',
-			});
 
 		return columns;
+	}, []);
+
+	const isSelected = (id: any) => selected.indexOf(id) !== -1;
+
+	const onDetail = (id: number) => {
+		onRowDetailCallback(id);
 	};
 
-	const onDetailHandler = (id) => {
-		if (allowDetail) {
-			onRowDetailCallback(id);
-		}
+	const onToggle = (ids: number[]) => {
+		onToggleCallback(ids);
+	};
+
+	const onDelete = (ids: number[]) => {
+		onDeleteCallback(ids);
 	};
 
 	const renderTableRow = (row, index) => {
@@ -380,142 +353,173 @@ const DataTable = ({
 				)}
 				{columnsLayout.name && (
 					<TableCell component="th" id={labelId} scope="row">
-						<ItemLink onClick={() => onDetailHandler(row.id)}>
+						<ItemRowLink onClick={() => onDetailHandler(row.id)}>
 							{row.name}
-						</ItemLink>
+						</ItemRowLink>
 					</TableCell>
 				)}
-				{/* !!! */}
 				{columnsLayout.email && (
 					<TableCell component="th" id={labelId} scope="row">
-						<ItemLink onClick={() => onDetailHandler(row.id)}>
+						<ItemRowLink onClick={() => onDetailHandler(row.id)}>
 							{row.email}
-						</ItemLink>
+						</ItemRowLink>
 					</TableCell>
 				)}
 				{columnsLayout.title && (
 					<TableCell component="th" id={labelId} scope="row">
-						<ItemLink onClick={() => onDetailHandler(row.id)}>
+						<ItemRowLink onClick={() => onDetailHandler(row.id)}>
 							{row.title}
-						</ItemLink>
+						</ItemRowLink>
 					</TableCell>
 				)}
 				{columnsLayout.title_lang && (
 					<TableCell component="th" id={labelId} scope="row">
-						<ItemLink onClick={() => onDetailHandler(row.id)}>
-							{' '}
-							... lang title ...
-						</ItemLink>
+						<ItemRowLink onClick={() => onDetailHandler(row.id)}>
+							{row.lang[lang].title}
+							{row.name && <small>{row.name}</small>}
+						</ItemRowLink>
 					</TableCell>
 				)}
 				{columnsLayout.sender && (
 					<TableCell component="th" id={labelId} scope="row">
-						<ItemLink onClick={() => onDetailHandler(row.id)}>
+						<ItemRowLink onClick={() => onDetailHandler(row.id)}>
 							{row.sender}
-						</ItemLink>
+						</ItemRowLink>
 					</TableCell>
 				)}
 				{columnsLayout.file_name && (
 					<TableCell component="th" id={labelId} scope="row">
-						<ItemLink onClick={() => onDetailHandler(row.id)}>
+						<ItemRowLink onClick={() => onDetailHandler(row.id)}>
 							{row.file_name}
-						</ItemLink>
+						</ItemRowLink>
 					</TableCell>
 				)}
 				{columnsLayout.file_size && (
-					<TableCell align="right">{row.file_size}</TableCell>
+					<TableCell>
+						<ItemRowText>{row.file_size}</ItemRowText>
+					</TableCell>
 				)}
 				{columnsLayout.active && (
-					<TableCell align="right">{row.active}</TableCell>
+					<TableCell>
+						<ItemRowText>{row.active}</ItemRowText>
+					</TableCell>
 				)}
-				{columnsLayout.tags && <TableCell align="right">{row.tags}</TableCell>}
+				{columnsLayout.tags && (
+					<TableCell>
+						<ItemRowText>{row.tags}</ItemRowText>
+					</TableCell>
+				)}
 				{columnsLayout.category && (
-					<TableCell align="right">{row.category}</TableCell>
+					<TableCell>
+						<ItemRowText>{row.category}</ItemRowText>
+					</TableCell>
 				)}
 				{columnsLayout.user_group && (
-					<TableCell align="right">{row.user_group}</TableCell>
+					<TableCell>
+						<ItemRowText>{row.user_group}</ItemRowText>
+					</TableCell>
 				)}
 				{columnsLayout.member_group && (
-					<TableCell align="right">{row.member_group}</TableCell>
+					<TableCell>
+						<ItemRowText>{row.member_group}</ItemRowText>
+					</TableCell>
 				)}
 				{columnsLayout.t_value && (
-					<TableCell align="right">{row.t_value}</TableCell>
+					<TableCell>
+						<ItemRowText>{row.t_value}</ItemRowText>
+					</TableCell>
 				)}
 				{columnsLayout.r_value && (
-					<TableCell align="right">{row.r_value}</TableCell>
+					<TableCell>
+						<ItemRowText>{row.r_value}</ItemRowText>
+					</TableCell>
 				)}
 				{columnsLayout.context && (
-					<TableCell align="right">{row.context}</TableCell>
+					<TableCell>
+						<ItemRowText>{row.context}</ItemRowText>
+					</TableCell>
 				)}
 				{columnsLayout.authorized && (
-					<TableCell align="right">{row.authorized}</TableCell>
-				)}
-				{/* !!! */}
-				{columnsLayout.calories && (
-					<TableCell align="right">{row.calories}</TableCell>
-				)}
-				{columnsLayout.fat && <TableCell align="right">{row.fat}</TableCell>}
-				{columnsLayout.carbs && (
-					<TableCell align="right">{row.carbs}</TableCell>
-				)}
-				{columnsLayout.protein && (
-					<TableCell align="right">{row.protein}</TableCell>
+					<TableCell>
+						<ItemRowText>{row.authorized}</ItemRowText>
+					</TableCell>
 				)}
 				{allowDetail && (
 					<TableCell align="right">
-						<Button type="button" onClick={() => onRowDetailCallback(row.id)}>
-							Detail
+						<Button type="button" onClick={() => onDetail(row.id)}>
+							{t('btn.detail')}
 						</Button>
-						<Button type="button" onClick={() => onRowToggleCallback(row.id)}>
-							Toggle
-						</Button>
-						<Button type="button" onClick={() => onRowDeleteCallback(row.id)}>
-							Delete
+						{(row.active == 1 || row.active == 0) && (
+							<Button type="button" onClick={() => onToggle([row.id])}>
+								{row.active == 1 ? t('btn.disable') : t('btn.active')}
+							</Button>
+						)}
+						<Button type="button" onClick={() => onDelete([row.id])}>
+							{t('btn.delete')}
 						</Button>
 					</TableCell>
 				)}
 			</TableRow>
 		);
 	};
+
 	return (
-		<div className={classes.root}>
-			<Paper className={classes.paper}>
-				<TableContainer>
-					<Table
-						className={classes.table}
-						aria-labelledby={prefix}
-						aria-label={ariaLabel}
+		<>
+			<div className={classes.root}>
+				<TableHeading>
+					<Button
+						type="button"
+						disabled={selected.length == 0}
+						onClick={() => onToggle(selected)}
 					>
-						<TableHead
-							classes={classes}
-							numSelected={selected.length}
-							order={order}
-							orderBy={orderBy}
-							onSelectAllClick={handleSelectAllClick}
-							onRequestSort={handleRequestSort}
-							rowCount={rows.length}
-							headCells={getColumns()}
-							allowSelect={allowSelect}
-							allowDetail={allowDetail}
-						/>
-						<TableBody>
-							{stableSort(rows, getComparator(order, orderBy))
-								.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-								.map((row, index) => renderTableRow(row, index))}
-						</TableBody>
-					</Table>
-				</TableContainer>
-				<TablePagination
-					rowsPerPageOptions={[5, 10, 25]}
-					component="div"
-					count={rows.length}
-					rowsPerPage={rowsPerPage}
-					page={page}
-					onChangePage={handleChangePage}
-					onChangeRowsPerPage={handleChangeRowsPerPage}
-				/>
-			</Paper>
-		</div>
+						Toggle selected
+					</Button>
+					<Button
+						type="button"
+						disabled={selected.length == 0}
+						onClick={() => onDelete(selected)}
+					>
+						Delete selected
+					</Button>
+				</TableHeading>
+				<Paper className={classes.paper}>
+					<TableContainer>
+						<Table
+							className={classes.table}
+							aria-labelledby={prefix}
+							aria-label={ariaLabel}
+						>
+							<TableHead
+								classes={classes}
+								numSelected={selected.length}
+								order={order}
+								orderBy={orderBy}
+								onSelectAllClick={handleSelectAllClick}
+								onRequestSort={handleRequestSort}
+								rowCount={items.length}
+								headCells={getColumns()}
+								allowSelect={allowSelect}
+								allowDetail={allowDetail}
+							/>
+							<TableBody>
+								{stableSort(items, getComparator(order, orderBy))
+									.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+									.map((row, index) => renderTableRow(row, index))}
+							</TableBody>
+						</Table>
+					</TableContainer>
+					<TablePagination
+						rowsPerPageOptions={[5, 10, 25]}
+						component="div"
+						count={items.length}
+						rowsPerPage={rowsPerPage}
+						page={page}
+						onChangePage={handleChangePage}
+						onChangeRowsPerPage={handleChangeRowsPerPage}
+					/>
+				</Paper>
+			</div>
+		</>
 	);
 };
 
