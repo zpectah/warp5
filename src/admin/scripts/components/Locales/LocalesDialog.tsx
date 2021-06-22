@@ -19,7 +19,7 @@ interface LocalesDialogProps {
 }
 
 const LocalesDialog = ({ open, onToggle, onCancel }: LocalesDialogProps) => {
-	const { i18n, t } = useTranslation(['common', 'components']);
+	const { i18n, t } = useTranslation(['common', 'component']);
 	const [isOpen, setOpen] = useState<boolean>(open);
 	const [lang, setLang] = useState<string>(i18n.language);
 	const [langList, setLangList] = useState<string[]>(
@@ -50,7 +50,7 @@ const LocalesDialog = ({ open, onToggle, onCancel }: LocalesDialogProps) => {
 			fullWidth
 		>
 			<DialogTitle id="locales-dialog-title">
-				{t('components:LocalesDialog.title')}
+				{t('component:LocalesDialog.title')}
 			</DialogTitle>
 			<DialogContent dividers>
 				<List component="nav">

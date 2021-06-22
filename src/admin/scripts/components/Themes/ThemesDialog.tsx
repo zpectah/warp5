@@ -20,7 +20,7 @@ interface ThemesDialogProps {
 }
 
 const ThemesDialog = ({ open, onToggle, onCancel }: ThemesDialogProps) => {
-	const { t } = useTranslation(['common', 'types', 'components']);
+	const { t } = useTranslation(['common', 'types', 'component']);
 	const store = useSelector((store: any) => store);
 	const [isOpen, setOpen] = useState<boolean>(open);
 	const [theme, setTheme] = useState<string>(store.ui.theme);
@@ -49,7 +49,7 @@ const ThemesDialog = ({ open, onToggle, onCancel }: ThemesDialogProps) => {
 			fullWidth
 		>
 			<DialogTitle id="themes-dialog-title">
-				{t('components:ThemeDialog.title')}
+				{t('component:ThemeDialog.title')}
 			</DialogTitle>
 			<DialogContent dividers>
 				<List component="nav">
