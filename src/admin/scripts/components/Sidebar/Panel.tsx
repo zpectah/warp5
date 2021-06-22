@@ -1,28 +1,37 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import media from '../../styles/responsive';
 import { Scrollable } from '../ui';
 import Navbar from './Navbar';
 
 const Wrapper = styled.div<{ open: boolean }>`
-	width: ${(props) => props.theme.sidebar.panel.width};
-	height: 100%;
+	width: 100vw;
+	height: calc(100vh - ${(props) => props.theme.sidebar.bar.width});
 	position: absolute;
-	top: 0;
-	left: ${(props) =>
-		props.open
-			? props.theme.sidebar.bar.width
-			: `calc((${props.theme.sidebar.panel.width} + ${props.theme.sidebar.bar.width}) * -1)`};
+	top: ${(props) => props.theme.sidebar.bar.width};
+	left: ${(props) => (props.open ? 0 : `-100vw`)};
 
 	color: ${(props) => props.theme.sidebar.color};
 	background-color: ${(props) => props.theme.sidebar.bg};
 	z-index: ${(props) => props.theme.sidebar.zIndex};
 	transition: left ${(props) => props.theme.sidebar.transitionDuration}
 		ease-in-out 0s;
+
+	${media.min.sm} {
+		width: ${(props) => props.theme.sidebar.panel.width};
+		height: 100%;
+		top: 0;
+		left: ${(props) =>
+			props.open
+				? props.theme.sidebar.bar.width
+				: `calc((${props.theme.sidebar.panel.width} + ${props.theme.sidebar.bar.width}) * -1)`};
+	}
 `;
 const Inner = styled.div`
 	width: 100%;
 	height: 100%;
+	padding: 0 1rem;
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;

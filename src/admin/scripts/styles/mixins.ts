@@ -1,5 +1,7 @@
 import { css } from 'styled-components';
 
+// import media from './responsive';
+
 export const layoutBase = css`
 	width: 100%;
 	height: auto;
@@ -10,7 +12,6 @@ export const layoutBase = css`
 
 export const layoutContainerBase = css`
 	width: 100%;
-	height: 100%;
 	position: relative;
 	display: flex;
 	flex-direction: column;

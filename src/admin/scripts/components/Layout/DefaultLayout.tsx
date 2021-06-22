@@ -3,6 +3,7 @@ import Helmet from 'react-helmet';
 import Container from '@material-ui/core/Container';
 import styled from 'styled-components';
 
+import media from '../../styles/responsive';
 import {
 	layoutBase,
 	layoutContainerBase,
@@ -21,19 +22,30 @@ const Wrapper = styled.div`
 const WrapperContainer = styled.div<{ open: boolean }>`
 	${layoutContainerBase}
 
+	width: 100%;
+	margin-top: ${(props) => props.theme.sidebar.bar.width};
 	top: 0;
-	width: ${(props) =>
-		props.open
-			? `calc(100% - (${props.theme.sidebar.bar.width} + ${props.theme.sidebar.panel.width}))`
-			: `calc(100% - ${props.theme.sidebar.bar.width})`};
-	left: ${(props) =>
-		props.open
-			? `calc(${props.theme.sidebar.panel.width} + ${props.theme.sidebar.bar.width})`
-			: props.theme.sidebar.bar.width};
-
+	left: 0;
 	transition: width ${(props) => props.theme.sidebar.transitionDuration}
 			ease-in-out 0s,
 		left ${(props) => props.theme.sidebar.transitionDuration} ease-in-out 0s;
+
+	${media.min.sm} {
+		width: ${(props) => `calc(100% - ${props.theme.sidebar.bar.width})`};
+		margin-top: 0;
+		left: ${(props) => props.theme.sidebar.bar.width};
+	}
+	${media.min.md} {
+		width: ${(props) =>
+			props.open
+				? `calc(100% - (${props.theme.sidebar.bar.width} + ${props.theme.sidebar.panel.width}))`
+				: `calc(100% - ${props.theme.sidebar.bar.width})`};
+		margin-top: 0;
+		left: ${(props) =>
+			props.open
+				? `calc(${props.theme.sidebar.panel.width} + ${props.theme.sidebar.bar.width})`
+				: props.theme.sidebar.bar.width};
+	}
 `;
 const Content = styled.main`
 	${layoutContentBase}
