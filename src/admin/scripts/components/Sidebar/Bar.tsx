@@ -5,6 +5,7 @@ import media from '../../styles/responsive';
 import SidebarToggle from './SidebarToggle';
 import ProfileMenu from '../Profile/ProfileMenu';
 import CreateMenu from '../Create/CreateMenu';
+import LogoutTrigger from '../Profile/LogoutTrigger';
 
 const Wrapper = styled.div`
 	width: 100vw;
@@ -56,6 +57,7 @@ const Bar: React.FC<BarProps> = ({ open }) => {
 				</Block>
 				<Block>
 					<ProfileMenu />
+					<LogoutTrigger />
 				</Block>
 			</Inner>
 		</Wrapper>
