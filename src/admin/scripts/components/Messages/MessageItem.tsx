@@ -3,7 +3,7 @@ import Button from '@material-ui/core/Button';
 import styled from 'styled-components';
 
 import { messageItemProps } from '../../types/types';
-import CloseButton from '../ui/Button';
+import { CloseButton } from '../ui';
 import { useTranslation } from 'react-i18next';
 
 const Wrapper = styled.article`
