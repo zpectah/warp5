@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { ROUTES } from '../../constants';
 import Layout from '../../components/Layout';
 import { Section, CreateButton } from '../../components/ui';
+import DataTable from '../../components/Table';
 
 const CategoriesPage = () => {
 	const { t } = useTranslation(['common', 'page']);
@@ -22,8 +23,7 @@ const CategoriesPage = () => {
 			}
 		>
 			<Section>
-				<div>...Categories...</div>
-				<div>table</div>
+				<DataTable rows={[]} columnsLayout={{}} model={'Categories'} />
 				<div>detail</div>
 				<div>confirm</div>
 			</Section>

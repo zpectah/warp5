@@ -43,8 +43,9 @@ export interface appProps {
 		| 'Distributors'
 		| 'Stores'
 		| 'Payments'
-		| 'Deliveries';
-	// TODO: new model
+		| 'Deliveries'
+		| 'Orders'
+		| 'Baskets';
 }
 
 export interface routeProps {
