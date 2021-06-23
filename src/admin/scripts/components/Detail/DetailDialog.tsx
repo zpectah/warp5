@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
 
 import { Dialog } from '../ui';
 import { appProps } from '../../types/types';
@@ -14,12 +13,13 @@ interface DetailDialogProps {
 	open: boolean;
 	onToggle: (open: boolean) => void;
 	detailData: any; // TODO
-	basePath: string;
 	onDelete?: (ids: number[]) => void;
 	onSubmit?: (data: any) => void;
 	onCancel?: () => void;
 	size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | false;
 	allowDelete?: boolean;
+	processing?: boolean;
+	loading?: boolean;
 }
 
 const DetailDialog = ({
@@ -27,19 +27,15 @@ const DetailDialog = ({
 	open,
 	onToggle,
 	detailData,
-	basePath,
 	onDelete,
 	onSubmit,
 	onCancel,
 	size = 'md',
 	allowDelete,
+	processing,
+	loading,
 }: DetailDialogProps) => {
-	const history = useHistory();
 	const [isOpen, setOpen] = useState(open);
-
-	const afterCloseHandler = () => {
-		history.push(basePath);
-	};
 
 	useEffect(() => setOpen(open), [open]);
 	useEffect(() => onToggle(isOpen), [isOpen]);
@@ -56,7 +52,7 @@ const DetailDialog = ({
 				open={isOpen}
 				onToggle={(open) => setOpen(open)}
 				size={size}
-				onClose={afterCloseHandler}
+				onClose={onCancel}
 			>
 				<ComponentName
 					detailData={detailData}
@@ -64,6 +60,8 @@ const DetailDialog = ({
 					onSubmit={onSubmit}
 					onDelete={onDelete}
 					allowDelete={allowDelete}
+					processing={processing}
+					loading={loading}
 				/>
 			</Dialog.Blank>
 		</>

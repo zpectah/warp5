@@ -12,7 +12,8 @@
 	},
 	"error": {
 		"fileNotAccepted": "This file type is not accepted!",
-		"fileNotSupported": "This file type is not supported!"
+		"fileNotSupported": "This file type is not supported!",
+		"itemNotFound": "This item was not found"
 	},
 	"userLogin": {
 		"user_not_found": "User was not found",

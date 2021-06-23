@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Button from '@material-ui/core/Button';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -6,15 +6,17 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import { useTranslation } from 'react-i18next';
 import { useForm } from 'react-hook-form';
 
-import { Form } from '../../ui';
+import { Form, Section } from '../../ui';
 import { CategoriesItemProps } from '../../../types/App';
 
 interface CategoriesFormProps {
 	detailData: CategoriesItemProps;
-	onDelete?: (ids: any[]) => void;
-	onSubmit?: (data: any) => void;
-	onCancel?: () => void;
-	allowDelete?: boolean;
+	onDelete: (ids: any[]) => void;
+	onSubmit: (data: any) => void;
+	onCancel: () => void;
+	allowDelete: boolean;
+	processing?: boolean;
+	loading?: boolean;
 }
 
 const CategoriesForm = ({
@@ -22,6 +24,9 @@ const CategoriesForm = ({
 	onDelete,
 	onSubmit,
 	onCancel,
+	allowDelete,
+	processing,
+	loading,
 }: CategoriesFormProps) => {
 	const { t } = useTranslation(['common', 'model']);
 	const { control, handleSubmit, formState, register } = useForm({
@@ -32,6 +37,7 @@ const CategoriesForm = ({
 
 	return (
 		<>
+			{processing && <>...processing preloader...</>}
 			{detailData && (
 				<>
 					<DialogTitle>
@@ -41,21 +47,25 @@ const CategoriesForm = ({
 					</DialogTitle>
 					<DialogContent dividers>
 						<Form.Base name="CategoriesForm">
-							...CategoriesForm elements...
-							<br />
-							{JSON.stringify(detailData)} ...
+							<div>
+								<input
+									type="hidden"
+									name="id"
+									ref={register({ required: true })}
+									defaultValue={detailData.id}
+								/>
+							</div>
+							<Section>... Categories Form elements ...</Section>
+							<Section>... {JSON.stringify(detailData)} ...</Section>
 						</Form.Base>
 					</DialogContent>
 					<DialogActions>
 						<Button onClick={onCancel} color="primary">
-							Cancel
+							{t('btn.cancel')}
 						</Button>
-						{detailData?.id !== 'new' && (
-							<Button
-								onClick={() => onDelete([detailData?.id])}
-								color="primary"
-							>
-								Delete
+						{detailData.id !== 'new' && allowDelete && (
+							<Button onClick={() => onDelete([detailData.id])} color="primary">
+								{t('btn.delete')}
 							</Button>
 						)}
 						<Button
@@ -63,7 +73,7 @@ const CategoriesForm = ({
 							color="primary"
 							autoFocus
 						>
-							Submit
+							{detailData.id == 'new' ? t('btn.create') : t('btn.update')}
 						</Button>
 					</DialogActions>
 				</>
@@ -71,5 +81,4 @@ const CategoriesForm = ({
 		</>
 	);
 };
-
 export default CategoriesForm;
