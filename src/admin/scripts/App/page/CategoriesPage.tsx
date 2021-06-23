@@ -26,43 +26,12 @@ const CategoriesPage = () => {
 		active: true,
 	};
 
-	const onRowDetail = (id: number) => {
-		history.push(
-			`${ROUTES.app.categories.path}${ROUTE_PATH_SUFFIX_DETAIL}/${id}`,
-		);
-	};
-
-	const onToggle = (ids: number[]) => {
-		console.log('onToggleCallback', ids);
-	};
-
-	const onDelete = (ids: number[]) => {
-		console.log('onDeleteCallback', ids);
-		setConfirmData(ids);
-		setConfirmOpen(true);
-	};
-
-	const onDeleteConfirm = (ids: number[]) => {
-		let master = [...ids];
-		setConfirmData([]);
-		setConfirmOpen(true);
-		setSelectedRows([]);
-
-		console.log('Delete this items ', master);
-	};
-
-	const onSelect = (ids: number[]) => {
-		console.log('onSelect', ids);
-		setSelectedRows(ids);
-	};
-
 	const getDetailData = (id, items) => {
 		let data = null;
 
 		if (id == 'new') {
 			data = {
 				id: 'new',
-				// TODO: blank model ...
 			};
 		} else if (items) {
 			items.map((item) => {
@@ -75,12 +44,43 @@ const CategoriesPage = () => {
 		return data;
 	};
 
+	const onRowDetail = (id: number) => {
+		history.push(
+			`${ROUTES.app.categories.path}${ROUTE_PATH_SUFFIX_DETAIL}/${id}`,
+		);
+	};
+
+	const onDelete = (ids: number[]) => {
+		setConfirmOpen(true);
+		setConfirmData(ids);
+	};
+
+	const onSelect = (ids: number[]) => {
+		setSelectedRows(ids);
+	};
+
 	const onDetailClose = () => {
 		setDetailOpen(false);
 		setDetailData(null);
 	};
 
+	const onToggle = (ids: number[]) => {
+		// TODO: toggle handler
+		console.log('onToggleCallback', ids);
+	};
+
+	const onDeleteConfirm = (ids: number[]) => {
+		let master = [...ids];
+		setConfirmOpen(true);
+		setConfirmData([]);
+		setSelectedRows([]);
+
+		// TODO: delete handler
+		console.log('Delete this items ', master);
+	};
+
 	const onDataSubmit = (data: any) => {
+		// TODO: submit handler
 		console.log('On submit data', data);
 	};
 

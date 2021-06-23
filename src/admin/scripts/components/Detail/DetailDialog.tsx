@@ -44,6 +44,12 @@ const DetailDialog = ({
 	useEffect(() => setOpen(open), [open]);
 	useEffect(() => onToggle(isOpen), [isOpen]);
 
+	const component = {
+		Categories: CategoriesForm,
+	};
+
+	const ComponentName = component[model];
+
 	return (
 		<>
 			<Dialog.Blank
@@ -52,23 +58,13 @@ const DetailDialog = ({
 				size={size}
 				onClose={afterCloseHandler}
 			>
-				<>
-					{
-						{
-							Categories: (
-								<>
-									<CategoriesForm
-										detailData={detailData}
-										onCancel={onCancel}
-										onSubmit={onSubmit}
-										onDelete={onDelete}
-										allowDelete={allowDelete}
-									/>
-								</>
-							),
-						}[model]
-					}
-				</>
+				<ComponentName
+					detailData={detailData}
+					onCancel={onCancel}
+					onSubmit={onSubmit}
+					onDelete={onDelete}
+					allowDelete={allowDelete}
+				/>
 			</Dialog.Blank>
 		</>
 	);
