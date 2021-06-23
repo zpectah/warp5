@@ -12,7 +12,7 @@ interface DetailDialogProps {
 		| appProps['modelMarket'];
 	open: boolean;
 	onToggle: (open: boolean) => void;
-	detailData: any; // TODO
+	detailData: any;
 	onDelete?: (ids: number[]) => void;
 	onSubmit?: (data: any) => void;
 	onCancel?: () => void;
@@ -41,7 +41,24 @@ const DetailDialog = ({
 	useEffect(() => onToggle(isOpen), [isOpen]);
 
 	const component = {
+		Tags: CategoriesForm, // TODO
+		Users: CategoriesForm, // TODO
+		Posts: CategoriesForm, // TODO
+		Translations: CategoriesForm, // TODO
 		Categories: CategoriesForm,
+		Pages: CategoriesForm, // TODO
+		Uploads: CategoriesForm, // TODO
+		Menu: CategoriesForm, // TODO
+		Messages: CategoriesForm, // TODO
+		Requests: CategoriesForm, // TODO
+		Members: CategoriesForm, // TODO
+		Products: CategoriesForm, // TODO
+		Deliveries: CategoriesForm, // TODO
+		Distributors: CategoriesForm, // TODO
+		Payments: CategoriesForm, // TODO
+		Producers: CategoriesForm, // TODO
+		Stores: CategoriesForm, // TODO
+		ProductsOptions: CategoriesForm, // TODO
 	};
 
 	const ComponentName = component[model];
@@ -54,15 +71,20 @@ const DetailDialog = ({
 				size={size}
 				onClose={onCancel}
 			>
-				<ComponentName
-					detailData={detailData}
-					onCancel={onCancel}
-					onSubmit={onSubmit}
-					onDelete={onDelete}
-					allowDelete={allowDelete}
-					processing={processing}
-					loading={loading}
-				/>
+				{detailData ? (
+					<ComponentName
+						detailData={detailData}
+						onCancel={onCancel}
+						onSubmit={onSubmit}
+						onDelete={onDelete}
+						allowDelete={allowDelete}
+						processing={processing}
+						loading={loading}
+					/>
+				) : (
+					<>...preloader...</>
+				)}
+				{processing && <>...preloader...</>}
 			</Dialog.Blank>
 		</>
 	);

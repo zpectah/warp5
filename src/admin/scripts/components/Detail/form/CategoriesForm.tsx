@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import Button from '@material-ui/core/Button';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -37,47 +37,40 @@ const CategoriesForm = ({
 
 	return (
 		<>
-			{processing && <>...processing preloader...</>}
-			{detailData && (
-				<>
-					<DialogTitle>
-						{detailData.id == 'new'
-							? t('btn_new.Categories')
-							: detailData.lang['en'].title}
-					</DialogTitle>
-					<DialogContent dividers>
-						<Form.Base name="CategoriesForm">
-							<div>
-								<input
-									type="hidden"
-									name="id"
-									ref={register({ required: true })}
-									defaultValue={detailData.id}
-								/>
-							</div>
-							<Section>... Categories Form elements ...</Section>
-							<Section>... {JSON.stringify(detailData)} ...</Section>
-						</Form.Base>
-					</DialogContent>
-					<DialogActions>
-						<Button onClick={onCancel} color="primary">
-							{t('btn.cancel')}
-						</Button>
-						{detailData.id !== 'new' && allowDelete && (
-							<Button onClick={() => onDelete([detailData.id])} color="primary">
-								{t('btn.delete')}
-							</Button>
-						)}
-						<Button
-							onClick={handleSubmit(onSubmitHandler)}
-							color="primary"
-							autoFocus
-						>
-							{detailData.id == 'new' ? t('btn.create') : t('btn.update')}
-						</Button>
-					</DialogActions>
-				</>
-			)}
+			<DialogTitle>
+				{detailData.id == 'new'
+					? t('btn_new.Categories')
+					: detailData.lang['en'].title}
+			</DialogTitle>
+			<DialogContent dividers>
+				<Form.Base name="CategoriesForm">
+					<div>
+						<input
+							type="hidden"
+							name="id"
+							ref={register({ required: true })}
+							defaultValue={detailData.id}
+						/>
+					</div>
+					<Section>... Categories Form elements ...</Section>
+					<Section>... {JSON.stringify(detailData)} ...</Section>
+				</Form.Base>
+			</DialogContent>
+			<DialogActions>
+				<Button onClick={onCancel}>{t('btn.cancel')}</Button>
+				{detailData.id !== 'new' && allowDelete && (
+					<Button onClick={() => onDelete([detailData.id])} color="secondary">
+						{t('btn.delete')}
+					</Button>
+				)}
+				<Button
+					onClick={handleSubmit(onSubmitHandler)}
+					color="primary"
+					autoFocus
+				>
+					{detailData.id == 'new' ? t('btn.create') : t('btn.update')}
+				</Button>
+			</DialogActions>
 		</>
 	);
 };

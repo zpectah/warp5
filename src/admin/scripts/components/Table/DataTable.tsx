@@ -8,11 +8,19 @@ import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Checkbox from '@material-ui/core/Checkbox';
+import ButtonGroup from '@material-ui/core/ButtonGroup';
 import { Button } from '@material-ui/core';
+import IconButton from '@material-ui/core/IconButton';
+import DeleteIcon from '@material-ui/icons/Delete';
+import EditIcon from '@material-ui/icons/Edit';
+import CheckIcon from '@material-ui/icons/Check';
+import NotInterestedIcon from '@material-ui/icons/NotInterested';
+import SettingsIcon from '@material-ui/icons/Settings';
 import { useTranslation } from 'react-i18next';
 import styled, { css } from 'styled-components';
 
 import config from '../../config';
+import { DATA_TABLE_ROWS_BY_PAGE } from '../../constants';
 import { appProps, routeProps } from '../../types/types';
 import { getComparator, stableSort, Order } from './utils';
 import TableHead from './TableHead';
@@ -33,6 +41,14 @@ const ItemRowText = styled.span`
 `;
 const TableHeading = styled.div`
 	padding-bottom: 1rem;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+`;
+const TableHeadingBlock = styled.div``;
+const TableOptionsContainer = styled.div`
+	width: 100%;
+	padding: 1rem;
 `;
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -126,6 +142,7 @@ const DataTable = ({
 	const [rowsPerPage, setRowsPerPage] = useState(5);
 	const [items, setItems] = useState<any[]>(data);
 	const [lang, setLang] = useState(config.GLOBAL.PROJECT.LANG_DEFAULT);
+	const [optionsOpen, setOptionsOpen] = useState<boolean>(false); // TODO
 
 	const authorId: number = Profile?.id; // TODO
 	const langList: string[] = Settings?.language_active; // TODO
@@ -450,17 +467,31 @@ const DataTable = ({
 				)}
 				{allowDetail && (
 					<TableCell align="right">
-						<Button type="button" onClick={() => onDetail(row.id)}>
-							{t('btn.detail')}
-						</Button>
 						{(row.active == 1 || row.active == 0) && (
-							<Button type="button" onClick={() => onToggle([row.id])}>
-								{row.active == 1 ? t('btn.disable') : t('btn.active')}
-							</Button>
+							<IconButton
+								onClick={() => onToggle([row.id])}
+								title={row.active == 1 ? t('btn.disable') : t('btn.active')}
+							>
+								{row.active == 1 ? (
+									<NotInterestedIcon fontSize="small" />
+								) : (
+									<CheckIcon fontSize="small" />
+								)}
+							</IconButton>
 						)}
-						<Button type="button" onClick={() => onDelete([row.id])}>
-							{t('btn.delete')}
-						</Button>
+						<IconButton
+							onClick={() => onDelete([row.id])}
+							title={t('btn.delete')}
+						>
+							<DeleteIcon fontSize="small" />
+						</IconButton>
+						<IconButton
+							onClick={() => onDetail(row.id)}
+							title={t('btn.detail')}
+							color="primary"
+						>
+							<EditIcon fontSize="small" />
+						</IconButton>
 					</TableCell>
 				)}
 			</TableRow>
@@ -471,21 +502,37 @@ const DataTable = ({
 		<>
 			<div className={classes.root}>
 				<TableHeading>
-					<Button
-						type="button"
-						disabled={selected.length == 0}
-						onClick={() => onToggle(selected)}
-					>
-						Toggle selected ({selected.length})
-					</Button>
-					<Button
-						type="button"
-						disabled={selected.length == 0}
-						onClick={() => onDelete(selected)}
-					>
-						Delete selected ({selected.length})
-					</Button>
+					<TableHeadingBlock>
+						<ButtonGroup>
+							<Button
+								disabled={selected.length == 0}
+								onClick={() => onToggle(selected)}
+								startIcon={<NotInterestedIcon />}
+								title={t('btn.toggle')}
+							>
+								{selected.length}
+							</Button>
+							<Button
+								disabled={selected.length == 0}
+								onClick={() => onDelete(selected)}
+								startIcon={<DeleteIcon />}
+								title={t('btn.delete')}
+							>
+								{selected.length}
+							</Button>
+						</ButtonGroup>
+					</TableHeadingBlock>
+					<TableHeadingBlock>
+						<IconButton onClick={() => setOptionsOpen(!optionsOpen)}>
+							<SettingsIcon />
+						</IconButton>
+					</TableHeadingBlock>
 				</TableHeading>
+				{optionsOpen && (
+					<Paper className={classes.paper}>
+						<TableOptionsContainer>Table options</TableOptionsContainer>
+					</Paper>
+				)}
 				<Paper className={classes.paper}>
 					<TableContainer>
 						<Table
@@ -513,7 +560,7 @@ const DataTable = ({
 						</Table>
 					</TableContainer>
 					<TablePagination
-						rowsPerPageOptions={[5, 10, 25]}
+						rowsPerPageOptions={DATA_TABLE_ROWS_BY_PAGE}
 						component="div"
 						count={items.length}
 						rowsPerPage={rowsPerPage}

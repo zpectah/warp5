@@ -10,17 +10,16 @@ export const BREAKPOINTS = {
 };
 export const EMAIL_REGEX =
 	/^(?:(?!.*?[.]{2})[a-zA-Z0-9](?:[a-zA-Z0-9.+!%-]{1,64}|)|\"[a-zA-Z0-9.+!% -]{1,64}\")@[a-zA-Z0-9][a-zA-Z0-9.-]+(.[a-z]{2,}|.[0-9]{1,})$/;
-export const SUBMIT_TIMEOUT = 750;
-export const RELOAD_HOOK_TIMEOUT = 125;
-export const MESSAGE_SUCCESS_DURATION = 2.5;
-export const MESSAGE_ERROR_DURATION = 5;
-export const TABLE_ITEMS_PER_PAGE = 30;
-export const CMS_MAPBOX_TOKEN =
-	'pk.eyJ1IjoienBlY3RlciIsImEiOiJja3BhYm5qMDIwc2plMnVuMTUzb3cxdWl6In0.BmfujOqcuQklZDV3HB-JCA'; // TODO: This is private key !!!
-export const MAPBOX_DEFAULTS = {
-	longitude: 14.501273600376752,
-	latitude: 50.08322927731517,
-	zoom: 10,
+export const MESSAGE_SUCCESS_DURATION = 2500;
+export const MESSAGE_ERROR_DURATION = 3500;
+export const MAPBOX = {
+	token:
+		'pk.eyJ1IjoienBlY3RlciIsImEiOiJja3BhYm5qMDIwc2plMnVuMTUzb3cxdWl6In0.BmfujOqcuQklZDV3HB-JCA', // TODO: This is private key !!!
+	defaultLocation: {
+		longitude: 14.501273600376752,
+		latitude: 50.08322927731517,
+		zoom: 10,
+	},
 };
 export const USER_LEVEL = {
 	demo: {
@@ -79,7 +78,7 @@ export const IMAGE_CROP_OPTIONS = [
 		value: 9 / 16,
 	},
 ];
-
+export const DATA_TABLE_ROWS_BY_PAGE = [5, 10, 25, 50, 100];
 export const ROUTES = {
 	app: {
 		'error-404': {
@@ -244,7 +243,6 @@ export const ROUTES = {
 		},
 	},
 };
-
 export const NAV_ITEMS = {
 	app: [
 		{

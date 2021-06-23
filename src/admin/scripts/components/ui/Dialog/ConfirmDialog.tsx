@@ -5,8 +5,19 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import Chip from '@material-ui/core/Chip';
+import { useTranslation } from 'react-i18next';
+import styled from 'styled-components';
 
 import { string } from '../../../../../libs/utils';
+
+const ItemsWrapper = styled.div`
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-wrap: wrap;
+`;
 
 interface DialogProps {
 	open: boolean;
@@ -28,6 +39,7 @@ const UiDialog: React.FC<DialogProps> = ({
 	onCancel,
 	items,
 }) => {
+	const { t } = useTranslation(['common']);
 	const [isOpen, setOpen] = useState(open);
 
 	const closeHandler = () => {
@@ -60,15 +72,19 @@ const UiDialog: React.FC<DialogProps> = ({
 			<DialogContent>
 				<DialogContentText id={`${id}_description`}>
 					{children}
-					{items && <>...{JSON.stringify(items)}...</>}
 				</DialogContentText>
+				{items && (
+					<ItemsWrapper>
+						{items.map((item) => (
+							<Chip key={item} label={`# ${item}`} color="primary" />
+						))}
+					</ItemsWrapper>
+				)}
 			</DialogContent>
 			<DialogActions>
-				<Button onClick={cancelHandler} color="primary">
-					Cancel
-				</Button>
-				<Button onClick={confirmHandler} color="primary" autoFocus>
-					Confirm
+				<Button onClick={cancelHandler}>{t('btn.cancel')}</Button>
+				<Button onClick={confirmHandler} color="primary">
+					{t('btn.confirm')}
 				</Button>
 			</DialogActions>
 		</Dialog>

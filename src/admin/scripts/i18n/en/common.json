@@ -44,6 +44,7 @@
 		"Stores": "New store"
 	},
 	"title": {
-		"deleteConfirm": "Are you sure want to delete?"
+		"deleteConfirm": "Are you sure want to delete this item?",
+		"deleteConfirm_plural": "Are you sure want to delete this items?"
 	}
 }
