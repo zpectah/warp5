@@ -19,6 +19,7 @@ interface DetailDialogProps {
 	onSubmit?: (data: any) => void;
 	onCancel?: () => void;
 	size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | false;
+	allowDelete?: boolean;
 }
 
 const DetailDialog = ({
@@ -31,6 +32,7 @@ const DetailDialog = ({
 	onSubmit,
 	onCancel,
 	size = 'md',
+	allowDelete,
 }: DetailDialogProps) => {
 	const history = useHistory();
 	const [isOpen, setOpen] = useState(open);
@@ -60,6 +62,7 @@ const DetailDialog = ({
 										onCancel={onCancel}
 										onSubmit={onSubmit}
 										onDelete={onDelete}
+										allowDelete={allowDelete}
 									/>
 								</>
 							),

@@ -13,8 +13,9 @@ interface DialogProps {
 	onToggle: (open: boolean) => void;
 	title?: string;
 	id?: string;
-	onConfirm?: Function;
+	onConfirm?: (ids?: number[]) => void;
 	onCancel?: Function;
+	items?: any[];
 }
 
 const UiDialog: React.FC<DialogProps> = ({
@@ -25,6 +26,7 @@ const UiDialog: React.FC<DialogProps> = ({
 	id = string.getToken(3, ''),
 	onConfirm,
 	onCancel,
+	items,
 }) => {
 	const [isOpen, setOpen] = useState(open);
 
@@ -34,7 +36,7 @@ const UiDialog: React.FC<DialogProps> = ({
 
 	const confirmHandler = () => {
 		setOpen(false);
-		if (onConfirm) onConfirm();
+		if (onConfirm) onConfirm(items);
 	};
 
 	const cancelHandler = () => {
@@ -58,6 +60,7 @@ const UiDialog: React.FC<DialogProps> = ({
 			<DialogContent>
 				<DialogContentText id={`${id}_description`}>
 					{children}
+					{items && <>...{JSON.stringify(items)}...</>}
 				</DialogContentText>
 			</DialogContent>
 			<DialogActions>

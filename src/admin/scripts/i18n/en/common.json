@@ -19,7 +19,8 @@
 		"saveChanges": "Save changes",
 		"updateChanges": "Update changes",
 		"clear": "Clear",
-		"install": "Install"
+		"install": "Install",
+		"new": "New"
 	},
 	"btn_new": {
 		"Posts": "New post",

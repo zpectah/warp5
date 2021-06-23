@@ -66,6 +66,7 @@ interface DataTableProps {
 		| appProps['modelApp']
 		| appProps['modelMembers']
 		| appProps['modelMarket'];
+	selectedRows: any[];
 	data: any[];
 	columnsLayout?: {
 		name?: boolean;
@@ -101,6 +102,7 @@ interface DataTableProps {
 
 const DataTable = ({
 	data = [],
+	selectedRows,
 	columnsLayout,
 	onRowDetailCallback,
 	onToggleCallback,
@@ -119,7 +121,7 @@ const DataTable = ({
 	const classes = useStyles();
 	const [order, setOrder] = useState<Order>('asc');
 	const [orderBy, setOrderBy] = useState<'id' | 'name'>('id');
-	const [selected, setSelected] = useState<any[]>([]);
+	const [selected, setSelected] = useState<any[]>(selectedRows);
 	const [page, setPage] = useState(0);
 	const [rowsPerPage, setRowsPerPage] = useState(5);
 	const [items, setItems] = useState<any[]>(data);
@@ -135,6 +137,8 @@ const DataTable = ({
 	useEffect(() => {
 		setItems(data);
 	}, [data]);
+
+	useEffect(() => setSelected(selectedRows), [selectedRows]);
 
 	const handleRequestSort = (
 		event: React.MouseEvent<unknown>,

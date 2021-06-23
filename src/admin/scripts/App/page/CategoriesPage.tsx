@@ -4,7 +4,7 @@ import { useParams, useHistory } from 'react-router-dom';
 
 import { ROUTE_PATH_SUFFIX_DETAIL, ROUTES } from '../../constants';
 import Layout from '../../components/Layout';
-import { Section, CreateButton } from '../../components/ui';
+import { Section, CreateButton, Dialog } from '../../components/ui';
 import DataTable from '../../components/Table';
 import DetailDialog from '../../components/Detail';
 import { useCategories } from '../../hooks/App';
@@ -16,6 +16,9 @@ const CategoriesPage = () => {
 	const { Categories } = useCategories();
 	const [detailOpen, setDetailOpen] = useState<boolean>(false);
 	const [detailData, setDetailData] = useState<any>(null);
+	const [confirmOpen, setConfirmOpen] = useState<boolean>(false);
+	const [confirmData, setConfirmData] = useState([]);
+	const [selectedRows, setSelectedRows] = useState<any[]>([]);
 
 	const columnsLayout = {
 		title_lang: true,
@@ -35,10 +38,22 @@ const CategoriesPage = () => {
 
 	const onDelete = (ids: number[]) => {
 		console.log('onDeleteCallback', ids);
+		setConfirmData(ids);
+		setConfirmOpen(true);
+	};
+
+	const onDeleteConfirm = (ids: number[]) => {
+		let master = [...ids];
+		setConfirmData([]);
+		setConfirmOpen(true);
+		setSelectedRows([]);
+
+		console.log('Delete this items ', master);
 	};
 
 	const onSelect = (ids: number[]) => {
 		console.log('onSelect', ids);
+		setSelectedRows(ids);
 	};
 
 	const getDetailData = (id, items) => {
@@ -94,6 +109,7 @@ const CategoriesPage = () => {
 					languageContent
 					model={'Categories'}
 					data={Categories}
+					selectedRows={selectedRows}
 					columnsLayout={columnsLayout}
 					onRowDetailCallback={onRowDetail}
 					onToggleCallback={onToggle}
@@ -111,8 +127,18 @@ const CategoriesPage = () => {
 					onDelete={onDelete}
 					onSubmit={onDataSubmit}
 					onCancel={onDetailClose}
+					allowDelete={true}
 				/>
-				<div>confirm</div>
+				<Dialog.Confirm
+					open={confirmOpen}
+					onToggle={(open) => setConfirmOpen(open)}
+					onConfirm={onDeleteConfirm}
+					onCancel={() => {
+						setConfirmOpen(false);
+					}}
+					title="Are you sure want to delete?"
+					items={confirmData}
+				/>
 			</Section>
 		</Layout.Default>
 	);
