@@ -16,10 +16,12 @@ interface DetailDialogProps {
 	onDelete?: (ids: number[]) => void;
 	onSubmit?: (data: any) => void;
 	onCancel?: () => void;
-	size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | false;
+	size?: 'sm' | 'md' | 'lg' | 'xl';
 	allowDelete?: boolean;
 	processing?: boolean;
 	loading?: boolean;
+	languageContent?: boolean;
+	authorId: number;
 }
 
 const DetailDialog = ({
@@ -34,6 +36,8 @@ const DetailDialog = ({
 	allowDelete,
 	processing,
 	loading,
+	languageContent,
+	authorId,
 }: DetailDialogProps) => {
 	const [isOpen, setOpen] = useState(open);
 
@@ -80,6 +84,8 @@ const DetailDialog = ({
 						allowDelete={allowDelete}
 						processing={processing}
 						loading={loading}
+						languageContent={languageContent}
+						authorId={authorId}
 					/>
 				) : (
 					<>...preloader...</>

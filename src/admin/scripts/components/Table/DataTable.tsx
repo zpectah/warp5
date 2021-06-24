@@ -9,13 +9,15 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Checkbox from '@material-ui/core/Checkbox';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
-import { Button } from '@material-ui/core';
+import { Button, InputBase } from '@material-ui/core';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import CheckIcon from '@material-ui/icons/Check';
 import NotInterestedIcon from '@material-ui/icons/NotInterested';
 import SettingsIcon from '@material-ui/icons/Settings';
+import MenuIcon from '@material-ui/icons/Menu';
+import SearchIcon from '@material-ui/icons/Search';
 import { useTranslation } from 'react-i18next';
 import styled, { css } from 'styled-components';
 
@@ -24,7 +26,9 @@ import { DATA_TABLE_ROWS_BY_PAGE } from '../../constants';
 import { appProps, routeProps } from '../../types/types';
 import { getComparator, stableSort, Order } from './utils';
 import TableHead from './TableHead';
-import { useProfile, useSettings } from '../../hooks/App';
+import { useSettings } from '../../hooks/App';
+import LanguageToggle from '../Language';
+import { Form } from '../ui';
 
 const columnBase = css`
 	display: flex;
@@ -45,7 +49,17 @@ const TableHeading = styled.div`
 	align-items: center;
 	justify-content: space-between;
 `;
-const TableHeadingBlock = styled.div``;
+const TableHeadingBlock = styled.div`
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+
+	& > div {
+		& + div {
+			margin-left: 0.5rem;
+		}
+	}
+`;
 const TableOptionsContainer = styled.div`
 	width: 100%;
 	padding: 1rem;
@@ -73,6 +87,10 @@ const useStyles = makeStyles((theme: Theme) =>
 			position: 'absolute',
 			top: 20,
 			width: 1,
+		},
+		input: {
+			marginLeft: theme.spacing(1),
+			flex: 1,
 		},
 	}),
 );
@@ -112,8 +130,8 @@ interface DataTableProps {
 	allowDetail?: boolean;
 	prefix?: string;
 	ariaLabel?: string;
-	//
 	languageContent?: boolean;
+	authorId: number;
 }
 
 const DataTable = ({
@@ -129,93 +147,27 @@ const DataTable = ({
 	prefix = 'data-table',
 	ariaLabel = 'data table',
 	model,
-	languageContent = false, // TODO ???
+	languageContent = false,
+	authorId,
 }: DataTableProps) => {
 	const { t } = useTranslation(['common', 'component']);
-	const { Profile } = useProfile();
 	const { Settings } = useSettings();
 	const classes = useStyles();
-	const [order, setOrder] = useState<Order>('asc');
-	const [orderBy, setOrderBy] = useState<'id' | 'name'>('id');
+	const [order, setOrder] = useState<Order>('desc');
+	const [orderBy, setOrderBy] = useState<string>('id');
 	const [selected, setSelected] = useState<any[]>(selectedRows);
 	const [page, setPage] = useState(0);
-	const [rowsPerPage, setRowsPerPage] = useState(5);
+	const [rowsPerPage, setRowsPerPage] = useState(25);
 	const [items, setItems] = useState<any[]>(data);
 	const [lang, setLang] = useState(config.GLOBAL.PROJECT.LANG_DEFAULT);
 	const [optionsOpen, setOptionsOpen] = useState<boolean>(false); // TODO
+	const [search, setSearch] = useState<string>('');
 
-	const authorId: number = Profile?.id; // TODO
+	// Local language variables
+	const langDefault: string = Settings?.language_default; // TODO
 	const langList: string[] = Settings?.language_active; // TODO
 
-	useEffect(() => {
-		if (onSelect && allowSelect) onSelect(selected);
-	}, [selected]);
-
-	useEffect(() => {
-		setItems(data);
-	}, [data]);
-
-	useEffect(() => setSelected(selectedRows), [selectedRows]);
-
-	const handleRequestSort = (
-		event: React.MouseEvent<unknown>,
-		property: any, // TODO ?
-	) => {
-		const isAsc = orderBy === property && order === 'asc';
-
-		setOrder(isAsc ? 'desc' : 'asc');
-		setOrderBy(property);
-	};
-
-	const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
-		if (allowSelect && event.target.checked) {
-			const newSelecteds = items.map((n) => n.id);
-			setSelected(newSelecteds);
-			return;
-		}
-
-		if (allowSelect) setSelected([]);
-	};
-
-	const handleClick = (event: React.MouseEvent<unknown>, id: any) => {
-		const selectedIndex = selected.indexOf(id);
-		let newSelected: string[] = [];
-
-		if (allowSelect) {
-			if (selectedIndex === -1) {
-				newSelected = newSelected.concat(selected, id);
-			} else if (selectedIndex === 0) {
-				newSelected = newSelected.concat(selected.slice(1));
-			} else if (selectedIndex === selected.length - 1) {
-				newSelected = newSelected.concat(selected.slice(0, -1));
-			} else if (selectedIndex > 0) {
-				newSelected = newSelected.concat(
-					selected.slice(0, selectedIndex),
-					selected.slice(selectedIndex + 1),
-				);
-			}
-		}
-
-		setSelected(newSelected);
-	};
-
-	const handleChangePage = (event: unknown, newPage: number) => {
-		setPage(newPage);
-	};
-
-	const handleChangeRowsPerPage = (
-		event: React.ChangeEvent<HTMLInputElement>,
-	) => {
-		setRowsPerPage(parseInt(event.target.value, 10));
-		setPage(0);
-	};
-
-	const onDetailHandler = (id) => {
-		if (allowDetail) {
-			onRowDetailCallback(id);
-		}
-	};
-
+	// Table columns by options *
 	const getColumns = useCallback(() => {
 		const columns = [];
 
@@ -335,20 +287,85 @@ const DataTable = ({
 		return columns;
 	}, []);
 
+	// When sort property is triggered
+	const handleRequestSort = (
+		event: React.MouseEvent<unknown>,
+		property: string,
+	) => {
+		let nProperty = property.includes('lang[') ? 'id' : property;
+		const isAsc = orderBy === nProperty && order === 'asc';
+		const nOrder = isAsc ? 'desc' : 'asc';
+
+		setOrder(nOrder);
+		setOrderBy(nProperty);
+	};
+
+	// When select or deselect all
+	const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
+		if (allowSelect && event.target.checked) {
+			const newSelecteds = items.map((n) => n.id);
+			setSelected(newSelecteds);
+			return;
+		}
+
+		if (allowSelect) setSelected([]);
+	};
+
+	// When row is selected
+	const handleClick = (event: React.MouseEvent<unknown>, id: any) => {
+		const selectedIndex = selected.indexOf(id);
+		let newSelected: string[] = [];
+
+		if (allowSelect) {
+			if (selectedIndex === -1) {
+				newSelected = newSelected.concat(selected, id);
+			} else if (selectedIndex === 0) {
+				newSelected = newSelected.concat(selected.slice(1));
+			} else if (selectedIndex === selected.length - 1) {
+				newSelected = newSelected.concat(selected.slice(0, -1));
+			} else if (selectedIndex > 0) {
+				newSelected = newSelected.concat(
+					selected.slice(0, selectedIndex),
+					selected.slice(selectedIndex + 1),
+				);
+			}
+		}
+
+		setSelected(newSelected);
+	};
+
+	// When next or prev page is triggered
+	const handleChangePage = (event: unknown, newPage: number) => {
+		setPage(newPage);
+	};
+
+	// When rows per page is changed
+	const handleChangeRowsPerPage = (
+		event: React.ChangeEvent<HTMLInputElement>,
+	) => {
+		setRowsPerPage(parseInt(event.target.value, 10));
+		setPage(0);
+	};
+
+	// Is row selected
 	const isSelected = (id: any) => selected.indexOf(id) !== -1;
 
+	// When row detail is triggered (to change url parameter in page handler)
 	const onDetail = (id: number) => {
-		onRowDetailCallback(id);
+		if (allowDetail && onRowDetailCallback) onRowDetailCallback(id);
 	};
 
+	// When toggle is triggered
 	const onToggle = (ids: number[]) => {
-		onToggleCallback(ids);
+		if (onToggleCallback) onToggleCallback(ids);
 	};
 
+	// When delete confirm is triggered
 	const onDelete = (ids: number[]) => {
-		onDeleteCallback(ids);
+		if (onDeleteCallback) onDeleteCallback(ids);
 	};
 
+	// Renderer of table rows by options *
 	const renderTableRow = (row, index) => {
 		const isItemSelected = isSelected(row.id);
 		const labelId = `${prefix}-checkbox-${index}`;
@@ -374,28 +391,28 @@ const DataTable = ({
 				)}
 				{columnsLayout.name && (
 					<TableCell component="th" id={labelId} scope="row">
-						<ItemRowLink onClick={() => onDetailHandler(row.id)}>
+						<ItemRowLink onClick={() => onDetail(row.id)}>
 							{row.name}
 						</ItemRowLink>
 					</TableCell>
 				)}
 				{columnsLayout.email && (
 					<TableCell component="th" id={labelId} scope="row">
-						<ItemRowLink onClick={() => onDetailHandler(row.id)}>
+						<ItemRowLink onClick={() => onDetail(row.id)}>
 							{row.email}
 						</ItemRowLink>
 					</TableCell>
 				)}
 				{columnsLayout.title && (
 					<TableCell component="th" id={labelId} scope="row">
-						<ItemRowLink onClick={() => onDetailHandler(row.id)}>
+						<ItemRowLink onClick={() => onDetail(row.id)}>
 							{row.title}
 						</ItemRowLink>
 					</TableCell>
 				)}
 				{columnsLayout.title_lang && (
 					<TableCell component="th" id={labelId} scope="row">
-						<ItemRowLink onClick={() => onDetailHandler(row.id)}>
+						<ItemRowLink onClick={() => onDetail(row.id)}>
 							{row.lang[lang].title}
 							{row.name && <small>{row.name}</small>}
 						</ItemRowLink>
@@ -403,14 +420,14 @@ const DataTable = ({
 				)}
 				{columnsLayout.sender && (
 					<TableCell component="th" id={labelId} scope="row">
-						<ItemRowLink onClick={() => onDetailHandler(row.id)}>
+						<ItemRowLink onClick={() => onDetail(row.id)}>
 							{row.sender}
 						</ItemRowLink>
 					</TableCell>
 				)}
 				{columnsLayout.file_name && (
 					<TableCell component="th" id={labelId} scope="row">
-						<ItemRowLink onClick={() => onDetailHandler(row.id)}>
+						<ItemRowLink onClick={() => onDetail(row.id)}>
 							{row.file_name}
 						</ItemRowLink>
 					</TableCell>
@@ -498,34 +515,68 @@ const DataTable = ({
 		);
 	};
 
+	// Callback to page when selected rows is changed
+	useEffect(() => {
+		if (onSelect && allowSelect) onSelect(selected);
+	}, [selected]);
+
+	// Callback from page
+	useEffect(() => setSelected(selectedRows), [selectedRows]);
+
+	// When data from page is loaded to table
+	useEffect(() => {
+		setItems(data);
+	}, [data]);
+
 	return (
 		<>
 			<div className={classes.root}>
 				<TableHeading>
 					<TableHeadingBlock>
-						<ButtonGroup>
-							<Button
-								disabled={selected.length == 0}
-								onClick={() => onToggle(selected)}
-								startIcon={<NotInterestedIcon />}
-								title={t('btn.toggle')}
-							>
-								{selected.length}
-							</Button>
-							<Button
-								disabled={selected.length == 0}
-								onClick={() => onDelete(selected)}
-								startIcon={<DeleteIcon />}
-								title={t('btn.delete')}
-							>
-								{selected.length}
-							</Button>
-						</ButtonGroup>
+						<div>
+							<Form.Search
+								id="TableSearchInput"
+								value={search}
+								onChange={(e) => setSearch(e.target.value)}
+								label={''}
+							/>
+						</div>
 					</TableHeadingBlock>
 					<TableHeadingBlock>
+						{/*
 						<IconButton onClick={() => setOptionsOpen(!optionsOpen)}>
 							<SettingsIcon />
 						</IconButton>
+						*/}
+						<div>
+							<ButtonGroup>
+								<Button
+									disabled={selected.length == 0}
+									onClick={() => onToggle(selected)}
+									startIcon={<NotInterestedIcon />}
+									title={t('btn.toggle')}
+								>
+									{selected.length}
+								</Button>
+								<Button
+									disabled={selected.length == 0}
+									onClick={() => onDelete(selected)}
+									startIcon={<DeleteIcon />}
+									title={t('btn.delete')}
+								>
+									{selected.length}
+								</Button>
+							</ButtonGroup>
+						</div>
+						{languageContent && (
+							<div>
+								<LanguageToggle
+									langDefault={langDefault}
+									langList={langList}
+									onChange={(lng) => setLang(lng)}
+								/>
+							</div>
+						)}
 					</TableHeadingBlock>
 				</TableHeading>
 				{optionsOpen && (

@@ -154,7 +154,8 @@ const LostPasswordForm = () => {
 								render={({ name, value, onChange }) => (
 									<TextField
 										id="lostPasswordForm_email"
-										label={t(
+										label={t('component:LostPasswordForm.input_email_label')}
+										placeholder={t(
 											'component:LostPasswordForm.input_email_placeholder',
 										)}
 										variant="outlined"
@@ -163,6 +164,7 @@ const LostPasswordForm = () => {
 										value={value}
 										onChange={onChange}
 										disabled={processing}
+										size="small"
 										style={{ width: '100%' }}
 									/>
 								)}

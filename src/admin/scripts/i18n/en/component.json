@@ -6,15 +6,18 @@
 		"btn_logOut": "Log out",
 		"btn_lostPassword": "Lost password",
 		"btn_submit": "Log in",
-		"input_email_placeholder": "E-mail",
-		"input_password_placeholder": "Password"
+		"input_email_label": "E-mail",
+		"input_email_placeholder": "Your e-mail",
+		"input_password_label": "Password",
+		"input_password_placeholder": "Your Password"
 	},
 	"LostPasswordForm": {
 		"title": "Lost and reset password",
 		"processing": "Your request has been processing...",
 		"btn_logIn": "Log in",
 		"btn_submit": "Submit request",
-		"input_email_placeholder": "E-mail"
+		"input_email_label": "E-mail",
+		"input_email_placeholder": "Your e-mail"
 	},
 	"ThemeDialog": {
 		"title": "Select theme"

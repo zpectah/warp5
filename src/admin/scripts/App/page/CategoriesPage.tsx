@@ -14,7 +14,7 @@ import useUiToasts from '../../hooks/useUiToasts';
 import { Section, CreateButton, Dialog } from '../../components/ui';
 import DataTable from '../../components/Table';
 import DetailDialog from '../../components/Detail';
-import { useCategories } from '../../hooks/App';
+import { useCategories, useProfile } from '../../hooks/App';
 
 const CategoriesPage = () => {
 	const params: any = useParams();
@@ -38,6 +38,7 @@ const CategoriesPage = () => {
 		createCategories,
 		reloadCategories,
 	} = useCategories();
+	const { Profile } = useProfile();
 	const { createToasts } = useUiToasts(dispatch);
 
 	const columnsLayout = {
@@ -47,6 +48,7 @@ const CategoriesPage = () => {
 	};
 	const allowDetail: boolean = true; // TODO
 	const allowSelect: boolean = true; // TODO
+	const authorId: number = Profile?.id; // TODO
 
 	const getDetailData = (id, items) => {
 		let data = null;
@@ -195,8 +197,10 @@ const CategoriesPage = () => {
 					onSelect={onSelect}
 					allowSelect={allowSelect}
 					allowDetail={allowDetail}
+					authorId={authorId}
 				/>
 				<DetailDialog
+					languageContent
 					model={'Categories'}
 					detailData={detailData}
 					open={detailOpen}
@@ -207,6 +211,7 @@ const CategoriesPage = () => {
 					processing={processing}
 					loading={loading}
 					allowDelete={allowDetail}
+					authorId={authorId}
 				/>
 				<Dialog.Confirm
 					open={confirmOpen}

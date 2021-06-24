@@ -45,6 +45,6 @@
 	},
 	"title": {
 		"deleteConfirm": "Are you sure want to delete this item?",
-		"deleteConfirm_plural": "Are you sure want to delete this items?"
+		"deleteConfirm_plural": "Are you sure want to delete these items?"
 	}
 }

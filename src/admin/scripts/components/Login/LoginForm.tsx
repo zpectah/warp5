@@ -114,13 +114,17 @@ const LoginForm = () => {
 								render={({ name, value, onChange }) => (
 									<TextField
 										id="loginForm_email"
-										label={t('component:LoginForm.input_email_placeholder')}
+										label={t('component:LoginForm.input_email_label')}
+										placeholder={t(
+											'component:LoginForm.input_email_placeholder',
+										)}
 										variant="outlined"
 										type="email"
 										name={name}
 										value={value}
 										onChange={onChange}
 										disabled={processing}
+										size="small"
 										style={{ width: '100%' }}
 									/>
 								)}
@@ -135,13 +139,17 @@ const LoginForm = () => {
 								render={({ name, value, onChange }) => (
 									<TextField
 										id="loginForm_password"
-										label={t('component:LoginForm.input_password_placeholder')}
+										label={t('component:LoginForm.input_password_label')}
+										placeholder={t(
+											'component:LoginForm.input_password_placeholder',
+										)}
 										variant="outlined"
 										type="password"
 										name={name}
 										value={value}
 										onChange={onChange}
 										disabled={processing}
+										size="small"
 										style={{ width: '100%' }}
 									/>
 								)}

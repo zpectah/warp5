@@ -17,6 +17,8 @@ interface CategoriesFormProps {
 	allowDelete: boolean;
 	processing?: boolean;
 	loading?: boolean;
+	languageContent?: boolean;
+	authorId: number;
 }
 
 const CategoriesForm = ({
@@ -27,6 +29,8 @@ const CategoriesForm = ({
 	allowDelete,
 	processing,
 	loading,
+	languageContent,
+	authorId,
 }: CategoriesFormProps) => {
 	const { t } = useTranslation(['common', 'model']);
 	const { control, handleSubmit, formState, register } = useForm({
