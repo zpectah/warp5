@@ -6,6 +6,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Divider from '@material-ui/core/Divider';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import Chip from '@material-ui/core/Chip';
+import { isMobileOnly } from 'react-device-detect';
 import styled from 'styled-components';
 
 import config from '../../config';
@@ -110,9 +111,14 @@ const ProfileMenu: React.FC<ProfileMenuProps> = ({ id = 'profileMenu' }) => {
 					<MenuItem onClick={profileHandler}>
 						{t('component:ProfileMenu.profile_link')}
 					</MenuItem>
-					<MenuItem onClick={logoutHandler}>
-						{t('component:ProfileMenu.logout_link')}
-					</MenuItem>
+					{isMobileOnly && (
+						<>
+							<Divider />
+							<MenuItem onClick={logoutHandler}>
+								{t('component:ProfileMenu.logout_link')}
+							</MenuItem>
+						</>
+					)}
 				</Menu>
 			</Outer>
 			<ThemesDialog open={themeOpen} onToggle={(open) => setThemeOpen(open)} />

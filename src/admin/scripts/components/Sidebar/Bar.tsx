@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { isDesktop } from 'react-device-detect';
 
 import media from '../../styles/responsive';
 import SidebarToggle from './SidebarToggle';
@@ -57,7 +58,7 @@ const Bar: React.FC<BarProps> = ({ open }) => {
 				</Block>
 				<Block>
 					<ProfileMenu />
-					<LogoutTrigger />
+					{isDesktop && <LogoutTrigger />}
 				</Block>
 			</Inner>
 		</Wrapper>
