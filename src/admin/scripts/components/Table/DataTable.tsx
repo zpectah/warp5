@@ -25,18 +25,25 @@ import { appProps, routeProps } from '../../types/types';
 import { getComparator, stableSort, Order } from './utils';
 import TableHead from './TableHead';
 import { useSettings } from '../../hooks/App';
-import LanguageToggle from '../Language';
+import Language from '../Language';
 import { Form } from '../ui';
 
 const columnBase = css`
 	display: flex;
-	flex-direction: column;
+	flex-direction: row;
 `;
 
 const ItemRowLink = styled.span`
 	${columnBase}
 
+	align-items: center;
+	justify-content: flex-start;
 	cursor: pointer;
+
+	& > div {
+		display: flex;
+		flex-direction: column;
+	}
 `;
 const ItemRowText = styled.span`
 	${columnBase}
@@ -57,6 +64,14 @@ const TableHeadingBlock = styled.div`
 			margin-left: 0.5rem;
 		}
 	}
+`;
+const RowLinkImage = styled.img`
+	max-width: 40px;
+	height: auto;
+	margin-right: 1rem;
+`;
+const RowLinkAvatar = styled(RowLinkImage)`
+	border-radius: 50px;
 `;
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -110,8 +125,9 @@ interface DataTableProps {
 		type?: boolean;
 		user_group?: boolean;
 		member_group?: boolean;
-		t_value?: boolean;
-		r_value?: boolean;
+		value?: boolean;
+		t_value?: boolean; // TODO: delete
+		r_value?: boolean; // TODO: delete
 		context?: boolean;
 		authorized?: boolean;
 		// TODO: new columns
@@ -159,8 +175,8 @@ const DataTable = ({
 	const [search, setSearch] = useState<string>('');
 
 	// Static variables
-	const langDefault: string = Settings?.language_default; // TODO
-	const langList: string[] = Settings?.language_active; // TODO
+	const langDefault: string = Settings?.language_default;
+	const langList: string[] = Settings?.language_active;
 
 	// Table columns by options *
 	const getColumns = useCallback(() => {
@@ -249,6 +265,13 @@ const DataTable = ({
 				numeric: false,
 				disablePadding: true,
 				label: 'Group',
+			});
+		if (columnsLayout.value)
+			columns.push({
+				id: 'value',
+				numeric: false,
+				disablePadding: true,
+				label: 'Value',
 			});
 		if (columnsLayout.t_value)
 			columns.push({
@@ -394,22 +417,42 @@ const DataTable = ({
 				{columnsLayout.email && (
 					<TableCell component="th" id={labelId} scope="row">
 						<ItemRowLink onClick={() => onDetail(row.id)}>
-							{row.email}
+							{row.img_avatar && (
+								<RowLinkAvatar src={row.img_avatar} alt={row.email} />
+							)}
+							<div>{row.email}</div>
 						</ItemRowLink>
 					</TableCell>
 				)}
 				{columnsLayout.title && (
 					<TableCell component="th" id={labelId} scope="row">
 						<ItemRowLink onClick={() => onDetail(row.id)}>
-							{row.title}
+							{row.img_thumbnail && (
+								<RowLinkImage
+									src={config.UPLOADS_PATH.image.thumbnail + row.img_thumbnail}
+									alt={row.name || `image_${row.id}`}
+								/>
+							)}
+							<div>
+								<b>{row.title}</b>
+								{row.name && <small>{row.name}</small>}
+							</div>
 						</ItemRowLink>
 					</TableCell>
 				)}
 				{columnsLayout.title_lang && (
 					<TableCell component="th" id={labelId} scope="row">
 						<ItemRowLink onClick={() => onDetail(row.id)}>
-							{row.lang[lang].title}
-							{row.name && <small>{row.name}</small>}
+							{row.img_thumbnail && (
+								<RowLinkImage
+									src={config.UPLOADS_PATH.image.thumbnail + row.img_thumbnail}
+									alt={row.name || `image_${row.id}`}
+								/>
+							)}
+							<div>
+								<b>{row.lang[lang].title}</b>
+								{row.name && <small>{row.name}</small>}
+							</div>
 						</ItemRowLink>
 					</TableCell>
 				)}
@@ -423,7 +466,15 @@ const DataTable = ({
 				{columnsLayout.file_name && (
 					<TableCell component="th" id={labelId} scope="row">
 						<ItemRowLink onClick={() => onDetail(row.id)}>
-							{row.file_name}
+							{row.type == 'image' ? (
+								<RowLinkImage
+									src={config.UPLOADS_PATH.image.thumbnail + row.file_name}
+									alt={row.name}
+								/>
+							) : (
+								<>icon by file type ...</>
+							)}
+							<div>{row.file_name}</div>
 						</ItemRowLink>
 					</TableCell>
 				)}
@@ -577,7 +628,7 @@ const DataTable = ({
 						</div>
 						{languageContent && (
 							<div>
-								<LanguageToggle
+								<Language.Toggle
 									langDefault={langDefault}
 									langList={langList}
 									onChange={(lng) => setLang(lng)}

@@ -67,7 +67,7 @@ const ThemesDialog = ({ open, onToggle, onCancel }: ThemesDialogProps) => {
 			</DialogContent>
 			<DialogActions>
 				<Button autoFocus onClick={closeHandler} color="primary">
-					{t('btn.cancel')}
+					{t('btn.close')}
 				</Button>
 			</DialogActions>
 		</Dialog>

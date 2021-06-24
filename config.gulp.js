@@ -27,7 +27,6 @@ export default {
 	ENV_NAME_PROD: 'production',
 	KEY_ENV_ENV: '%%%%%ENV_ENV%%%%%',
 	KEY_ENV_TIMESTAMP: '%%%%%ENV_TIMESTAMP%%%%%',
-
 	CLEAN_WITH_UPLOADS: false,
 	CLEAN_WITH_LOGS: false,
 	ADMIN_EXTERNAL_CSS: true,

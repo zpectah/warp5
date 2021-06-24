@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Button from '@material-ui/core/Button';
+import { useTranslation } from 'react-i18next';
 
 import { Dialog } from '../ui';
 
@@ -9,6 +10,7 @@ interface HelpModalProps {
 }
 
 const HelpDialog = ({ open, onToggle }: HelpModalProps) => {
+	const { t } = useTranslation(['common', 'component']);
 	const [isOpen, setOpen] = useState(open);
 
 	useEffect(() => setOpen(open), [open]);
@@ -22,8 +24,8 @@ const HelpDialog = ({ open, onToggle }: HelpModalProps) => {
 				headerChildren={<>Help</>}
 				footerChildren={
 					<>
-						<Button onClick={() => setOpen(false)} color="primary">
-							Cancel
+						<Button onClick={() => setOpen(false)} color="primary" autoFocus>
+							{t('btn.close')}
 						</Button>
 					</>
 				}

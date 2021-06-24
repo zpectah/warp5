@@ -61,17 +61,14 @@ const LocalesDialog = ({ open, onToggle, onCancel }: LocalesDialogProps) => {
 							onClick={() => changeHandler(lng)}
 							selected={lng == lang}
 						>
-							<ListItemText
-								primary={config.LOCALES_LIST[lng].label}
-								secondary={lng}
-							/>
+							<ListItemText primary={config.LOCALES_LIST[lng].label} />
 						</ListItem>
 					))}
 				</List>
 			</DialogContent>
 			<DialogActions>
 				<Button autoFocus onClick={closeHandler} color="primary">
-					{t('btn.cancel')}
+					{t('btn.close')}
 				</Button>
 			</DialogActions>
 		</Dialog>
