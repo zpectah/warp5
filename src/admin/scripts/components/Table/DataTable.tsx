@@ -9,19 +9,17 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Checkbox from '@material-ui/core/Checkbox';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
-import { Button, InputBase } from '@material-ui/core';
+import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import CheckIcon from '@material-ui/icons/Check';
 import NotInterestedIcon from '@material-ui/icons/NotInterested';
-import SettingsIcon from '@material-ui/icons/Settings';
-import MenuIcon from '@material-ui/icons/Menu';
-import SearchIcon from '@material-ui/icons/Search';
 import { useTranslation } from 'react-i18next';
 import styled, { css } from 'styled-components';
 
 import config from '../../config';
+import { array } from '../../../../libs/utils';
 import { DATA_TABLE_ROWS_BY_PAGE } from '../../constants';
 import { appProps, routeProps } from '../../types/types';
 import { getComparator, stableSort, Order } from './utils';
@@ -59,10 +57,6 @@ const TableHeadingBlock = styled.div`
 			margin-left: 0.5rem;
 		}
 	}
-`;
-const TableOptionsContainer = styled.div`
-	width: 100%;
-	padding: 1rem;
 `;
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -132,6 +126,7 @@ interface DataTableProps {
 	ariaLabel?: string;
 	languageContent?: boolean;
 	authorId: number;
+	searchAttrs?: string[];
 }
 
 const DataTable = ({
@@ -149,6 +144,7 @@ const DataTable = ({
 	model,
 	languageContent = false,
 	authorId,
+	searchAttrs = [],
 }: DataTableProps) => {
 	const { t } = useTranslation(['common', 'component']);
 	const { Settings } = useSettings();
@@ -160,10 +156,9 @@ const DataTable = ({
 	const [rowsPerPage, setRowsPerPage] = useState(25);
 	const [items, setItems] = useState<any[]>(data);
 	const [lang, setLang] = useState(config.GLOBAL.PROJECT.LANG_DEFAULT);
-	const [optionsOpen, setOptionsOpen] = useState<boolean>(false); // TODO
 	const [search, setSearch] = useState<string>('');
 
-	// Local language variables
+	// Static variables
 	const langDefault: string = Settings?.language_default; // TODO
 	const langList: string[] = Settings?.language_active; // TODO
 
@@ -357,12 +352,12 @@ const DataTable = ({
 
 	// When toggle is triggered
 	const onToggle = (ids: number[]) => {
-		if (onToggleCallback) onToggleCallback(ids);
+		if (allowDetail && onToggleCallback) onToggleCallback(ids);
 	};
 
 	// When delete confirm is triggered
 	const onDelete = (ids: number[]) => {
-		if (onDeleteCallback) onDeleteCallback(ids);
+		if (allowDetail && onDeleteCallback) onDeleteCallback(ids);
 	};
 
 	// Renderer of table rows by options *
@@ -515,6 +510,18 @@ const DataTable = ({
 		);
 	};
 
+	// Returns updated search attributes
+	const getSearchAttrs = (attrs) => {
+		let na = [];
+
+		attrs.map((attr) => {
+			let ni = attr.replace('[lang]', lang);
+			na.push(ni);
+		});
+
+		return na;
+	};
+
 	// Callback to page when selected rows is changed
 	useEffect(() => {
 		if (onSelect && allowSelect) onSelect(selected);
@@ -523,10 +530,15 @@ const DataTable = ({
 	// Callback from page
 	useEffect(() => setSelected(selectedRows), [selectedRows]);
 
-	// When data from page is loaded to table
+	// When data from page is loaded to table and do search
 	useEffect(() => {
-		setItems(data);
-	}, [data]);
+		let tmp = data;
+
+		if (search.length > 3)
+			tmp = array.search(data, getSearchAttrs(searchAttrs), search);
+
+		setItems(tmp);
+	}, [data, search]);
 
 	return (
 		<>
@@ -543,11 +555,6 @@ const DataTable = ({
 						</div>
 					</TableHeadingBlock>
 					<TableHeadingBlock>
-						{/*
-						<IconButton onClick={() => setOptionsOpen(!optionsOpen)}>
-							<SettingsIcon />
-						</IconButton>
-						*/}
 						<div>
 							<ButtonGroup>
 								<Button
@@ -579,11 +586,6 @@ const DataTable = ({
 						)}
 					</TableHeadingBlock>
 				</TableHeading>
-				{optionsOpen && (
-					<Paper className={classes.paper}>
-						<TableOptionsContainer>Table options</TableOptionsContainer>
-					</Paper>
-				)}
 				<Paper className={classes.paper}>
 					<TableContainer>
 						<Table

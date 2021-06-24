@@ -28,7 +28,6 @@ const CategoriesPage = () => {
 	const [confirmOpen, setConfirmOpen] = useState<boolean>(false);
 	const [confirmData, setConfirmData] = useState([]);
 	const [selectedRows, setSelectedRows] = useState<any[]>([]);
-
 	const {
 		Categories,
 		isCategoriesLoading,
@@ -41,6 +40,9 @@ const CategoriesPage = () => {
 	const { Profile } = useProfile();
 	const { createToasts } = useUiToasts(dispatch);
 
+	// Static variables
+	const modelName = 'Categories';
+	const modelRoute = ROUTES.app.categories;
 	const columnsLayout = {
 		title_lang: true,
 		type: true,
@@ -48,8 +50,9 @@ const CategoriesPage = () => {
 	};
 	const allowDetail: boolean = true; // TODO
 	const allowSelect: boolean = true; // TODO
-	const authorId: number = Profile?.id; // TODO
+	const authorId: number = Profile?.id;
 
+	// Returns data to dialog
 	const getDetailData = (id, items) => {
 		let data = null;
 
@@ -75,9 +78,7 @@ const CategoriesPage = () => {
 
 	// Trigger detail parameter
 	const onRowDetail = (id: number) => {
-		history.push(
-			`${ROUTES.app.categories.path}${ROUTE_PATH_SUFFIX_DETAIL}/${id}`,
-		);
+		history.push(`${modelRoute.path}${ROUTE_PATH_SUFFIX_DETAIL}/${id}`);
 	};
 
 	// When confirm dialog is open
@@ -95,7 +96,7 @@ const CategoriesPage = () => {
 	const onDetailClose = () => {
 		setDetailOpen(false);
 		setDetailData(null);
-		history.push(ROUTES.app.categories.path);
+		history.push(modelRoute.path);
 	};
 
 	// When items are toggled
@@ -173,13 +174,13 @@ const CategoriesPage = () => {
 
 	return (
 		<Layout.Default
-			route={ROUTES.app.categories}
-			titlePage={t('page:Categories.page.title')}
-			titleMeta={t('page:Categories.meta.title')}
+			route={modelRoute}
+			titlePage={t(`page:${modelName}.page.title`)}
+			titleMeta={t(`page:${modelName}.meta.title`)}
 			headerChildren={
 				<>
-					<CreateButton href={ROUTES.app.categories.path} newDetailSuffix>
-						{t('btn_new.Categories')}
+					<CreateButton href={modelRoute.path} newDetailSuffix>
+						{t(`btn_new.${modelName}`)}
 					</CreateButton>
 				</>
 			}
@@ -187,8 +188,9 @@ const CategoriesPage = () => {
 			<Section>
 				<DataTable
 					languageContent
-					model={'Categories'}
 					data={Categories}
+					searchAttrs={['name', 'lang.[lang].title', 'lang.[lang].perex']}
+					model={modelName}
 					selectedRows={selectedRows}
 					columnsLayout={columnsLayout}
 					onRowDetailCallback={onRowDetail}
@@ -201,7 +203,7 @@ const CategoriesPage = () => {
 				/>
 				<DetailDialog
 					languageContent
-					model={'Categories'}
+					model={modelName}
 					detailData={detailData}
 					open={detailOpen}
 					onToggle={(open) => setDetailOpen(open)}
