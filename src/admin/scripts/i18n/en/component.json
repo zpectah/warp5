@@ -31,5 +31,14 @@
 		"help_link": "Help",
 		"profile_link": "Profile",
 		"logout_link": "Log out"
+	},
+	"Settings": {
+		"tabs": {
+			"global": {},
+			"web": {},
+			"content": {},
+			"module": {},
+			"maintenance": {}
+		}
 	}
 }

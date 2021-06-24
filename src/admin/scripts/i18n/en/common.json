@@ -21,7 +21,8 @@
 		"updateChanges": "Update changes",
 		"clear": "Clear",
 		"install": "Install",
-		"new": "New"
+		"new": "New",
+		"newItem": "New item"
 	},
 	"btn_new": {
 		"Posts": "New post",

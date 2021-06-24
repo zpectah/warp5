@@ -44,6 +44,11 @@
 	"noindex,follow": "No Index, Follow",
 	"custom": "Custom {{id}}",
 	"error_404": "Error 404",
-	"error_500": "Error 500"
+	"error_500": "Error 500",
+	"global": "Global",
+	"web": "Web",
+	"content": "Content",
+	"module": "Module",
+	"maintenance": "Maintenance"
 }
 

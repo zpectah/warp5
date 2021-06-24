@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 import { ROUTES } from '../../constants';
 import { Tabs } from '../ui';
@@ -7,6 +8,7 @@ import { Tabs } from '../ui';
 interface SettingsFormProps {}
 
 const SettingsForm = ({}: SettingsFormProps) => {
+	const { t } = useTranslation(['common', 'types']);
 	const params: any = useParams();
 	const history: any = useHistory();
 	const [panelIndex, setPanelIndex] = useState(0);
@@ -14,23 +16,23 @@ const SettingsForm = ({}: SettingsFormProps) => {
 	const tabList = [
 		{
 			name: 'global',
-			label: 'Global',
+			label: t('types:global'),
 		},
 		{
 			name: 'web',
-			label: 'Web',
+			label: t('types:web'),
 		},
 		{
 			name: 'content',
-			label: 'Content',
+			label: t('types:content'),
 		},
 		{
 			name: 'module',
-			label: 'Module',
+			label: t('types:module'),
 		},
 		{
 			name: 'maintenance',
-			label: 'Maintenance',
+			label: t('types:maintenance'),
 		},
 	];
 
@@ -54,7 +56,7 @@ const SettingsForm = ({}: SettingsFormProps) => {
 				name="form-settings-tab"
 				activeIndex={panelIndex}
 				onChange={panelChangeHandler}
-				ariaLabel="Form Settings"
+				ariaLabel="settings form"
 			>
 				<Tabs.Panel>Global</Tabs.Panel>
 				<Tabs.Panel>Web</Tabs.Panel>

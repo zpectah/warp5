@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 import Helmet from 'react-helmet';
 import Container from '@material-ui/core/Container';
 import styled from 'styled-components';
@@ -14,7 +16,7 @@ import { appProps, routeProps } from '../../types/types';
 import Footer from '../Footer';
 import Header from '../Header';
 import Sidebar from '../Sidebar';
-import { useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 
 const Wrapper = styled.div`
 	${layoutBase}
@@ -74,7 +76,8 @@ const DefaultLayout: React.FC<DefaultLayoutProps> = ({
 	overrideMaxWidthDefault = 'lg',
 }) => {
 	const store = useSelector((store: any) => store);
-
+	const params: any = useParams();
+	const { t } = useTranslation(['common', 'types']);
 	const [sidebarOpen, setSidebarOpen] = useState<boolean>(store.ui.sideBarOpen);
 
 	useEffect(() => {
@@ -87,6 +90,12 @@ const DefaultLayout: React.FC<DefaultLayoutProps> = ({
 				<title>
 					{config.GLOBAL.CMS.META.name}
 					{titleMeta ? ` | ${titleMeta}` : ''}
+					{params.id
+						? ` : ${
+								params.id == 'new' ? t('common:btn.newItem') : `#${params.id}`
+						  }`
+						: ''}
+					{params.panel ? ` : ${t(`types:${params.panel}`)}` : ''}
 				</title>
 			</Helmet>
 			<Wrapper>
