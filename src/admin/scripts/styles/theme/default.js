@@ -42,4 +42,10 @@ export default {
 			bg: palette.red,
 		},
 	},
+	preloader: {
+		block: {
+			color: palette.black,
+			bg: 'rgba(250,250,250,.5)',
+		},
+	},
 };

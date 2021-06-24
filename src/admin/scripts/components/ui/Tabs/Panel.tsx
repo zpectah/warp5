@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 const Wrapper = styled.div`
-	padding-top: 2rem;
+	padding: 1rem;
 `;
 
 interface PanelProps {}

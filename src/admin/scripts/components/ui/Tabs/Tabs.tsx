@@ -1,6 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
+import Paper from '@material-ui/core/Paper';
+import styled from 'styled-components';
+
+const NavigationContainer = styled.div`
+	padding-bottom: 0.5rem;
+`;
+const PanelContainer = styled.div``;
 
 interface TabPanelProps {
 	children?: React.ReactNode;
@@ -38,7 +45,7 @@ const UiTabs: React.FC<TabsProps> = ({
 		const { children, value, index, ...other } = props;
 
 		return (
-			<div
+			<Paper
 				role="tabpanel"
 				hidden={value !== index}
 				id={`${name}-${index}`}
@@ -46,7 +53,7 @@ const UiTabs: React.FC<TabsProps> = ({
 				{...other}
 			>
 				{value === index && <>{children}</>}
-			</div>
+			</Paper>
 		);
 	}
 
@@ -59,24 +66,28 @@ const UiTabs: React.FC<TabsProps> = ({
 
 	return (
 		<>
-			<Tabs
-				indicatorColor="primary"
-				textColor="primary"
-				value={value}
-				onChange={handleChange}
-				aria-label={ariaLabel}
-				variant="scrollable"
-				scrollButtons="auto"
-			>
-				{tabList.map((item, index) => (
-					<Tab label={item.label} key={index} {...a11yProps(index)} />
+			<NavigationContainer>
+				<Tabs
+					indicatorColor="primary"
+					textColor="primary"
+					value={value}
+					onChange={handleChange}
+					aria-label={ariaLabel}
+					variant="scrollable"
+					scrollButtons="auto"
+				>
+					{tabList.map((item, index) => (
+						<Tab label={item.label} key={index} {...a11yProps(index)} />
+					))}
+				</Tabs>
+			</NavigationContainer>
+			<PanelContainer>
+				{children.map((item, index) => (
+					<TabPanel value={value} index={index} key={index}>
+						{item}
+					</TabPanel>
 				))}
-			</Tabs>
-			{children.map((item, index) => (
-				<TabPanel value={value} index={index} key={index}>
-					{item}
-				</TabPanel>
-			))}
+			</PanelContainer>
 		</>
 	);
 };

@@ -5,5 +5,15 @@ import Section from './Section';
 import Form from './Form';
 import Dialog from './Dialog';
 import Tabs from './Tabs';
+import Preloader from './Preloader';
 
-export { Scrollable, CloseButton, CreateButton, Section, Form, Dialog, Tabs };
+export {
+	Scrollable,
+	CloseButton,
+	CreateButton,
+	Section,
+	Form,
+	Dialog,
+	Tabs,
+	Preloader,
+};

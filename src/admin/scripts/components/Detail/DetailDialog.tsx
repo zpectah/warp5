@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
-import { Dialog } from '../ui';
+import { Dialog, Preloader } from '../ui';
 import { appProps } from '../../types/types';
-
 import CategoriesForm from './form/CategoriesForm';
 
 interface DetailDialogProps {
@@ -75,6 +74,11 @@ const DetailDialog = ({
 				size={size}
 				onClose={onCancel}
 			>
+				{processing && (
+					<>
+						<Preloader.Page />
+					</>
+				)}
 				{detailData ? (
 					<ComponentName
 						detailData={detailData}
@@ -88,9 +92,10 @@ const DetailDialog = ({
 						authorId={authorId}
 					/>
 				) : (
-					<>...preloader...</>
+					<>
+						<Preloader.Page />
+					</>
 				)}
-				{processing && <>...preloader...</>}
 			</Dialog.Blank>
 		</>
 	);
