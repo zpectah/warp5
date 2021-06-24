@@ -7,7 +7,8 @@ Content Managing System with multiple languages for easy management basic web pr
 
 ## Requirements
 * Must be installed globally on machine:
-	- Node.js (NPM) or YARN
+	- Node.js (Node Package Manager)
+	- Yarn
 	- Gulp CLI
 * PHP and Composer (For Windows may be different stack)
 * Apache Server with MySQL database. Prefer (XAMP / MAMP / LAMP / ...)
@@ -17,10 +18,11 @@ Content Managing System with multiple languages for easy management basic web pr
 	- TypeScript
 	- Babel
 	- React
-	- styled-components ()
+	- styled-components (https://styled-components.com/)
 	- JSS (https://cssinjs.org/styled-jss?v=v2.2.3)
+	- Material UI (https://material-ui.com/)
 	- Redux
-	- i18n
+	- i18n (https://react.i18next.com/)
 	- lodash
 	- moment.js
 	- ...more
@@ -32,7 +34,7 @@ Content Managing System with multiple languages for easy management basic web pr
 	- Sass/SCSS
 
 ## Development configuration
-### Server
+### Apache Server for development
 #### Virtual Host
 ```
 <VirtualHost *:80>
@@ -53,14 +55,14 @@ Content Managing System with multiple languages for easy management basic web pr
 127.0.0.1		test.warp5
 ```
 
-### Description
-- If you config correctly and open your browser with ``http://warp5/`` or ``http://test.warp5/`` you will see current build
-- Configuration paths may be different for Windows or Unix system users
+### Note
+- (!) If you config correctly and open your browser with ``http://warp5/`` or ``http://test.warp5/`` you will see current build
+- (!) Configuration paths may be different for Windows or Unix system users
 
 ## Development tasks
 ### Install
 - ``% yarn install`` - Install node packages
-- ``% yarn initial`` - Prepare vendors
+- ``% yarn initial`` - Prepare PHP vendors
 
 ### Watch
 - ``% yarn start`` - Watching changes for whole project
@@ -76,40 +78,42 @@ Content Managing System with multiple languages for easy management basic web pr
 
 Location | Description
 --- | ---
-``src/`` | Source directory
-``dev/`` | Development directory
-``test/`` | Test directory - prepared for test
-``prod/`` | Production directory - prepared for deploy
+``./src`` | Source directory
+``./dev`` | Build development directory
+``./test`` | Build test directory (prepared for local test)
+``./prod`` | Build production directory (prepared for deploy)
 
 ## File structure
 
-Location | Description
---- | ---
-``src/admin/`` | Root Admin directory
-``src/api/`` | Root Api directory
-``src/web/`` | Root Web directory
-``src/config/`` | Config files
-``src/core/`` | PHP Core files
-``src/libs/`` | Extended libraries (Only for imports)
-``src/static/`` | Static files (images or whatever)
-``src/vendor/`` | Vendor directory (Composer)
-``$/uploads/`` | Uploaded files from system
-``$/logs/`` | Log files, if any
+Location | Source | Description
+--- | --- | ---
+``/admin`` | source | Root Admin directory (endpoint)
+``/api`` | source | Root Api directory (endpoint)
+``/web`` | source |Root Web directory (endpoint)
+``/config`` | source | Config files
+``/core`` | source | PHP Core files
+``/libs`` | source | Extended libraries (Only for imports)
+``/static`` | source | Static files (images or whatever)
+``/vendor`` | source,dev,test,prod | Vendor directory (Composer)
+``/uploads`` | dev,test,prod | Uploaded files from system
+``/logs`` | dev,test,prod | Log files, if any
 
 ## Configuration and Options files
 
-Name | Type | Location | Rebuild | Description
+Name | Type | Location | Need rebuild (*) | Description
 --- | --- | --- | --- | ---
-Config | Admin | ``src/admin/scripts/config.js`` | true | Config file imports
-Constants | Admin | ``src/admin/scripts/constants.ts`` | true | JavaScript Constants
-Constants | Backend | ``src/config/constants.php`` | true | PHP Constants
-Database | Backend | ``src/config/database.php`` | true | Configuration for Backend databases
-Global | All | ``src/config/global.json`` | true | Global configuration file
-Environment | All | ``src/config/environmental.json`` | true | Configuration by environment
-Options | All | ``src/config/options.json`` | true | Project options object
-Locales | All | ``src/config/locales.json`` | true | Locale options object
-Numbers | All | ``src/config/nums.json`` | true | ...
+Development | All | ``config.gulp.js`` | true | Development configuration file
+Config | Admin | ``./src/admin/scripts/config.js`` | true | Config file imports
+Constants | Admin | ``./src/admin/scripts/constants.ts`` | true | JavaScript Constants
+Constants | Backend | ``./src/config/constants.php`` | false | PHP Constants
+Database | Backend | ``./src/config/database.php`` | false | Configuration for Backend databases
+Global | All | ``./src/config/global.json`` | true | Global configuration file
+Environment | All | ``./src/config/environmental.json`` | true | Configuration by environment
+Options | All | ``./src/config/options.json`` | true | Project options object
+Locales | All | ``./src/config/locales.json`` | true | Locale options object
+Numbers | All | ``./src/config/nums.json`` | true | For other number list
 
+(*) When value changes is necessary to create new bundle or just copy file only
 
-## Api paths
+## Api
 - See ``./api.md`` file for more info
