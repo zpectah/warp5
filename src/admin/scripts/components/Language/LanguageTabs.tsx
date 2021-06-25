@@ -64,6 +64,8 @@ const LanguageTabs: React.FC<LanguageTabsProps> = ({
 		return na;
 	};
 
+	const tabs = getTabList();
+
 	const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
 		setValue(newValue);
 		setLang(langList[newValue]);
@@ -94,21 +96,23 @@ const LanguageTabs: React.FC<LanguageTabsProps> = ({
 
 	return (
 		<>
-			<NavigationContainer>
-				<Tabs
-					indicatorColor="primary"
-					textColor="primary"
-					value={value}
-					onChange={handleChange}
-					aria-label={ariaLabel}
-					variant="scrollable"
-					scrollButtons="auto"
-				>
-					{getTabList().map((item, index) => (
-						<Tab label={item.label} key={index} {...a11yProps(index)} />
-					))}
-				</Tabs>
-			</NavigationContainer>
+			{tabs && tabs.length > 1 && (
+				<NavigationContainer>
+					<Tabs
+						indicatorColor="primary"
+						textColor="primary"
+						value={value}
+						onChange={handleChange}
+						aria-label={ariaLabel}
+						variant="scrollable"
+						scrollButtons="auto"
+					>
+						{tabs.map((item, index) => (
+							<Tab label={item.label} key={index} {...a11yProps(index)} />
+						))}
+					</Tabs>
+				</NavigationContainer>
+			)}
 			<PanelContainer>
 				{children?.map((item, index) => (
 					<TabPanel value={value} index={index} key={index}>
