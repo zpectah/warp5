@@ -25,7 +25,10 @@ interface FormRowProps {
 		| 'flex-end';
 }
 
-const FormRow: React.FC<FormRowProps> = ({ children, justify = 'center' }) => {
+const FormRow: React.FC<FormRowProps> = ({
+	children,
+	justify = 'flex-start',
+}) => {
 	return (
 		<Wrapper className="form-row" justify={justify}>
 			{children}
