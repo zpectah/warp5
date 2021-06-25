@@ -17,7 +17,7 @@ import { Form, Section, Tabs } from '../../ui';
 import { CategoriesItemProps } from '../../../types/App';
 import Language from '../../Language';
 import { useSettings } from '../../../hooks/App';
-import LanguageTabs from '../../Language/LanguageTabs';
+import setLanguageModel from '../setLanguageModel';
 
 const LanguageWrapper = styled.div``;
 const LanguageWrapperPanel = styled.div<{ isActive: boolean }>`
@@ -55,20 +55,29 @@ const CategoriesForm = ({
 		'types',
 	]);
 	const [lang, setLang] = useState(config.GLOBAL.PROJECT.LANG_DEFAULT);
-	const { control, handleSubmit, formState, register } = useForm({
-		mode: 'all',
-		defaultValues: {
-			...detailData,
-		},
-	});
 	const { Settings } = useSettings();
 
 	// Static variables
 	const langDefault: string = Settings?.language_default;
 	const langList: string[] = Settings?.language_active;
 
+	// Form controller
+	const { control, handleSubmit, formState, register } = useForm({
+		mode: 'all',
+		defaultValues: {
+			lang: setLanguageModel(langList, {
+				title: '',
+				perex: '',
+				content: '',
+			}),
+			...detailData,
+		},
+	});
+
+	// Submit handler
 	const onSubmitHandler = (data) => onSubmit(data);
 
+	// When language on content changed
 	const onLanguageChange = (lang: string) => {
 		setLang(lang);
 	};
@@ -106,6 +115,7 @@ const CategoriesForm = ({
 									id={row.id}
 									value={row.value}
 									onChange={row.onChange}
+									onBlur={row.onBlur}
 									style={{ width: '75%' }}
 									variant="outlined"
 									size="small"
@@ -125,6 +135,7 @@ const CategoriesForm = ({
 									id={row.id}
 									value={row.value}
 									onChange={row.onChange}
+									onBlur={row.onBlur}
 									style={{ width: '50%' }}
 									variant="outlined"
 									margin="dense"
@@ -144,18 +155,17 @@ const CategoriesForm = ({
 							parent TODO: picker
 						</Form.Row>
 					</Section>
-					<Section withBorder>... Categories Form elements ...</Section>
 					<Section title={t('common:title.languageContent')} withBorder>
 						{langList.length > 1 && (
 							<Language.Tabs langList={langList} onChange={onLanguageChange} />
 						)}
-						{langList.map((lng) => (
+						{langList?.map((lng) => (
 							<LanguageWrapperPanel key={lng} isActive={lng == lang}>
 								<Form.RowController
 									label={t('input:title.label')}
 									control={control}
 									name={`lang.${lng}.title`}
-									defaultValue={detailData?.lang[lng].title || ''}
+									defaultValue={''}
 								>
 									{(row) => (
 										<TextField
@@ -164,6 +174,7 @@ const CategoriesForm = ({
 											id={row.id}
 											value={row.value}
 											onChange={row.onChange}
+											onBlur={row.onBlur}
 											style={{ width: '100%' }}
 											variant="outlined"
 											size="small"
@@ -174,7 +185,7 @@ const CategoriesForm = ({
 									label={t('input:perex.label')}
 									control={control}
 									name={`lang.${lng}.perex`}
-									defaultValue={detailData?.lang[lng].perex || ''}
+									defaultValue={''}
 								>
 									{(row) => (
 										<TextField
@@ -183,6 +194,7 @@ const CategoriesForm = ({
 											id={row.id}
 											value={row.value}
 											onChange={row.onChange}
+											onBlur={row.onBlur}
 											style={{ width: '100%' }}
 											variant="outlined"
 											size="small"

@@ -48,4 +48,10 @@ export default {
 			bg: 'rgba(250,250,250,.5)',
 		},
 	},
+	section: {
+		border: '1px solid rgba(200,200,200,.35)',
+		heading: {
+			color: 'rgba(25, 25, 25, 0.75)',
+		},
+	},
 };
