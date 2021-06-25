@@ -1,4 +1,4 @@
-import React, { createContext, useEffect } from 'react';
+import React, { createContext } from 'react';
 import { Controller } from 'react-hook-form';
 import styled from 'styled-components';
 
@@ -7,13 +7,13 @@ import media from '../../../styles/responsive';
 
 const Wrapper = styled.div<{ justify: FormRowControllerProps['justify'] }>`
 	width: 100%;
-	padding-bottom: 0.75rem;
+	padding-bottom: 0.5rem;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 
 	& + .form-row {
-		margin-top: 1rem;
+		margin-top: 0.5rem;
 	}
 
 	${(props) =>
@@ -115,12 +115,6 @@ const FormRowController: React.FC<FormRowControllerProps> = ({
 	required = false,
 	errors = [],
 }) => {
-	useEffect(() => {
-		console.log('W T F  ???');
-
-		return () => {};
-	}, []);
-
 	return (
 		<Wrapper className="form-row form-row-controller" justify={justify}>
 			<Controller
@@ -148,12 +142,15 @@ const FormRowController: React.FC<FormRowControllerProps> = ({
 							}}
 						>
 							{label && (
-								<LabelWrapper className="form-row-label-column" htmlFor={id}>
+								<LabelWrapper
+									className="form-row-column form-row-column-label"
+									htmlFor={id}
+								>
 									{label}
 									{required && <b>*</b>}
 								</LabelWrapper>
 							)}
-							<InputWrapper className="form-row-input-column">
+							<InputWrapper className="form-row-column form-row-column-input">
 								{/* TODO */}
 								{/* @ts-ignore */}
 								<Context.Consumer children={children} />

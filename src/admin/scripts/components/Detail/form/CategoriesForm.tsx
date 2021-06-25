@@ -6,7 +6,11 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import { useTranslation } from 'react-i18next';
 import { useForm, Controller } from 'react-hook-form';
 import TextField from '@material-ui/core/TextField';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormHelperText from '@material-ui/core/FormHelperText'; // TODO -> as error message to row under input ...
+import Select from '@material-ui/core/Select';
 import styled from 'styled-components';
+import Switch from '@material-ui/core/Switch';
 
 import config from '../../../config';
 import { Form, Section, Tabs } from '../../ui';
@@ -43,7 +47,13 @@ const CategoriesForm = ({
 	languageContent,
 	authorId,
 }: CategoriesFormProps) => {
-	const { t } = useTranslation(['common', 'component', 'model', 'input']);
+	const { t } = useTranslation([
+		'common',
+		'component',
+		'model',
+		'input',
+		'types',
+	]);
 	const [lang, setLang] = useState(config.GLOBAL.PROJECT.LANG_DEFAULT);
 	const { control, handleSubmit, formState, register } = useForm({
 		mode: 'all',
@@ -80,13 +90,13 @@ const CategoriesForm = ({
 							defaultValue={detailData.id}
 						/>
 					</div>
-					<Section>... Categories Form elements ...</Section>
-					<Section>
-						<Form.Row>...</Form.Row>
+					<Section withBorder>
 						<Form.RowController
 							label={t('input:name.label')}
 							name={'name'}
 							control={control}
+							rules={{ required: true }}
+							required
 							defaultValue={detailData.name || ''}
 						>
 							{(row) => (
@@ -102,9 +112,40 @@ const CategoriesForm = ({
 								/>
 							)}
 						</Form.RowController>
+						<Form.RowController
+							label={t('input:type.label')}
+							name={'type'}
+							control={control}
+							rules={{ required: true }}
+							required
+							defaultValue={detailData.type || 'default'}
+						>
+							{(row) => (
+								<Select
+									id={row.id}
+									value={row.value}
+									onChange={row.onChange}
+									style={{ width: '50%' }}
+									variant="outlined"
+									margin="dense"
+								>
+									<MenuItem value="">
+										<em>{t('input:type.placeholder')}</em>
+									</MenuItem>
+									{config.OPTIONS.model.Categories.type_list.map((opt) => (
+										<MenuItem key={opt} value={opt}>
+											{t(`types:${opt}`)}
+										</MenuItem>
+									))}
+								</Select>
+							)}
+						</Form.RowController>
+						<Form.Row label={t('input:parent.label')}>
+							parent TODO: picker
+						</Form.Row>
 					</Section>
-					<Section>... {JSON.stringify(detailData)} ...</Section>
-					<Section>
+					<Section withBorder>... Categories Form elements ...</Section>
+					<Section title={t('common:title.languageContent')} withBorder>
 						{langList.length > 1 && (
 							<Language.Tabs langList={langList} onChange={onLanguageChange} />
 						)}
@@ -130,15 +171,15 @@ const CategoriesForm = ({
 									)}
 								</Form.RowController>
 								<Form.RowController
-									label={t('input:description.label')}
+									label={t('input:perex.label')}
 									control={control}
-									name={`lang.${lng}.description`}
-									defaultValue={detailData?.lang[lng].description || ''}
+									name={`lang.${lng}.perex`}
+									defaultValue={detailData?.lang[lng].perex || ''}
 								>
 									{(row) => (
 										<TextField
 											type="text"
-											placeholder={t('input:description.placeholder')}
+											placeholder={t('input:perex.placeholder')}
 											id={row.id}
 											value={row.value}
 											onChange={row.onChange}
@@ -150,11 +191,39 @@ const CategoriesForm = ({
 										/>
 									)}
 								</Form.RowController>
+								<Form.Row label={t('input:content.label')}>
+									wysiwyg content TODO: wysiwyg
+								</Form.Row>
 							</LanguageWrapperPanel>
 						))}
 					</Section>
-					<Section>...</Section>
-					<Section>...</Section>
+					<Section title={t('common:title.media')} withBorder>
+						<Form.Row label={t('input:imgMain.label')}>
+							main image TODO: uploads picker
+						</Form.Row>
+						<Form.Row label={t('input:imgThumbnail.label')}>
+							thumbnail TODO: uploads picker
+						</Form.Row>
+					</Section>
+					<Section title={t('common:title.options')}>
+						<Form.RowController
+							label={t('input:active.label')}
+							name={'active'}
+							control={control}
+							defaultValue={detailData.active || 1}
+						>
+							{(row) => (
+								<Switch
+									checked={row.value == 1}
+									value={row.value}
+									onChange={(e) => row.onChange(e.target.checked ? 1 : 0)}
+									name={row.name}
+									color="primary"
+									inputProps={{ 'aria-label': 'item active' }}
+								/>
+							)}
+						</Form.RowController>
+					</Section>
 				</Form.Base>
 			</DialogContent>
 			<DialogActions>

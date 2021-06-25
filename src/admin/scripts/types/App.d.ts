@@ -66,7 +66,7 @@ export interface CategoriesItemProps extends commonModelProps {
 	img_thumbnail?: string;
 	lang?: {
 		title: string;
-		perex?: string;
+		perex?: string; // TODO: change to description
 		content?: string;
 	};
 }

@@ -68,13 +68,16 @@
 		"placeholder": "Select keywords"
 	},
 	"inMaintenance": {
-		"label": "In Maintenance"
+		"label": "In Maintenance",
+		"placeholder": "In Maintenance"
 	},
 	"inDebug": {
-		"label": "In Debug"
+		"label": "In Debug",
+		"placeholder": "In Debug"
 	},
 	"inDevelopment": {
-		"label": "In Development"
+		"label": "In Development",
+		"placeholder": "In Development"
 	},
 	"senderEmail": {
 		"label": "Sender E-mail",
@@ -85,37 +88,71 @@
 		"placeholder": "Type E-mail"
 	},
 	"redactorApproval": {
-		"label": "Redactor Approval"
+		"label": "Redactor Approval",
+		"placeholder": "Redactor Approval"
 	},
 	"active": {
-		"label": "Active"
+		"label": "Active",
+		"placeholder": "Active"
 	},
 	"anonymous": {
-		"label": "Anonymous"
+		"label": "Anonymous",
+		"placeholder": "Anonymous"
 	},
 	"membersActive": {
-		"label": "Members active"
+		"label": "Members active",
+		"placeholder": "Members active"
 	},
 	"registerActive": {
-		"label": "Register active"
+		"label": "Register active",
+		"placeholder": "Register active"
 	},
 	"loginActive": {
-		"label": "Login active"
+		"label": "Login active",
+		"placeholder": "Login active"
 	},
 	"lostPasswordActive": {
-		"label": "Lost password active"
+		"label": "Lost password active",
+		"placeholder": "Lost password active"
 	},
 	"marketActive": {
-		"label": "Market active"
+		"label": "Market active",
+		"placeholder": "Market active"
 	},
 	"languageToInstall": {
-		"label": "Language to install"
+		"label": "Language to install",
+		"placeholder": "Language to install"
 	},
 	"activeLanguages": {
-		"label": "Active languages"
+		"label": "Active languages",
+		"placeholder": "Active languages"
 	},
 	"defaultLanguage": {
 		"label": "Default language",
 		"placeholder": "Select default language"
+	},
+	"type": {
+		"label": "Type",
+		"placeholder": "Select type"
+	},
+	"parent": {
+		"label": "Parent",
+		"placeholder": "Select parent"
+	},
+	"perex": {
+		"label": "Perex",
+		"placeholder": "Type perex"
+	},
+	"content": {
+		"label": "Content",
+		"placeholder": "Type content"
+	},
+	"imgMain": {
+		"label": "Main image",
+		"placeholder": "Select main image"
+	},
+	"imgThumbnail": {
+		"label": "Thumbnail image",
+		"placeholder": "Select thumbnail"
 	}
 }
