@@ -13,6 +13,7 @@ import { Form, Section, Tabs } from '../../ui';
 import { CategoriesItemProps } from '../../../types/App';
 import Language from '../../Language';
 import { useSettings } from '../../../hooks/App';
+import LanguageTabs from '../../Language/LanguageTabs';
 
 const LanguageWrapper = styled.div``;
 const LanguageWrapperPanel = styled.div<{ isActive: boolean }>`
@@ -104,13 +105,9 @@ const CategoriesForm = ({
 					</Section>
 					<Section>... {JSON.stringify(detailData)} ...</Section>
 					<Section>
-						<Language.Toggle
-							langList={langList}
-							onChange={onLanguageChange}
-							langDefault={langDefault}
-						/>
-					</Section>
-					<Section>
+						{langList.length > 1 && (
+							<Language.Tabs langList={langList} onChange={onLanguageChange} />
+						)}
 						{langList.map((lng) => (
 							<LanguageWrapperPanel key={lng} isActive={lng == lang}>
 								<Form.RowController
@@ -156,33 +153,7 @@ const CategoriesForm = ({
 							</LanguageWrapperPanel>
 						))}
 					</Section>
-					{/*
-					<Section>
-						<Language.Tabs
-							name="form-detail-language-content-tab"
-							langDefault={langDefault}
-							langList={langList}
-							onChange={onLanguageChange}
-							ariaLabel="language content form"
-						>
-							{langList.map((lng) => (
-								<Tabs.Panel key={lng}>
-									<Form.Row>
-										<Controller
-											control={control}
-											name="test"
-											render={(
-												{ onChange, onBlur, value, name, ref },
-												{ invalid, isTouched, isDirty },
-											) => <>...{lng}...</>}
-										/>
-									</Form.Row>
-									<Form.Row>lang content {lang} : description ...</Form.Row>
-								</Tabs.Panel>
-							))}
-						</Language.Tabs>
-					</Section>
-					*/}
+					<Section>...</Section>
 					<Section>...</Section>
 				</Form.Base>
 			</DialogContent>
