@@ -4,7 +4,6 @@ import Tab from '@material-ui/core/Tab';
 import styled from 'styled-components';
 
 import config from '../../config';
-import { useSettings } from '../../hooks/App';
 
 const NavigationContainer = styled.div`
 	padding-bottom: 0.5rem;
@@ -23,6 +22,8 @@ interface LanguageTabsProps {
 	name?: string;
 	ariaLabel?: string;
 	onChange?: (lang: string, langList: string[]) => void;
+	langDefault: string;
+	langList: string[];
 }
 
 const LanguageTabs: React.FC<LanguageTabsProps> = ({
@@ -31,14 +32,11 @@ const LanguageTabs: React.FC<LanguageTabsProps> = ({
 	name = 'tabs-language',
 	ariaLabel = 'Panel language tabs',
 	onChange,
+	langDefault,
+	langList,
 }) => {
-	const { Settings } = useSettings();
 	const [value, setValue] = useState(activeIndex);
 	const [lang, setLang] = useState(config.GLOBAL.PROJECT.LANG_DEFAULT);
-
-	// Static variables
-	const langDefault: string = Settings?.language_default;
-	const langList: string[] = Settings?.language_active;
 
 	useEffect(() => {
 		if (langDefault) setLang(langDefault);

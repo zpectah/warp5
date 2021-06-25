@@ -4,13 +4,20 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { useTranslation } from 'react-i18next';
-import { useForm } from 'react-hook-form';
-// import styled from 'styled-components';
+import { useForm, Controller } from 'react-hook-form';
+import TextField from '@material-ui/core/TextField';
+import styled from 'styled-components';
 
 import config from '../../../config';
 import { Form, Section, Tabs } from '../../ui';
 import { CategoriesItemProps } from '../../../types/App';
 import Language from '../../Language';
+import { useSettings } from '../../../hooks/App';
+
+const LanguageWrapper = styled.div``;
+const LanguageWrapperPanel = styled.div<{ isActive: boolean }>`
+	display: ${(props) => (props.isActive ? 'block' : 'none')};
+`;
 
 interface CategoriesFormProps {
 	detailData: CategoriesItemProps;
@@ -35,21 +42,24 @@ const CategoriesForm = ({
 	languageContent,
 	authorId,
 }: CategoriesFormProps) => {
-	const { t } = useTranslation(['common', 'component', 'model']);
+	const { t } = useTranslation(['common', 'component', 'model', 'input']);
 	const [lang, setLang] = useState(config.GLOBAL.PROJECT.LANG_DEFAULT);
-	const [langList, setLangList] = useState<string[]>([]);
 	const { control, handleSubmit, formState, register } = useForm({
 		mode: 'all',
 		defaultValues: {
 			...detailData,
 		},
 	});
+	const { Settings } = useSettings();
+
+	// Static variables
+	const langDefault: string = Settings?.language_default;
+	const langList: string[] = Settings?.language_active;
 
 	const onSubmitHandler = (data) => onSubmit(data);
 
-	const onLanguageChange = (lang: string, langList: string[]) => {
+	const onLanguageChange = (lang: string) => {
 		setLang(lang);
-		setLangList(langList);
 	};
 
 	return (
@@ -72,22 +82,107 @@ const CategoriesForm = ({
 					<Section>... Categories Form elements ...</Section>
 					<Section>
 						<Form.Row>...</Form.Row>
+						<Form.RowController
+							label={t('input:name.label')}
+							name={'name'}
+							control={control}
+							defaultValue={detailData.name || ''}
+						>
+							{(row) => (
+								<TextField
+									type="text"
+									placeholder={t('input:name.placeholder')}
+									id={row.id}
+									value={row.value}
+									onChange={row.onChange}
+									style={{ width: '75%' }}
+									variant="outlined"
+									size="small"
+								/>
+							)}
+						</Form.RowController>
 					</Section>
 					<Section>... {JSON.stringify(detailData)} ...</Section>
 					<Section>
+						<Language.Toggle
+							langList={langList}
+							onChange={onLanguageChange}
+							langDefault={langDefault}
+						/>
+					</Section>
+					<Section>
+						{langList.map((lng) => (
+							<LanguageWrapperPanel key={lng} isActive={lng == lang}>
+								<Form.RowController
+									label={t('input:title.label')}
+									control={control}
+									name={`lang.${lng}.title`}
+									defaultValue={detailData?.lang[lng].title || ''}
+								>
+									{(row) => (
+										<TextField
+											type="text"
+											placeholder={t('input:title.placeholder')}
+											id={row.id}
+											value={row.value}
+											onChange={row.onChange}
+											style={{ width: '100%' }}
+											variant="outlined"
+											size="small"
+										/>
+									)}
+								</Form.RowController>
+								<Form.RowController
+									label={t('input:description.label')}
+									control={control}
+									name={`lang.${lng}.description`}
+									defaultValue={detailData?.lang[lng].description || ''}
+								>
+									{(row) => (
+										<TextField
+											type="text"
+											placeholder={t('input:description.placeholder')}
+											id={row.id}
+											value={row.value}
+											onChange={row.onChange}
+											style={{ width: '100%' }}
+											variant="outlined"
+											size="small"
+											multiline
+											rows={4}
+										/>
+									)}
+								</Form.RowController>
+							</LanguageWrapperPanel>
+						))}
+					</Section>
+					{/*
+					<Section>
 						<Language.Tabs
 							name="form-detail-language-content-tab"
+							langDefault={langDefault}
+							langList={langList}
 							onChange={onLanguageChange}
 							ariaLabel="language content form"
 						>
 							{langList.map((lng) => (
 								<Tabs.Panel key={lng}>
-									<Form.Row>lang content {lang} : title ...</Form.Row>
+									<Form.Row>
+										<Controller
+											control={control}
+											name="test"
+											render={(
+												{ onChange, onBlur, value, name, ref },
+												{ invalid, isTouched, isDirty },
+											) => <>...{lng}...</>}
+										/>
+									</Form.Row>
 									<Form.Row>lang content {lang} : description ...</Form.Row>
 								</Tabs.Panel>
 							))}
 						</Language.Tabs>
 					</Section>
+					*/}
 					<Section>...</Section>
 				</Form.Base>
 			</DialogContent>
