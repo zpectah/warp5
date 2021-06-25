@@ -47,6 +47,11 @@ const CategoriesForm = ({
 
 	const onSubmitHandler = (data) => onSubmit(data);
 
+	const onLanguageChange = (lang: string, langList: string[]) => {
+		setLang(lang);
+		setLangList(langList);
+	};
+
 	return (
 		<>
 			<DialogTitle>
@@ -72,10 +77,7 @@ const CategoriesForm = ({
 					<Section>
 						<Language.Tabs
 							name="form-detail-language-content-tab"
-							onChange={(lang, langList) => {
-								setLang(lang);
-								setLangList(langList);
-							}}
+							onChange={onLanguageChange}
 							ariaLabel="language content form"
 						>
 							{langList.map((lng) => (

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import Paper from '@material-ui/core/Paper';
 import styled from 'styled-components';
 
 import config from '../../config';
@@ -30,7 +29,7 @@ const LanguageTabs: React.FC<LanguageTabsProps> = ({
 	children,
 	activeIndex = 0,
 	name = 'tabs-language',
-	ariaLabel = 'Panel tabs',
+	ariaLabel = 'Panel language tabs',
 	onChange,
 }) => {
 	const { Settings } = useSettings();
