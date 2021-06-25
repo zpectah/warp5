@@ -5,18 +5,12 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { useTranslation } from 'react-i18next';
 import { useForm } from 'react-hook-form';
-import styled from 'styled-components';
+// import styled from 'styled-components';
 
 import config from '../../../config';
-import { Form, Section } from '../../ui';
+import { Form, Section, Tabs } from '../../ui';
 import { CategoriesItemProps } from '../../../types/App';
-import { useSettings } from '../../../hooks/App';
 import Language from '../../Language';
-
-const LanguageWrapper = styled.div``;
-const LanguageWrapperPanel = styled.div<{ isActive: boolean }>`
-	display: ${(props) => (props.isActive ? 'block' : 'none')};
-`;
 
 interface CategoriesFormProps {
 	detailData: CategoriesItemProps;
@@ -42,22 +36,14 @@ const CategoriesForm = ({
 	authorId,
 }: CategoriesFormProps) => {
 	const { t } = useTranslation(['common', 'component', 'model']);
-	const { Settings } = useSettings();
 	const [lang, setLang] = useState(config.GLOBAL.PROJECT.LANG_DEFAULT);
+	const [langList, setLangList] = useState<string[]>([]);
 	const { control, handleSubmit, formState, register } = useForm({
 		mode: 'all',
 		defaultValues: {
 			...detailData,
 		},
 	});
-
-	// Static variables
-	const langDefault: string = Settings?.language_default;
-	const langList: string[] = Settings?.language_active;
-
-	useEffect(() => {
-		if (langDefault) setLang(langDefault);
-	}, [langDefault]);
 
 	const onSubmitHandler = (data) => onSubmit(data);
 
@@ -80,25 +66,27 @@ const CategoriesForm = ({
 					</div>
 					<Section>... Categories Form elements ...</Section>
 					<Section>
-						<Form.Row>
-							<Language.Toggle
-								langDefault={lang}
-								langList={langList}
-								onChange={(lng) => setLang(lng)}
-							/>
-						</Form.Row>
+						<Form.Row>...</Form.Row>
 					</Section>
 					<Section>... {JSON.stringify(detailData)} ...</Section>
 					<Section>
-						<LanguageWrapper>
-							{langList?.map((lng) => (
-								<LanguageWrapperPanel key={lng} isActive={lng == lang}>
+						<Language.Tabs
+							name="form-detail-language-content-tab"
+							onChange={(lang, langList) => {
+								setLang(lang);
+								setLangList(langList);
+							}}
+							ariaLabel="language content form"
+						>
+							{langList.map((lng) => (
+								<Tabs.Panel key={lng}>
 									<Form.Row>lang content {lang} : title ...</Form.Row>
 									<Form.Row>lang content {lang} : description ...</Form.Row>
-								</LanguageWrapperPanel>
+								</Tabs.Panel>
 							))}
-						</LanguageWrapper>
+						</Language.Tabs>
 					</Section>
+					<Section>...</Section>
 				</Form.Base>
 			</DialogContent>
 			<DialogActions>
