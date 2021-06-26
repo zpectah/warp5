@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useParams, useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
+import { string } from '../../../../libs/utils';
 import {
 	ROUTE_PATH_SUFFIX_DETAIL,
 	ROUTES,
@@ -102,18 +103,20 @@ const CategoriesPage = () => {
 	// When items are toggled
 	const onToggle = (ids: number[]) => {
 		setProcessing(true);
-		setSelectedRows([]);
 
-		// TODO: toggle handler
-		console.log('TOGGLE this items', ids);
+		toggleCategories(ids).then((response) => {
+			// console.log('toggleCategories', response);
 
-		// callback
-		createToasts({
-			title: 'Callback message by response !!!',
-			context: 'success',
-			timeout: MESSAGE_SUCCESS_DURATION,
+			createToasts({
+				title: t('messages:success.items.update', { count: ids.length }),
+				context: 'success',
+				timeout: MESSAGE_SUCCESS_DURATION,
+			});
+			reloadCategories();
+
+			setSelectedRows([]);
+			setProcessing(false);
 		});
-		setProcessing(false);
 	};
 
 	// When data are confirmed
@@ -121,42 +124,63 @@ const CategoriesPage = () => {
 		let master = [...ids];
 
 		setProcessing(true);
-		setConfirmOpen(true);
 		setConfirmData([]);
 		setSelectedRows([]);
 
-		// TODO: delete handler
-		console.log('DELETE this items ', master);
+		deleteCategories(master).then((response) => {
+			// console.log('deleteCategories', response);
 
-		// callback
-		createToasts({
-			title: 'Callback message by response !!!',
-			context: 'success',
-			timeout: MESSAGE_SUCCESS_DURATION,
+			onDetailClose();
+			createToasts({
+				title: t('messages:success.items.delete', { count: ids.length }),
+				context: 'success',
+				timeout: MESSAGE_SUCCESS_DURATION,
+			});
+			reloadCategories();
+
+			setConfirmOpen(false);
+			setProcessing(false);
 		});
-		setProcessing(false);
-		onDetailClose();
 	};
 
 	// When form is submitted
 	const onDataSubmit = (data: any) => {
+		const master = {
+			...data,
+			name: string.replaceSpaces(data.name),
+		};
+
 		setProcessing(true);
 
-		// TODO: submit handler
 		if (data.id == 'new') {
-			console.log('CREATE data', data);
-		} else {
-			console.log('UPDATE data', data);
-		}
+			createCategories(master).then((response) => {
+				// console.log('createCategories', response);
 
-		// callback
-		createToasts({
-			title: 'Callback message by response !!!',
-			context: 'success',
-			timeout: MESSAGE_SUCCESS_DURATION,
-		});
-		setProcessing(false);
-		onDetailClose();
+				onDetailClose();
+				createToasts({
+					title: t('messages:success.items.create'),
+					context: 'success',
+					timeout: MESSAGE_SUCCESS_DURATION,
+				});
+				reloadCategories();
+
+				setProcessing(false);
+			});
+		} else {
+			updateCategories(master).then((response) => {
+				// console.log('updateCategories', response);
+
+				onDetailClose();
+				createToasts({
+					title: t('messages:success.items.update'),
+					context: 'success',
+					timeout: MESSAGE_SUCCESS_DURATION,
+				});
+				reloadCategories();
+
+				setProcessing(false);
+			});
+		}
 	};
 
 	// Trigger detail dialog when url detail parameter

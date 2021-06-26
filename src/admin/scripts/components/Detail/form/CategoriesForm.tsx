@@ -166,6 +166,8 @@ const CategoriesForm = ({
 									label={t('input:title.label')}
 									control={control}
 									name={`lang.${lng}.title`}
+									rules={{ required: true }}
+									required
 									defaultValue={''}
 								>
 									{(row) => (
@@ -286,7 +288,11 @@ const CategoriesForm = ({
 						{t('btn.delete')}
 					</Button>
 				)}
-				<Button onClick={handleSubmit(onSubmitHandler)} color="primary">
+				<Button
+					onClick={handleSubmit(onSubmitHandler)}
+					color="primary"
+					disabled={!formState.isValid}
+				>
 					{detailData.id == 'new' ? t('btn.create') : t('btn.update')}
 				</Button>
 			</DialogActions>
