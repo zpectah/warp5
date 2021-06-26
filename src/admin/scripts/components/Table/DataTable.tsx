@@ -400,7 +400,7 @@ const DataTable = ({
 				role="checkbox"
 				aria-checked={isItemSelected}
 				tabIndex={-1}
-				key={row.name}
+				key={row.id || row.name}
 				selected={isItemSelected}
 				onDoubleClick={(event) => handleClick(event, row.id)}
 			>

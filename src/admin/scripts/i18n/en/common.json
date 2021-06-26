@@ -51,6 +51,11 @@
 		"languageContent": "Language content",
 		"media": "Media",
 		"options": "Options",
-		"menuItems": "Menu items"
+		"menuItems": "Menu items",
+		"credentials": "Credentials",
+		"contact": "Contact",
+		"address": "Address",
+		"location": "Location",
+		"descriptions": "Descriptions"
 	}
 }

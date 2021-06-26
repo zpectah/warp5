@@ -163,6 +163,34 @@
 		"label": "Tags",
 		"placeholder": "Select tags"
 	},
+	"password": {
+		"label": "Password",
+		"placeholder": "Set password"
+	},
+	"nickname": {
+		"label": "Nickname",
+		"placeholder": "Set nickname"
+	},
+	"firstName": {
+		"label": "First name",
+		"placeholder": "Set first name"
+	},
+	"middleName": {
+		"label": "Middle name",
+		"placeholder": "Set middle name"
+	},
+	"lastName": {
+		"label": "Last name",
+		"placeholder": "Set last name"
+	},
+	"level": {
+		"label": "Level",
+		"placeholder": "Select level"
+	},
+	"group": {
+		"label": "Group",
+		"placeholder": "Select group"
+	},
 	"searchTable": {
 		"label": "Search",
 		"placeholder": "Search in table"

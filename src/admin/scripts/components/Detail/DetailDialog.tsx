@@ -7,6 +7,8 @@ import TagsForm from './form/TagsForm';
 import TranslationsForm from './form/TranslationsForm';
 import PagesForm from './form/PagesForm';
 import MenuForm from './form/MenuForm';
+import UsersForm from './form/UsersForm';
+import MembersForm from './form/MembersForm';
 
 interface DetailDialogProps {
 	model:
@@ -49,7 +51,7 @@ const DetailDialog = ({
 
 	const component = {
 		Tags: TagsForm,
-		Users: CategoriesForm, // TODO
+		Users: UsersForm,
 		Posts: CategoriesForm, // TODO
 		Translations: TranslationsForm,
 		Categories: CategoriesForm,
@@ -58,7 +60,7 @@ const DetailDialog = ({
 		Menu: MenuForm,
 		Messages: CategoriesForm, // TODO
 		Requests: CategoriesForm, // TODO
-		Members: CategoriesForm, // TODO
+		Members: MembersForm,
 		Products: CategoriesForm, // TODO
 		Deliveries: CategoriesForm, // TODO
 		Distributors: CategoriesForm, // TODO
