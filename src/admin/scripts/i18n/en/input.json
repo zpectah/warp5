@@ -155,6 +155,14 @@
 		"label": "Thumbnail image",
 		"placeholder": "Select thumbnail"
 	},
+	"category": {
+		"label": "Category",
+		"placeholder": "Select category"
+	},
+	"tags": {
+		"label": "Tags",
+		"placeholder": "Select tags"
+	},
 	"searchTable": {
 		"label": "Search",
 		"placeholder": "Search in table"

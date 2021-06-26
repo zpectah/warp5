@@ -5,6 +5,7 @@ import { appProps } from '../../types/types';
 import CategoriesForm from './form/CategoriesForm';
 import TagsForm from './form/TagsForm';
 import TranslationsForm from './form/TranslationsForm';
+import PagesForm from './form/PagesForm';
 
 interface DetailDialogProps {
 	model:
@@ -51,7 +52,7 @@ const DetailDialog = ({
 		Posts: CategoriesForm, // TODO
 		Translations: TranslationsForm,
 		Categories: CategoriesForm,
-		Pages: CategoriesForm, // TODO
+		Pages: PagesForm,
 		Uploads: CategoriesForm, // TODO
 		Menu: CategoriesForm, // TODO
 		Messages: CategoriesForm, // TODO
