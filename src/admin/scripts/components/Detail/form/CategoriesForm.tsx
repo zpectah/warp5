@@ -225,12 +225,36 @@ const CategoriesForm = ({
 						))}
 					</Section>
 					<Section title={t('common:title.media')} withBorder>
-						<Form.Row label={t('input:imgMain.label')}>
-							main image TODO: uploads picker
-						</Form.Row>
-						<Form.Row label={t('input:imgThumbnail.label')}>
-							thumbnail TODO: uploads picker
-						</Form.Row>
+						<Form.RowController
+							label={t('input:imgThumbnail.label')}
+							control={control}
+							name={`img_thumbnail`}
+							defaultValue={detailData?.img_thumbnail || ''}
+						>
+							{(row) => (
+								<Picker.Uploads
+									id={row.id}
+									value={row.value}
+									onChange={row.onChange}
+									// placeholder={t('input:imgThumbnail.placeholder')}
+								/>
+							)}
+						</Form.RowController>
+						<Form.RowController
+							label={t('input:imgMain.label')}
+							control={control}
+							name={`img_main`}
+							defaultValue={detailData?.img_main || ''}
+						>
+							{(row) => (
+								<Picker.Uploads
+									id={row.id}
+									value={row.value}
+									onChange={row.onChange}
+									// placeholder={t('input:imgMain.placeholder')}
+								/>
+							)}
+						</Form.RowController>
 					</Section>
 					<Section title={t('common:title.options')}>
 						<Form.RowController
