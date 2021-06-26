@@ -236,7 +236,8 @@ const CategoriesForm = ({
 									id={row.id}
 									value={row.value}
 									onChange={row.onChange}
-									// placeholder={t('input:imgThumbnail.placeholder')}
+									placeholder={t('input:imgThumbnail.placeholder')}
+									mode={'image'}
 								/>
 							)}
 						</Form.RowController>
@@ -251,7 +252,8 @@ const CategoriesForm = ({
 									id={row.id}
 									value={row.value}
 									onChange={row.onChange}
-									// placeholder={t('input:imgMain.placeholder')}
+									placeholder={t('input:imgMain.placeholder')}
+									mode={'image'}
 								/>
 							)}
 						</Form.RowController>

@@ -186,5 +186,9 @@
 	"select_tags": {
 		"placeholder": "Select tag",
 		"placeholder_plural": "Select tags"
+	},
+	"select_uploads": {
+		"placeholder": "Select upload",
+		"placeholder_plural": "Select uploads"
 	}
 }
