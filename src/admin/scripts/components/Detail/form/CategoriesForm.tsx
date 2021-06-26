@@ -18,6 +18,7 @@ import { CategoriesItemProps } from '../../../types/App';
 import Language from '../../Language';
 import { useSettings } from '../../../hooks/App';
 import setLanguageModel from '../setLanguageModel';
+import Picker from '../../Picker';
 
 const LanguageWrapper = styled.div``;
 const LanguageWrapperPanel = styled.div<{ isActive: boolean }>`
@@ -131,26 +132,37 @@ const CategoriesForm = ({
 							defaultValue={detailData.type || 'default'}
 						>
 							{(row) => (
-								<>
-									<Form.Select
-										id={row.id}
-										value={row.value}
-										onChange={row.onChange}
-										onBlur={row.onBlur}
-										placeholder={t('input:type.placeholder')}
-									>
-										{config.OPTIONS.model.Categories.type_list.map((opt) => (
-											<MenuItem key={opt} value={opt}>
-												{t(`types:${opt}`)}
-											</MenuItem>
-										))}
-									</Form.Select>
-								</>
+								<Form.Select
+									id={row.id}
+									value={row.value}
+									onChange={row.onChange}
+									onBlur={row.onBlur}
+									placeholder={t('input:type.placeholder')}
+								>
+									{config.OPTIONS.model.Categories.type_list.map((opt) => (
+										<MenuItem key={opt} value={opt}>
+											{t(`types:${opt}`)}
+										</MenuItem>
+									))}
+								</Form.Select>
 							)}
 						</Form.RowController>
-						<Form.Row label={t('input:parent.label')}>
-							parent TODO: picker
-						</Form.Row>
+						<Form.RowController
+							label={t('input:parent.label')}
+							name={'parent'}
+							control={control}
+							defaultValue={detailData.parent || ''}
+						>
+							{(row) => (
+								<Picker.Categories
+									id={row.id}
+									value={row.value}
+									onChange={row.onChange}
+									onBlur={row.onBlur}
+									ignoredId={detailData.id !== 'new' && [detailData.id]}
+								/>
+							)}
+						</Form.RowController>
 					</Section>
 					<Section title={t('common:title.languageContent')} withBorder>
 						{langList.length > 1 && (

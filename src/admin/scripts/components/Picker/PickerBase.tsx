@@ -9,7 +9,7 @@ interface PickerBaseProps {
 	onBlur: (e: any) => void;
 	placeholder: string;
 	multiple?: boolean;
-	options: { value: string; label: string }[];
+	options: { value: any; label: string; disabled?: boolean }[];
 }
 
 const PickerBase: React.FC<PickerBaseProps> = ({
@@ -23,19 +23,17 @@ const PickerBase: React.FC<PickerBaseProps> = ({
 	options,
 }) => {
 	return (
-		<>
-			<Form.Select
-				id={id}
-				value={value}
-				onChange={onChange}
-				onBlur={onBlur}
-				style={{ width: '50%' }}
-				multiple={multiple}
-				placeholder={placeholder}
-				options={options}
-				children={children}
-			/>
-		</>
+		<Form.Select
+			id={id}
+			value={value}
+			onChange={onChange}
+			onBlur={onBlur}
+			style={{ width: '50%' }}
+			multiple={multiple}
+			placeholder={placeholder}
+			options={options}
+			children={children}
+		/>
 	);
 };
 

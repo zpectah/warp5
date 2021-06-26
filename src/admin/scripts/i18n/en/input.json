@@ -158,5 +158,33 @@
 	"searchTable": {
 		"label": "Search",
 		"placeholder": "Search in table"
+	},
+	"select_category": {
+		"placeholder": "Select category",
+		"placeholder_plural": "Select categories"
+	},
+	"select_menu": {
+		"placeholder": "Select menu",
+		"placeholder_plural": "Select menu"
+	},
+	"select_menuItems": {
+		"placeholder": "Select menu item",
+		"placeholder_plural": "Select menu items"
+	},
+	"select_pages": {
+		"placeholder": "Select page",
+		"placeholder_plural": "Select pages"
+	},
+	"select_productsOptions": {
+		"placeholder": "Select option",
+		"placeholder_plural": "Select options"
+	},
+	"select_products": {
+		"placeholder": "Select product",
+		"placeholder_plural": "Select products"
+	},
+	"select_tags": {
+		"placeholder": "Select tag",
+		"placeholder_plural": "Select tags"
 	}
 }

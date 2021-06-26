@@ -9,7 +9,7 @@ interface SelectBaseProps {
 	onBlur: (e: any) => void;
 	placeholder: string;
 	multiple?: boolean;
-	options?: { value: string; label: string }[];
+	options?: { value: any; label: string; disabled?: boolean }[];
 	style?: any;
 }
 
@@ -25,28 +25,27 @@ const SelectBase: React.FC<SelectBaseProps> = ({
 	style = { width: '50%' },
 }) => {
 	return (
-		<>
-			<Select
-				id={id}
-				value={value}
-				onChange={onChange}
-				onBlur={onBlur}
-				style={style}
-				variant="outlined"
-				margin="dense"
-				multiple={multiple}
-			>
-				<MenuItem value="">
-					<em>{placeholder}</em>
+		<Select
+			id={id}
+			value={value}
+			onChange={onChange}
+			onBlur={onBlur}
+			style={style}
+			variant="outlined"
+			margin="dense"
+			multiple={multiple}
+			placeholder={placeholder}
+		>
+			<MenuItem value={''} selected disabled>
+				<em>{placeholder}</em>
+			</MenuItem>
+			{options.map((opt) => (
+				<MenuItem key={opt.value} value={opt.value} disabled={opt.disabled}>
+					{opt.label}
 				</MenuItem>
-				{options.map((opt) => (
-					<MenuItem key={opt.value} value={opt.value}>
-						{opt.label}
-					</MenuItem>
-				))}
-				{children}
-			</Select>
-		</>
+			))}
+			{children}
+		</Select>
 	);
 };
 
