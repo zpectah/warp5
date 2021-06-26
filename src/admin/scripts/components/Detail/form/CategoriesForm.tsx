@@ -9,8 +9,8 @@ import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormHelperText from '@material-ui/core/FormHelperText'; // TODO -> as error message to row under input ...
 import Select from '@material-ui/core/Select';
-import styled from 'styled-components';
 import Switch from '@material-ui/core/Switch';
+import styled from 'styled-components';
 
 import config from '../../../config';
 import { Form, Section, Tabs } from '../../ui';
@@ -131,24 +131,21 @@ const CategoriesForm = ({
 							defaultValue={detailData.type || 'default'}
 						>
 							{(row) => (
-								<Select
-									id={row.id}
-									value={row.value}
-									onChange={row.onChange}
-									onBlur={row.onBlur}
-									style={{ width: '50%' }}
-									variant="outlined"
-									margin="dense"
-								>
-									<MenuItem value="">
-										<em>{t('input:type.placeholder')}</em>
-									</MenuItem>
-									{config.OPTIONS.model.Categories.type_list.map((opt) => (
-										<MenuItem key={opt} value={opt}>
-											{t(`types:${opt}`)}
-										</MenuItem>
-									))}
-								</Select>
+								<>
+									<Form.Select
+										id={row.id}
+										value={row.value}
+										onChange={row.onChange}
+										onBlur={row.onBlur}
+										placeholder={t('input:type.placeholder')}
+									>
+										{config.OPTIONS.model.Categories.type_list.map((opt) => (
+											<MenuItem key={opt} value={opt}>
+												{t(`types:${opt}`)}
+											</MenuItem>
+										))}
+									</Form.Select>
+								</>
 							)}
 						</Form.RowController>
 						<Form.Row label={t('input:parent.label')}>
