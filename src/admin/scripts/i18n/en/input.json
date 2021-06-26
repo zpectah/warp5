@@ -154,5 +154,9 @@
 	"imgThumbnail": {
 		"label": "Thumbnail image",
 		"placeholder": "Select thumbnail"
+	},
+	"searchTable": {
+		"label": "Search",
+		"placeholder": "Search in table"
 	}
 }

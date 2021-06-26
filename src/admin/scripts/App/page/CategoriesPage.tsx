@@ -200,6 +200,8 @@ const CategoriesPage = () => {
 					allowSelect={allowSelect}
 					allowDetail={allowDetail}
 					authorId={authorId}
+					processing={processing}
+					loading={loading}
 				/>
 				<DetailDialog
 					languageContent

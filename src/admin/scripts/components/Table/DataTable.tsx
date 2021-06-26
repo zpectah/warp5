@@ -21,12 +21,12 @@ import styled, { css } from 'styled-components';
 import config from '../../config';
 import { array } from '../../../../libs/utils';
 import { DATA_TABLE_ROWS_BY_PAGE } from '../../constants';
-import { appProps, routeProps } from '../../types/types';
+import { appProps } from '../../types/types';
 import { getComparator, stableSort, Order } from './utils';
 import TableHead from './TableHead';
 import { useSettings } from '../../hooks/App';
 import Language from '../Language';
-import { Form } from '../ui';
+import { Form, Preloader } from '../ui';
 
 const columnBase = css`
 	display: flex;
@@ -81,7 +81,9 @@ const useStyles = makeStyles((theme: Theme) =>
 		},
 		paper: {
 			width: '100%',
+			minHeight: 200,
 			marginBottom: theme.spacing(2),
+			position: 'relative',
 		},
 		table: {
 			minWidth: 750,
@@ -143,6 +145,8 @@ interface DataTableProps {
 	languageContent?: boolean;
 	authorId: number;
 	searchAttrs?: string[];
+	processing?: boolean;
+	loading?: boolean;
 }
 
 const DataTable = ({
@@ -161,6 +165,8 @@ const DataTable = ({
 	languageContent = false,
 	authorId,
 	searchAttrs = [],
+	processing,
+	loading,
 }: DataTableProps) => {
 	const { t } = useTranslation(['common', 'component']);
 	const { Settings } = useSettings();
@@ -601,7 +607,6 @@ const DataTable = ({
 								id="TableSearchInput"
 								value={search}
 								onChange={(e) => setSearch(e.target.value)}
-								label={''}
 							/>
 						</div>
 					</TableHeadingBlock>
@@ -638,6 +643,7 @@ const DataTable = ({
 					</TableHeadingBlock>
 				</TableHeading>
 				<Paper className={classes.paper}>
+					{loading && <Preloader.Block />}
 					<TableContainer>
 						<Table
 							className={classes.table}

@@ -2,6 +2,7 @@ import React from 'react';
 import TextField from '@material-ui/core/TextField';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import SearchIcon from '@material-ui/icons/Search';
+import { useTranslation } from 'react-i18next';
 
 interface SearchInputProps {
 	id: string;
@@ -14,18 +15,22 @@ interface SearchInputProps {
 
 const SearchInput = ({
 	id,
-	label = 'Search',
-	placeholder = 'Search',
+	label,
+	placeholder,
 	onChange,
 	disabled = false,
 }: SearchInputProps) => {
+	const { t } = useTranslation(['cinput']);
+
 	return (
 		<>
 			<TextField
 				type="search"
 				id={id}
 				label={label}
-				placeholder={placeholder}
+				placeholder={
+					placeholder ? placeholder : t('input:searchTable.placeholder')
+				}
 				variant="outlined"
 				onChange={onChange}
 				size="small"
@@ -36,6 +41,7 @@ const SearchInput = ({
 						</InputAdornment>
 					),
 				}}
+				margin="dense"
 				disabled={disabled}
 			/>
 		</>

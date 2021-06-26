@@ -45,7 +45,7 @@ export default {
 	preloader: {
 		block: {
 			color: palette.black,
-			bg: 'rgba(250,250,250,.5)',
+			bg: 'rgba(250,250,250,.25)',
 		},
 	},
 	section: {

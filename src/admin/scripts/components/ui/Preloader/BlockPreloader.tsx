@@ -6,6 +6,7 @@ import styled from 'styled-components';
 
 const Wrapper = styled.div`
 	width: 100%;
+	min-height: 200px;
 	height: 100%;
 	position: absolute;
 	top: 0;
@@ -22,7 +23,9 @@ interface PagePreloaderProps {}
 const PagePreloader = ({}: PagePreloaderProps) => {
 	return (
 		<Wrapper>
-			<CircularProgress color="inherit" />
+			<div>
+				<CircularProgress color="inherit" />
+			</div>
 		</Wrapper>
 	);
 };
