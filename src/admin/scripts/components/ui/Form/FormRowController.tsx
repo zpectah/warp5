@@ -1,5 +1,6 @@
 import React, { createContext } from 'react';
 import { Controller } from 'react-hook-form';
+import FormHelperText from '@material-ui/core/FormHelperText'; // TODO -> as error message to row under input ...
 import styled from 'styled-components';
 
 import { string } from '../../../../../libs/utils';
@@ -50,13 +51,13 @@ const HelpText = styled.div`
 	font-size: 0.85rem;
 	color: rgba(90, 90, 90, 0.5);
 `;
-const ErrorMessage = styled.div`
-	width: 100%;
-	height: auto;
-	margin-top: 0.75rem;
-	font-size: 0.85rem;
-	color: ${(props) => props.theme.color.red};
-`;
+// const ErrorMessage = styled.div`
+// 	width: 100%;
+// 	height: auto;
+// 	margin-top: 0.75rem;
+// 	font-size: 0.85rem;
+// 	color: ${(props) => props.theme.color.red};
+// `;
 
 interface ContextProps {
 	id: string | null;
@@ -151,12 +152,14 @@ const FormRowController: React.FC<FormRowControllerProps> = ({
 								</LabelWrapper>
 							)}
 							<InputWrapper className="form-row-column form-row-column-input">
-								{/* TODO */}
+								{/* TODO: FIX */}
 								{/* @ts-ignore */}
 								<Context.Consumer children={children} />
 								{helpText && <HelpText>{helpText}</HelpText>}
 								{errors.map((err, index) => (
-									<ErrorMessage key={index}>{err}</ErrorMessage>
+									<FormHelperText key={index} error margin="dense">
+										{err}
+									</FormHelperText>
 								))}
 							</InputWrapper>
 						</Context.Provider>

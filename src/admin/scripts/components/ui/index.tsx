@@ -6,6 +6,7 @@ import Form from './Form';
 import Dialog from './Dialog';
 import Tabs from './Tabs';
 import Preloader from './Preloader';
+import Wysiwyg from './Wysiwyg/Wysiwyg';
 
 export {
 	Scrollable,
@@ -16,4 +17,5 @@ export {
 	Dialog,
 	Tabs,
 	Preloader,
+	Wysiwyg,
 };

@@ -54,4 +54,7 @@ export default {
 			color: 'rgba(25, 25, 25, 0.75)',
 		},
 	},
+	wysiwyg: {
+		border: '1px solid rgba(150,150,150,.5)',
+	},
 };

@@ -4,23 +4,20 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { useTranslation } from 'react-i18next';
-import { useForm, Controller } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
-import FormHelperText from '@material-ui/core/FormHelperText'; // TODO -> as error message to row under input ...
-import Select from '@material-ui/core/Select';
+
 import Switch from '@material-ui/core/Switch';
 import styled from 'styled-components';
 
 import config from '../../../config';
-import { Form, Section, Tabs } from '../../ui';
+import { Form, Section, Tabs, Wysiwyg } from '../../ui';
 import { CategoriesItemProps } from '../../../types/App';
 import Language from '../../Language';
 import { useSettings } from '../../../hooks/App';
-import setLanguageModel from '../setLanguageModel';
 import Picker from '../../Picker';
 
-const LanguageWrapper = styled.div``;
 const LanguageWrapperPanel = styled.div<{ isActive: boolean }>`
 	display: ${(props) => (props.isActive ? 'block' : 'none')};
 `;
@@ -66,11 +63,6 @@ const CategoriesForm = ({
 	const { control, handleSubmit, formState, register } = useForm({
 		mode: 'all',
 		defaultValues: {
-			lang: setLanguageModel(langList, {
-				title: '',
-				perex: '',
-				content: '',
-			}),
 			...detailData,
 		},
 	});
@@ -212,9 +204,23 @@ const CategoriesForm = ({
 										/>
 									)}
 								</Form.RowController>
-								<Form.Row label={t('input:content.label')}>
-									wysiwyg content TODO: wysiwyg
-								</Form.Row>
+								<Form.RowController
+									label={t('input:content.label')}
+									control={control}
+									name={`lang.${lng}.content`}
+									defaultValue={
+										(detailData?.lang && detailData?.lang[lng]?.content) || ''
+									}
+								>
+									{(row) => (
+										<Wysiwyg
+											id={row.id}
+											value={row.value}
+											onChange={row.onChange}
+											placeholder={t('input:content.placeholder')}
+										/>
+									)}
+								</Form.RowController>
 							</LanguageWrapperPanel>
 						))}
 					</Section>
