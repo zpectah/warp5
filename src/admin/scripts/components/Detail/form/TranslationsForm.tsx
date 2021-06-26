@@ -15,8 +15,10 @@ import config from '../../../config';
 import { Form, Section, Tabs, Wysiwyg } from '../../ui';
 import { TranslationsItemProps } from '../../../types/App';
 import Language from '../../Language';
-import { useSettings } from '../../../hooks/App';
+import { useSettings, useTranslations } from '../../../hooks/App';
 import Picker from '../../Picker';
+import checkDuplicates from '../checkDuplicates';
+import { string } from '../../../../../libs/utils';
 
 const LanguageWrapperPanel = styled.div<{ isActive: boolean }>`
 	display: ${(props) => (props.isActive ? 'block' : 'none')};
@@ -51,12 +53,14 @@ const TranslationsForm = ({
 		'model',
 		'input',
 		'types',
+		'messages',
 	]);
-	const [lang, setLang] = useState(config.GLOBAL.PROJECT.LANG_DEFAULT);
+	const [lang, setLang] = useState<string>(config.GLOBAL.PROJECT.LANG_DEFAULT);
+	const [duplicates, setDuplicates] = useState<boolean>(false);
 	const { Settings } = useSettings();
+	const { Translations } = useTranslations();
 
 	// Static variables
-	const langDefault: string = Settings?.language_default;
 	const langList: string[] = Settings?.language_active;
 
 	// Form controller
@@ -74,6 +78,10 @@ const TranslationsForm = ({
 	const onLanguageChange = (lang: string) => {
 		setLang(lang);
 	};
+
+	// Check duplicates
+	const checkDupes = (name: string) =>
+		setDuplicates(checkDuplicates(Translations, name, detailData.id));
 
 	return (
 		<>
@@ -100,6 +108,7 @@ const TranslationsForm = ({
 							rules={{ required: true }}
 							required
 							defaultValue={detailData.name || ''}
+							errors={duplicates ? [t('messages:error.nameInUse')] : []}
 						>
 							{(row) => (
 								<TextField
@@ -107,8 +116,14 @@ const TranslationsForm = ({
 									placeholder={t('input:name.placeholder')}
 									id={row.id}
 									value={row.value}
-									onChange={row.onChange}
-									onBlur={row.onBlur}
+									onChange={(e) => {
+										row.onChange(e.target.value);
+										if (e.target.value.length > 2) checkDupes(e.target.value);
+									}}
+									onBlur={(e) => {
+										row.onBlur(e.target.value);
+										if (e.target.value.length > 2) checkDupes(e.target.value);
+									}}
 									style={{ width: '75%' }}
 									variant="outlined"
 									size="small"
@@ -178,7 +193,7 @@ const TranslationsForm = ({
 				<Button
 					onClick={handleSubmit(onSubmitHandler)}
 					color="primary"
-					disabled={!formState.isValid}
+					disabled={!formState.isValid || duplicates}
 				>
 					{detailData.id == 'new' ? t('btn.create') : t('btn.update')}
 				</Button>

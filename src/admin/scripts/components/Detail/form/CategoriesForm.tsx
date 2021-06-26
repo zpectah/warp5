@@ -17,6 +17,7 @@ import { CategoriesItemProps } from '../../../types/App';
 import Language from '../../Language';
 import { useSettings, useCategories } from '../../../hooks/App';
 import Picker from '../../Picker';
+import checkDuplicates from '../checkDuplicates';
 
 const LanguageWrapperPanel = styled.div<{ isActive: boolean }>`
 	display: ${(props) => (props.isActive ? 'block' : 'none')};
@@ -51,6 +52,7 @@ const CategoriesForm = ({
 		'model',
 		'input',
 		'types',
+		'messages',
 	]);
 	const [lang, setLang] = useState<string>(config.GLOBAL.PROJECT.LANG_DEFAULT);
 	const [duplicates, setDuplicates] = useState<boolean>(false);
@@ -58,7 +60,6 @@ const CategoriesForm = ({
 	const { Categories } = useCategories();
 
 	// Static variables
-	const langDefault: string = Settings?.language_default;
 	const langList: string[] = Settings?.language_active;
 
 	// Form controller
@@ -78,17 +79,8 @@ const CategoriesForm = ({
 	};
 
 	// Check duplicates
-	const isDuplicate = (name: string) => {
-		let duplicate = false;
-		Categories?.map((item) => {
-			if (item.name == name) duplicate = true;
-			if (item.name == string.replaceSpaces(name)) duplicate = true;
-		});
-
-		setDuplicates(duplicate);
-
-		return duplicate;
-	};
+	const checkDupes = (name: string) =>
+		setDuplicates(checkDuplicates(Categories, name, detailData.id));
 
 	return (
 		<>
@@ -125,11 +117,11 @@ const CategoriesForm = ({
 									value={row.value}
 									onChange={(e) => {
 										row.onChange(e.target.value);
-										if (e.target.value.length > 2) isDuplicate(e.target.value);
+										if (e.target.value.length > 2) checkDupes(e.target.value);
 									}}
 									onBlur={(e) => {
 										row.onBlur(e.target.value);
-										if (e.target.value.length > 2) isDuplicate(e.target.value);
+										if (e.target.value.length > 2) checkDupes(e.target.value);
 									}}
 									style={{ width: '75%' }}
 									variant="outlined"

@@ -18,6 +18,8 @@ import Language from '../../Language';
 import { useProfile, useSettings, useUsers } from '../../../hooks/App';
 import Picker from '../../Picker';
 import { EMAIL_REGEX, USER_LEVEL } from '../../../constants';
+import checkDuplicates from '../checkDuplicates';
+import { string } from '../../../../../libs/utils';
 
 const LanguageWrapperPanel = styled.div<{ isActive: boolean }>`
 	display: ${(props) => (props.isActive ? 'block' : 'none')};
@@ -54,14 +56,13 @@ const UsersForm = ({
 		'types',
 		'messages',
 	]);
-	const [lang, setLang] = useState(config.GLOBAL.PROJECT.LANG_DEFAULT);
-	const [duplicates, setDuplicates] = useState(false);
+	const [lang, setLang] = useState<string>(config.GLOBAL.PROJECT.LANG_DEFAULT);
+	const [duplicates, setDuplicates] = useState<boolean>(false);
 	const { Settings } = useSettings();
 	const { Profile } = useProfile();
 	const { Users } = useUsers();
 
 	// Static variables
-	const langDefault: string = Settings?.language_default;
 	const langList: string[] = Settings?.language_active;
 
 	// Form controller
@@ -81,16 +82,8 @@ const UsersForm = ({
 	};
 
 	// Check duplicates
-	const isDuplicate = (email: string) => {
-		let duplicate = false;
-		Users?.map((item) => {
-			if (item.email == email) duplicate = true;
-		});
-
-		setDuplicates(duplicate);
-
-		return duplicate;
-	};
+	const checkDupes = (name: string) =>
+		setDuplicates(checkDuplicates(Users, name, detailData.id, 'email'));
 
 	return (
 		<>
@@ -131,11 +124,11 @@ const UsersForm = ({
 									value={row.value}
 									onChange={(e) => {
 										row.onChange(e.target.value);
-										if (e.target.value.length > 2) isDuplicate(e.target.value);
+										if (e.target.value.length > 2) checkDupes(e.target.value);
 									}}
 									onBlur={(e) => {
 										row.onBlur(e.target.value);
-										if (e.target.value.length > 2) isDuplicate(e.target.value);
+										if (e.target.value.length > 2) checkDupes(e.target.value);
 									}}
 									style={{ width: '75%' }}
 									variant="outlined"

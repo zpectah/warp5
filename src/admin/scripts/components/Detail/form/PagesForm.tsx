@@ -17,6 +17,7 @@ import { PagesItemProps } from '../../../types/App';
 import Language from '../../Language';
 import { usePages, useSettings } from '../../../hooks/App';
 import Picker from '../../Picker';
+import checkDuplicates from '../checkDuplicates';
 
 const LanguageWrapperPanel = styled.div<{ isActive: boolean }>`
 	display: ${(props) => (props.isActive ? 'block' : 'none')};
@@ -59,7 +60,6 @@ const PagesForm = ({
 	const { Pages } = usePages();
 
 	// Static variables
-	const langDefault: string = Settings?.language_default;
 	const langList: string[] = Settings?.language_active;
 
 	// Form controller
@@ -79,17 +79,8 @@ const PagesForm = ({
 	};
 
 	// Check duplicates
-	const isDuplicate = (name: string) => {
-		let duplicate = false;
-		Pages?.map((item) => {
-			if (item.name == name) duplicate = true;
-			if (item.name == string.replaceSpaces(name)) duplicate = true;
-		});
-
-		setDuplicates(duplicate);
-
-		return duplicate;
-	};
+	const checkDupes = (name: string) =>
+		setDuplicates(checkDuplicates(Pages, name, detailData.id));
 
 	const watchType = watch('type');
 
@@ -136,11 +127,11 @@ const PagesForm = ({
 									value={row.value}
 									onChange={(e) => {
 										row.onChange(e.target.value);
-										if (e.target.value.length > 2) isDuplicate(e.target.value);
+										if (e.target.value.length > 2) checkDupes(e.target.value);
 									}}
 									onBlur={(e) => {
 										row.onBlur(e.target.value);
-										if (e.target.value.length > 2) isDuplicate(e.target.value);
+										if (e.target.value.length > 2) checkDupes(e.target.value);
 									}}
 									style={{ width: '75%' }}
 									variant="outlined"

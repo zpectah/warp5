@@ -17,6 +17,7 @@ import { TagsItemProps } from '../../../types/App';
 import Language from '../../Language';
 import { useSettings, useTags } from '../../../hooks/App';
 import Picker from '../../Picker';
+import checkDuplicates from '../checkDuplicates';
 
 const LanguageWrapperPanel = styled.div<{ isActive: boolean }>`
 	display: ${(props) => (props.isActive ? 'block' : 'none')};
@@ -59,7 +60,6 @@ const TagsForm = ({
 	const { Tags } = useTags();
 
 	// Static variables
-	const langDefault: string = Settings?.language_default;
 	const langList: string[] = Settings?.language_active;
 
 	// Form controller
@@ -79,17 +79,8 @@ const TagsForm = ({
 	};
 
 	// Check duplicates
-	const isDuplicate = (name: string) => {
-		let duplicate = false;
-		Tags?.map((item) => {
-			if (item.name == name) duplicate = true;
-			if (item.name == string.replaceSpaces(name)) duplicate = true;
-		});
-
-		setDuplicates(duplicate);
-
-		return duplicate;
-	};
+	const checkDupes = (name: string) =>
+		setDuplicates(checkDuplicates(Tags, name, detailData.id));
 
 	return (
 		<>
@@ -124,11 +115,11 @@ const TagsForm = ({
 									value={row.value}
 									onChange={(e) => {
 										row.onChange(e.target.value);
-										if (e.target.value.length > 2) isDuplicate(e.target.value);
+										if (e.target.value.length > 2) checkDupes(e.target.value);
 									}}
 									onBlur={(e) => {
 										row.onBlur(e.target.value);
-										if (e.target.value.length > 2) isDuplicate(e.target.value);
+										if (e.target.value.length > 2) checkDupes(e.target.value);
 									}}
 									style={{ width: '75%' }}
 									variant="outlined"

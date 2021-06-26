@@ -16,8 +16,11 @@ import { Form, Section, Tabs, Wysiwyg } from '../../ui';
 import { MembersItemProps } from '../../../types/Members';
 import Language from '../../Language';
 import { useProfile, useSettings } from '../../../hooks/App';
+import { useMembers } from '../../../hooks/Members';
 import Picker from '../../Picker';
 import { EMAIL_REGEX } from '../../../constants';
+import checkDuplicates from '../checkDuplicates';
+import { string } from '../../../../../libs/utils';
 
 const LanguageWrapperPanel = styled.div<{ isActive: boolean }>`
 	display: ${(props) => (props.isActive ? 'block' : 'none')};
@@ -52,13 +55,15 @@ const MembersForm = ({
 		'model',
 		'input',
 		'types',
+		'messages',
 	]);
-	const [lang, setLang] = useState(config.GLOBAL.PROJECT.LANG_DEFAULT);
+	const [lang, setLang] = useState<string>(config.GLOBAL.PROJECT.LANG_DEFAULT);
+	const [duplicates, setDuplicates] = useState<boolean>(false);
 	const { Settings } = useSettings();
 	const { Profile } = useProfile();
+	const { Members } = useMembers();
 
 	// Static variables
-	const langDefault: string = Settings?.language_default;
 	const langList: string[] = Settings?.language_active;
 
 	// Form controller
@@ -76,6 +81,10 @@ const MembersForm = ({
 	const onLanguageChange = (lang: string) => {
 		setLang(lang);
 	};
+
+	// Check duplicates
+	const checkDupes = (name: string) =>
+		setDuplicates(checkDuplicates(Members, name, detailData.id, 'email'));
 
 	return (
 		<>
@@ -120,6 +129,7 @@ const MembersForm = ({
 							rules={{ required: true, pattern: EMAIL_REGEX }}
 							required
 							defaultValue={detailData.email || ''}
+							errors={duplicates ? [t('messages:error.emailInUse')] : []}
 						>
 							{(row) => (
 								<TextField
@@ -127,8 +137,14 @@ const MembersForm = ({
 									placeholder={t('input:email.placeholder')}
 									id={row.id}
 									value={row.value}
-									onChange={row.onChange}
-									onBlur={row.onBlur}
+									onChange={(e) => {
+										row.onChange(e.target.value);
+										if (e.target.value.length > 2) checkDupes(e.target.value);
+									}}
+									onBlur={(e) => {
+										row.onBlur(e.target.value);
+										if (e.target.value.length > 2) checkDupes(e.target.value);
+									}}
 									style={{ width: '75%' }}
 									variant="outlined"
 									size="small"
@@ -403,7 +419,7 @@ const MembersForm = ({
 				<Button
 					onClick={handleSubmit(onSubmitHandler)}
 					color="primary"
-					disabled={!formState.isValid}
+					disabled={!formState.isValid || duplicates}
 				>
 					{detailData.id == 'new' ? t('btn.create') : t('btn.update')}
 				</Button>
