@@ -281,7 +281,7 @@ const DataTable = ({
 			});
 		if (columnsLayout.t_value)
 			columns.push({
-				id: 't_value',
+				id: 'value',
 				numeric: false,
 				disablePadding: true,
 				label: 'Value',
@@ -489,11 +489,6 @@ const DataTable = ({
 						<ItemRowText>{row.file_size}</ItemRowText>
 					</TableCell>
 				)}
-				{columnsLayout.active && (
-					<TableCell>
-						<ItemRowText>{row.active}</ItemRowText>
-					</TableCell>
-				)}
 				{columnsLayout.tags && (
 					<TableCell>
 						<ItemRowText>{row.tags}</ItemRowText>
@@ -516,12 +511,24 @@ const DataTable = ({
 				)}
 				{columnsLayout.t_value && (
 					<TableCell>
-						<ItemRowText>{row.t_value}</ItemRowText>
+						<ItemRowLink onClick={() => onDetail(row.id)}>
+							<div>
+								<b>
+									{lang}: {row.lang[lang].value}
+								</b>
+								{row.name && <small>{row.name}</small>}
+							</div>
+						</ItemRowLink>
 					</TableCell>
 				)}
 				{columnsLayout.r_value && (
 					<TableCell>
 						<ItemRowText>{row.r_value}</ItemRowText>
+					</TableCell>
+				)}
+				{columnsLayout.active && (
+					<TableCell>
+						<ItemRowText>{row.active}</ItemRowText>
 					</TableCell>
 				)}
 				{columnsLayout.context && (

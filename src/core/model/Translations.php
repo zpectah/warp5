@@ -39,11 +39,11 @@ class Translations {
 			$table_name = 'translations__' . $lang;
 
 			// prepare
-			$query = ('INSERT INTO ' . $table_name . ' (id, t_value) VALUES (?,?)');
+			$query = ('INSERT INTO ' . $table_name . ' (id, value) VALUES (?,?)');
 			$types = 'is';
 			$args = [
 				$lastId,
-				$requestData[$lang]['t_value']
+				$requestData[$lang]['value']
 			];
 
 			// execute
@@ -69,10 +69,10 @@ class Translations {
 			$table_name = 'translations__' . $lang;
 
 			// prepare
-			$query = ('UPDATE ' . $table_name . ' SET t_value = ? WHERE id = ?');
+			$query = ('UPDATE ' . $table_name . ' SET value = ? WHERE id = ?');
 			$types = 'si';
 			$args = [
-				$requestData[$lang]['t_value'],
+				$requestData[$lang]['value'],
 				$id
 			];
 

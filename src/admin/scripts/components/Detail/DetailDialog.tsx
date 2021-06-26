@@ -4,6 +4,7 @@ import { Dialog, Preloader } from '../ui';
 import { appProps } from '../../types/types';
 import CategoriesForm from './form/CategoriesForm';
 import TagsForm from './form/TagsForm';
+import TranslationsForm from './form/TranslationsForm';
 
 interface DetailDialogProps {
 	model:
@@ -48,7 +49,7 @@ const DetailDialog = ({
 		Tags: TagsForm,
 		Users: CategoriesForm, // TODO
 		Posts: CategoriesForm, // TODO
-		Translations: CategoriesForm, // TODO
+		Translations: TranslationsForm,
 		Categories: CategoriesForm,
 		Pages: CategoriesForm, // TODO
 		Uploads: CategoriesForm, // TODO

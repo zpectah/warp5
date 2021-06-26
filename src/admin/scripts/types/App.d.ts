@@ -54,7 +54,7 @@ export interface TagsItemProps extends commonModelProps {
 export interface TranslationsItemProps extends commonModelProps {
 	name: string;
 	lang?: {
-		t_value: string;
+		value: string;
 	};
 }
 
