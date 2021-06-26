@@ -6,6 +6,7 @@ import CategoriesForm from './form/CategoriesForm';
 import TagsForm from './form/TagsForm';
 import TranslationsForm from './form/TranslationsForm';
 import PagesForm from './form/PagesForm';
+import MenuForm from './form/MenuForm';
 
 interface DetailDialogProps {
 	model:
@@ -54,7 +55,7 @@ const DetailDialog = ({
 		Categories: CategoriesForm,
 		Pages: PagesForm,
 		Uploads: CategoriesForm, // TODO
-		Menu: CategoriesForm, // TODO
+		Menu: MenuForm,
 		Messages: CategoriesForm, // TODO
 		Requests: CategoriesForm, // TODO
 		Members: CategoriesForm, // TODO

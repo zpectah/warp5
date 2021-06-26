@@ -50,6 +50,7 @@
 		"deleteConfirm_plural": "Are you sure want to delete these items?",
 		"languageContent": "Language content",
 		"media": "Media",
-		"options": "Options"
+		"options": "Options",
+		"menuItems": "Menu items"
 	}
 }
