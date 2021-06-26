@@ -56,6 +56,9 @@
 		"contact": "Contact",
 		"address": "Address",
 		"location": "Location",
-		"descriptions": "Descriptions"
+		"descriptions": "Descriptions",
+		"product": "Product",
+		"productOptions": "Product options",
+		"status": "Status"
 	}
 }

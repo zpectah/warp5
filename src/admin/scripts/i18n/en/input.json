@@ -191,6 +191,82 @@
 		"label": "Group",
 		"placeholder": "Select group"
 	},
+	"price": {
+		"label": "Price",
+		"placeholder": "Set price"
+	},
+	"discount": {
+		"label": "Discount",
+		"placeholder": "Set discount"
+	},
+	"weight": {
+		"label": "Weight",
+		"placeholder": "Set weight"
+	},
+	"length": {
+		"label": "Length",
+		"placeholder": "Set length"
+	},
+	"width": {
+		"label": "Width",
+		"placeholder": "Set width"
+	},
+	"height": {
+		"label": "Height",
+		"placeholder": "Set height"
+	},
+	"amount": {
+		"label": "Amount",
+		"placeholder": "Set amount"
+	},
+	"options": {
+		"label": "Options",
+		"placeholder": "Select options"
+	},
+	"related": {
+		"label": "Related",
+		"placeholder": "Select related"
+	},
+	"attachment": {
+		"label": "Attachments",
+		"placeholder": "Select attachments"
+	},
+	"rating": {
+		"label": "Rating",
+		"placeholder": "Set rating"
+	},
+	"isNew": {
+		"label": "Is new",
+		"placeholder": "Select option"
+	},
+	"isUsed": {
+		"label": "Is used",
+		"placeholder": "Select option"
+	},
+	"isUnboxed": {
+		"label": "Is unboxed",
+		"placeholder": "Select option"
+	},
+	"value": {
+		"label": "Value",
+		"placeholder": "Set value"
+	},
+	"weightLimit": {
+		"label": "Weight limit",
+		"placeholder": "Set weight limit"
+	},
+	"logo": {
+		"label": "Logo",
+		"placeholder": "Set logo"
+	},
+	"published": {
+		"label": "Published",
+		"placeholder": "Set publish date"
+	},
+	"authorized": {
+		"label": "Authorized",
+		"placeholder": "Set authorized"
+	},
 	"searchTable": {
 		"label": "Search",
 		"placeholder": "Search in table"

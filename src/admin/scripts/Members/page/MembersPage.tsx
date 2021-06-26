@@ -212,7 +212,7 @@ const MembersPage = () => {
 			<Section>
 				<DataTable
 					data={Members}
-					searchAttrs={['email', 'first_name', 'last_name']}
+					searchAttrs={['email', 'nickname', 'first_name', 'last_name']}
 					model={modelName}
 					selectedRows={selectedRows}
 					columnsLayout={columnsLayout}
