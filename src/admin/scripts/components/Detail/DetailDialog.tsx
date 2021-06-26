@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Dialog, Preloader } from '../ui';
 import { appProps } from '../../types/types';
 import CategoriesForm from './form/CategoriesForm';
+import TagsForm from './form/TagsForm';
 
 interface DetailDialogProps {
 	model:
@@ -44,7 +45,7 @@ const DetailDialog = ({
 	useEffect(() => onToggle(isOpen), [isOpen]);
 
 	const component = {
-		Tags: CategoriesForm, // TODO
+		Tags: TagsForm,
 		Users: CategoriesForm, // TODO
 		Posts: CategoriesForm, // TODO
 		Translations: CategoriesForm, // TODO
