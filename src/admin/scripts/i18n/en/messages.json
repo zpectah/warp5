@@ -14,7 +14,9 @@
 		"fileNotAccepted": "This file type is not accepted!",
 		"fileNotSupported": "This file type is not supported!",
 		"itemNotFound": "This item was not found",
-		"detailNotFound": "Detail not found"
+		"detailNotFound": "Detail not found",
+		"nameInUse": "This name is already in use, try another",
+		"emailInUse": "This e-mail is already in use, try another"
 	},
 	"info": {
 		"menuItemsCreateAfter": "Menu items should be added when menu is created"

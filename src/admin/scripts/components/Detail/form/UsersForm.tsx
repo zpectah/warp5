@@ -15,7 +15,7 @@ import config from '../../../config';
 import { Form, Section, Tabs, Wysiwyg } from '../../ui';
 import { UsersItemProps } from '../../../types/App';
 import Language from '../../Language';
-import { useProfile, useSettings } from '../../../hooks/App';
+import { useProfile, useSettings, useUsers } from '../../../hooks/App';
 import Picker from '../../Picker';
 import { EMAIL_REGEX, USER_LEVEL } from '../../../constants';
 
@@ -52,10 +52,13 @@ const UsersForm = ({
 		'model',
 		'input',
 		'types',
+		'messages',
 	]);
 	const [lang, setLang] = useState(config.GLOBAL.PROJECT.LANG_DEFAULT);
+	const [duplicates, setDuplicates] = useState(false);
 	const { Settings } = useSettings();
 	const { Profile } = useProfile();
+	const { Users } = useUsers();
 
 	// Static variables
 	const langDefault: string = Settings?.language_default;
@@ -75,6 +78,18 @@ const UsersForm = ({
 	// When language on content changed
 	const onLanguageChange = (lang: string) => {
 		setLang(lang);
+	};
+
+	// Check duplicates
+	const isDuplicate = (email: string) => {
+		let duplicate = false;
+		Users?.map((item) => {
+			if (item.email == email) duplicate = true;
+		});
+
+		setDuplicates(duplicate);
+
+		return duplicate;
 	};
 
 	return (
@@ -106,6 +121,7 @@ const UsersForm = ({
 							rules={{ required: true, pattern: EMAIL_REGEX }}
 							required
 							defaultValue={detailData.email || ''}
+							errors={duplicates ? [t('messages:error.emailInUse')] : []}
 						>
 							{(row) => (
 								<TextField
@@ -113,8 +129,14 @@ const UsersForm = ({
 									placeholder={t('input:email.placeholder')}
 									id={row.id}
 									value={row.value}
-									onChange={row.onChange}
-									onBlur={row.onBlur}
+									onChange={(e) => {
+										row.onChange(e.target.value);
+										if (e.target.value.length > 2) isDuplicate(e.target.value);
+									}}
+									onBlur={(e) => {
+										row.onBlur(e.target.value);
+										if (e.target.value.length > 2) isDuplicate(e.target.value);
+									}}
 									style={{ width: '75%' }}
 									variant="outlined"
 									size="small"
@@ -312,7 +334,7 @@ const UsersForm = ({
 				<Button
 					onClick={handleSubmit(onSubmitHandler)}
 					color="primary"
-					disabled={!formState.isValid}
+					disabled={!formState.isValid || duplicates}
 				>
 					{detailData.id == 'new' ? t('btn.create') : t('btn.update')}
 				</Button>

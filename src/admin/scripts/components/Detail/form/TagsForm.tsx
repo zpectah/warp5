@@ -7,15 +7,15 @@ import { useTranslation } from 'react-i18next';
 import { useForm } from 'react-hook-form';
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
-
 import Switch from '@material-ui/core/Switch';
 import styled from 'styled-components';
 
+import { string } from '../../../../../libs/utils';
 import config from '../../../config';
 import { Form, Section, Tabs, Wysiwyg } from '../../ui';
 import { TagsItemProps } from '../../../types/App';
 import Language from '../../Language';
-import { useSettings } from '../../../hooks/App';
+import { useSettings, useTags } from '../../../hooks/App';
 import Picker from '../../Picker';
 
 const LanguageWrapperPanel = styled.div<{ isActive: boolean }>`
@@ -51,9 +51,12 @@ const TagsForm = ({
 		'model',
 		'input',
 		'types',
+		'messages',
 	]);
-	const [lang, setLang] = useState(config.GLOBAL.PROJECT.LANG_DEFAULT);
+	const [lang, setLang] = useState<string>(config.GLOBAL.PROJECT.LANG_DEFAULT);
+	const [duplicates, setDuplicates] = useState<boolean>(false);
 	const { Settings } = useSettings();
+	const { Tags } = useTags();
 
 	// Static variables
 	const langDefault: string = Settings?.language_default;
@@ -73,6 +76,19 @@ const TagsForm = ({
 	// When language on content changed
 	const onLanguageChange = (lang: string) => {
 		setLang(lang);
+	};
+
+	// Check duplicates
+	const isDuplicate = (name: string) => {
+		let duplicate = false;
+		Tags?.map((item) => {
+			if (item.name == name) duplicate = true;
+			if (item.name == string.replaceSpaces(name)) duplicate = true;
+		});
+
+		setDuplicates(duplicate);
+
+		return duplicate;
 	};
 
 	return (
@@ -98,6 +114,7 @@ const TagsForm = ({
 							rules={{ required: true }}
 							required
 							defaultValue={detailData.name || ''}
+							errors={duplicates ? [t('messages:error.nameInUse')] : []}
 						>
 							{(row) => (
 								<TextField
@@ -105,8 +122,14 @@ const TagsForm = ({
 									placeholder={t('input:name.placeholder')}
 									id={row.id}
 									value={row.value}
-									onChange={row.onChange}
-									onBlur={row.onBlur}
+									onChange={(e) => {
+										row.onChange(e.target.value);
+										if (e.target.value.length > 2) isDuplicate(e.target.value);
+									}}
+									onBlur={(e) => {
+										row.onBlur(e.target.value);
+										if (e.target.value.length > 2) isDuplicate(e.target.value);
+									}}
 									style={{ width: '75%' }}
 									variant="outlined"
 									size="small"
@@ -145,7 +168,7 @@ const TagsForm = ({
 				<Button
 					onClick={handleSubmit(onSubmitHandler)}
 					color="primary"
-					disabled={!formState.isValid}
+					disabled={!formState.isValid || duplicates}
 				>
 					{detailData.id == 'new' ? t('btn.create') : t('btn.update')}
 				</Button>
