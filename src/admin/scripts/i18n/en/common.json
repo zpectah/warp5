@@ -22,7 +22,8 @@
 		"clear": "Clear",
 		"install": "Install",
 		"new": "New",
-		"newItem": "New item"
+		"newItem": "New item",
+		"select": "Select"
 	},
 	"btn_new": {
 		"Posts": "New post",

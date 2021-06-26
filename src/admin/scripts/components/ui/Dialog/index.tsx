@@ -3,7 +3,7 @@ import ConfirmDialog from './ConfirmDialog';
 import BlankDialog from './BlankDialog';
 
 export default {
-	Wrapper: Dialog,
+	Base: Dialog,
 	Confirm: ConfirmDialog,
 	Blank: BlankDialog,
 };

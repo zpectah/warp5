@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import Button from '@material-ui/core/Button';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import styled from 'styled-components';
 
 import { useUploads } from '../../hooks/App';
+import { Dialog } from '../ui';
 
 const ActionsWrapper = styled.div``;
 const SelectedWrapper = styled.div``;
@@ -27,7 +28,26 @@ const UploadsPicker = ({
 	mode = 'all',
 }: UploadsPickerProps) => {
 	const { t } = useTranslation(['common', 'input', 'messages']);
+	const [dialogOpen, setDialogOpen] = useState(false);
+	const [tmpSelected, setSelected] = useState([]);
+
 	const { Uploads } = useUploads();
+
+	useEffect(() => {
+		if (value) {
+			// if string
+
+			// if array
+
+			console.log('value', typeof value, value);
+
+			if (typeof value == 'string') {
+				setSelected([value]);
+			} else {
+				setSelected([...value]);
+			}
+		}
+	}, [value]);
 
 	const getPickerOptions = () => {
 		let opts = [];
@@ -47,23 +67,58 @@ const UploadsPicker = ({
 		return opts;
 	};
 
-	const onDialogOpen = () => {};
+	const onDialogClose = () => {
+		setDialogOpen(false);
+	};
+
+	const onDialogOpen = () => {
+		setDialogOpen(true);
+	};
 
 	const onResetHandler = () => {
+		setSelected([]);
 		onChange('');
+	};
+
+	const onSelectedConfirm = () => {
+		console.log('confirm selected ...');
+
+		setDialogOpen(false);
 	};
 
 	return (
 		<>
 			<ActionsWrapper>
 				<ButtonGroup size="small" aria-label="small outlined button group">
-					<Button onClick={onDialogOpen}>Select</Button>
+					<Button onClick={onDialogOpen}>{t('btn.select')}</Button>
 					<Button onClick={onResetHandler} disabled={!value} color="secondary">
-						Reset
+						{t('btn.clear')}
 					</Button>
 				</ButtonGroup>
 			</ActionsWrapper>
-			<SelectedWrapper>uploads list ...</SelectedWrapper>
+			<SelectedWrapper>
+				{tmpSelected.map((item) => (
+					<div key={item}>{item}</div>
+				))}
+			</SelectedWrapper>
+			<Dialog.Base
+				open={dialogOpen}
+				onToggle={(open) => setDialogOpen(open)}
+				headerChildren={<>Select uploads</>}
+				footerChildren={
+					<>
+						<Button onClick={onDialogClose}>{t('btn.cancel')}</Button>
+						<Button onClick={onSelectedConfirm} color="primary" autoFocus>
+							{t('btn.confirm')}
+						</Button>
+					</>
+				}
+				customContent={
+					<>
+						<div>list of uploads by type ...</div>
+					</>
+				}
+			/>
 		</>
 	);
 };

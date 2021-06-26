@@ -18,7 +18,7 @@ const HelpDialog = ({ open, onToggle }: HelpModalProps) => {
 
 	return (
 		<>
-			<Dialog.Wrapper
+			<Dialog.Base
 				open={isOpen}
 				onToggle={(open) => setOpen(open)}
 				headerChildren={<>Help</>}
