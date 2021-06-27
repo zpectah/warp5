@@ -74,14 +74,12 @@ const UploadsPicker = ({
 	const [items, setItems] = useState<any[]>([]);
 	const [itemsSelected, setItemsSelected] = useState<any[]>([]);
 	const [tmpItemsSelected, setTmpItemsSelected] = useState<any[]>([]);
-
 	const { Uploads } = useUploads();
 
 	const classes = useStyles();
 
 	const setInitialItems = () => {
 		let tmp_items = [];
-		let tmp_selected = [];
 
 		Uploads?.map((item) => {
 			switch (mode) {
@@ -112,32 +110,8 @@ const UploadsPicker = ({
 			}
 		});
 
-		if (value) {
-			if (!multiple) {
-				tmp_items.map((item) => {
-					if (item.file_name == value) tmp_selected.push(item.file_name);
-				});
-			} else {
-				if (Array.isArray(value)) {
-					if (value.length > 0)
-						tmp_items.map((item) => {
-							value.map((sel) => {
-								if (item.file_name == sel || item.id == sel)
-									tmp_selected.push(item.file_name);
-							});
-						});
-				}
-			}
-		}
-
 		setItems(tmp_items);
-		setItemsSelected(tmp_selected);
-		setTmpItemsSelected(tmp_selected);
 	};
-
-	useEffect(() => {
-		if (Uploads) setInitialItems();
-	}, [Uploads]);
 
 	const onSelectHandler = (fileName) => {
 		let tmp_selected = [...tmpItemsSelected];
@@ -179,6 +153,42 @@ const UploadsPicker = ({
 		setTmpItemsSelected([]);
 		onChange('');
 	};
+
+	const onToggleDialogHandler = (open: boolean) => {
+		setDialogOpen(open);
+		if (!open) {
+			setTmpItemsSelected(itemsSelected);
+		}
+	};
+
+	useEffect(() => {
+		if (Uploads) setInitialItems();
+	}, [Uploads]);
+
+	useEffect(() => {
+		let tmp_selected = [];
+
+		if (value) {
+			if (!multiple) {
+				items.map((item) => {
+					if (item.file_name == value) tmp_selected.push(item.file_name);
+				});
+			} else {
+				if (Array.isArray(value)) {
+					if (value.length > 0)
+						items.map((item) => {
+							value.map((sel) => {
+								if (item.file_name == sel || item.id == sel)
+									tmp_selected.push(item.file_name);
+							});
+						});
+				}
+			}
+		}
+
+		setItemsSelected(tmp_selected);
+		setTmpItemsSelected(tmp_selected);
+	}, [items, value]);
 
 	return (
 		<>
@@ -222,7 +232,7 @@ const UploadsPicker = ({
 			</ActionsWrapper>
 			<Dialog.Base
 				open={dialogOpen}
-				onToggle={(open) => setDialogOpen(open)}
+				onToggle={onToggleDialogHandler}
 				headerChildren={
 					<>
 						{placeholder
