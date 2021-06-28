@@ -9,6 +9,10 @@ import PagesForm from './form/PagesForm';
 import MenuForm from './form/MenuForm';
 import UsersForm from './form/UsersForm';
 import MembersForm from './form/MembersForm';
+import MessagesForm from './form/MessagesForm';
+import RequestsForm from './form/RequestsForm';
+import OrdersForm from './form/OrdersForm';
+import BasketsForm from './form/BasketsForm';
 
 interface DetailDialogProps {
 	model:
@@ -58,8 +62,8 @@ const DetailDialog = ({
 		Pages: PagesForm,
 		Uploads: CategoriesForm, // TODO
 		Menu: MenuForm,
-		Messages: CategoriesForm, // TODO
-		Requests: CategoriesForm, // TODO
+		Messages: MessagesForm,
+		Requests: RequestsForm,
 		Members: MembersForm,
 		Products: CategoriesForm, // TODO
 		Deliveries: CategoriesForm, // TODO
@@ -68,6 +72,8 @@ const DetailDialog = ({
 		Producers: CategoriesForm, // TODO
 		Stores: CategoriesForm, // TODO
 		ProductsOptions: CategoriesForm, // TODO
+		Orders: OrdersForm,
+		Baskets: BasketsForm,
 	};
 
 	const ComponentName = component[model];

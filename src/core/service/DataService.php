@@ -8,8 +8,10 @@ namespace core\service;
 use core\handler\Installer;
 use core\handler\SqlDumper;
 use core\model\Categories;
+use core\model\Market\Baskets;
 use core\model\Market\Deliveries;
 use core\model\Market\Distributors;
+use core\model\Market\Orders;
 use core\model\Market\Payments;
 use core\model\Market\Producers;
 use core\model\Market\Products;
@@ -65,6 +67,8 @@ class DataService {
 		$Products = new Products;
 		$ProductsOptions = new ProductsOptions;
 		$Stores = new Stores;
+		$Orders = new Orders;
+		$Baskets = new Baskets;
 
 		$languages = $Settings -> get_languages($conn);
 		$modules = $Settings -> get_modules($conn);
@@ -189,6 +193,22 @@ class DataService {
 				}
 				break;
 
+			case 'Orders':
+				if ($modules['module_market_installed'] == 'true') {
+					$response = $Orders -> get($conn);
+				} else {
+					$response = [];
+				}
+				break;
+
+			case 'Baskets':
+				if ($modules['module_market_installed'] == 'true') {
+					$response = $Baskets -> get($conn);
+				} else {
+					$response = [];
+				}
+				break;
+
 		}
 
 		$conn -> close();
@@ -228,7 +248,8 @@ class DataService {
 		$Products = new Products;
 		$ProductsOptions = new ProductsOptions;
 		$Stores = new Stores;
-
+		$Orders = new Orders;
+		$Baskets = new Baskets;
 
 		$languages = $Settings -> get_languages($conn);
 		$modules = $Settings -> get_modules($conn);
@@ -351,6 +372,22 @@ class DataService {
 				}
 				break;
 
+			case 'Orders':
+				if ($modules['module_market_installed'] == 'true') {
+					$response = $Orders -> create($conn, $data);
+				} else {
+					$response = [];
+				}
+				break;
+
+			case 'Baskets':
+				if ($modules['module_market_installed'] == 'true') {
+					$response = $Baskets -> create($conn, $data);
+				} else {
+					$response = [];
+				}
+				break;
+
 		}
 
 		$conn -> close();
@@ -389,6 +426,8 @@ class DataService {
 		$Products = new Products;
 		$ProductsOptions = new ProductsOptions;
 		$Stores = new Stores;
+		$Orders = new Orders;
+		$Baskets = new Baskets;
 
 		$languages = $Settings -> get_languages($conn);
 		$modules = $Settings -> get_modules($conn);
@@ -510,6 +549,22 @@ class DataService {
 			case 'Stores':
 				if ($modules['module_market_installed'] == 'true') {
 					$response = $Stores -> update($conn, $data, $languages);
+				} else {
+					$response = [];
+				}
+				break;
+
+			case 'Orders':
+				if ($modules['module_market_installed'] == 'true') {
+					$response = $Orders -> update($conn, $data);
+				} else {
+					$response = [];
+				}
+				break;
+
+			case 'Baskets':
+				if ($modules['module_market_installed'] == 'true') {
+					$response = $Baskets -> update($conn, $data);
 				} else {
 					$response = [];
 				}
@@ -709,6 +764,8 @@ class DataService {
 		$Products = new Products;
 		$ProductsOptions = new ProductsOptions;
 		$Stores = new Stores;
+		$Orders = new Orders;
+		$Baskets = new Baskets;
 
 		$modules = $Settings -> get_modules($conn);
 
@@ -825,6 +882,22 @@ class DataService {
 			case 'Stores':
 				if ($modules['module_market_installed'] == 'true') {
 					$response = $Stores -> delete($conn, $data);
+				} else {
+					$response = [];
+				}
+				break;
+
+			case 'Orders':
+				if ($modules['module_market_installed'] == 'true') {
+					$response = $Orders -> delete($conn, $data);
+				} else {
+					$response = [];
+				}
+				break;
+
+			case 'Baskets':
+				if ($modules['module_market_installed'] == 'true') {
+					$response = $Baskets -> delete($conn, $data);
 				} else {
 					$response = [];
 				}

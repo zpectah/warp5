@@ -92,3 +92,13 @@ export interface DistributorsItemProps extends commonModelProps {
 	type: 'undefined';
 	img_main?: string;
 }
+
+export interface OrdersItemProps extends commonModelProps {
+	name: string;
+	type: 'default';
+}
+
+export interface BasketsItemProps extends commonModelProps {
+	name: string;
+	type: 'default';
+}

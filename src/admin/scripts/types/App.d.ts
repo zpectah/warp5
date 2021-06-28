@@ -114,7 +114,7 @@ export interface MenuItemsItemProps extends commonModelProps {
 
 export interface MessagesItemProps {
 	is_new?: boolean;
-	id: number;
+	id?: string;
 	type: 'default' | 'system';
 	sender: string;
 	recipients: string[];
@@ -124,7 +124,7 @@ export interface MessagesItemProps {
 }
 
 export interface RequestsItemProps {
-	id: number;
+	id?: string;
 	type: 'default' | 'user' | 'system';
 	context: string;
 	value: string;

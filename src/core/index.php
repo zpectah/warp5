@@ -59,6 +59,8 @@ require PATH_PFX . 'core/model/Market/Producers.php';
 require PATH_PFX . 'core/model/Market/Payments.php';
 require PATH_PFX . 'core/model/Market/Distributors.php';
 require PATH_PFX . 'core/model/Market/Deliveries.php';
+require PATH_PFX . 'core/model/Market/Orders.php';
+require PATH_PFX . 'core/model/Market/Baskets.php';
 
 /*
  * Handlers

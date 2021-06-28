@@ -132,6 +132,7 @@ interface DataTableProps {
 		r_value?: boolean; // TODO: delete
 		context?: boolean;
 		authorized?: boolean;
+		subject?: boolean;
 		// TODO: new columns
 	};
 	onRowDetailCallback?: (id: number) => void;
@@ -258,6 +259,13 @@ const DataTable = ({
 				disablePadding: true,
 				label: 'Category',
 			});
+		if (columnsLayout.subject)
+			columns.push({
+				id: 'subject',
+				numeric: false,
+				disablePadding: true,
+				label: 'Subject',
+			});
 		if (columnsLayout.user_group)
 			columns.push({
 				id: 'user_group',
@@ -288,7 +296,7 @@ const DataTable = ({
 			});
 		if (columnsLayout.r_value)
 			columns.push({
-				id: 'r_value',
+				id: 'value',
 				numeric: false,
 				disablePadding: true,
 				label: 'Value',
@@ -522,13 +530,20 @@ const DataTable = ({
 					</TableCell>
 				)}
 				{columnsLayout.r_value && (
-					<TableCell>
-						<ItemRowText>{row.r_value}</ItemRowText>
+					<TableCell component="th" id={labelId} scope="row">
+						<ItemRowLink onClick={() => onDetail(row.id)}>
+							<ItemRowText>{row.value}</ItemRowText>
+						</ItemRowLink>
 					</TableCell>
 				)}
 				{columnsLayout.active && (
 					<TableCell>
 						<ItemRowText>{row.active}</ItemRowText>
+					</TableCell>
+				)}
+				{columnsLayout.subject && (
+					<TableCell>
+						<ItemRowText>{row.subject}</ItemRowText>
 					</TableCell>
 				)}
 				{columnsLayout.context && (

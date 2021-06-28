@@ -960,6 +960,71 @@ class Request {
 					return $unauthorizedResponse;
 				}
 
+			// Orders
+			case 'get_orders':
+				if ($authorized) {
+					$response['data'] = $DataService -> get('Orders', $requestData);
+					$response['status'] = 'ok';
+					return $response;
+				} else {
+					return $unauthorizedResponse;
+				}
+
+			case 'create_orders':
+				if ($authorized) {
+					$response['data'] = $DataService -> create('Orders', $requestData);
+					$response['status'] = 'ok';
+					return $response;
+				} else {
+					return $unauthorizedResponse;
+				}
+
+			case 'delete_orders':
+				if ($authorized) {
+					$response['data'] = $DataService -> delete('Orders', $requestData);
+					$response['status'] = 'ok';
+					return $response;
+				} else {
+					return $unauthorizedResponse;
+				}
+
+			// Baskets
+			case 'get_baskets':
+				if ($authorized) {
+					$response['data'] = $DataService -> get('Baskets', $requestData);
+					$response['status'] = 'ok';
+					return $response;
+				} else {
+					return $unauthorizedResponse;
+				}
+
+			case 'create_baskets':
+				if ($authorized) {
+					$response['data'] = $DataService -> create('Baskets', $requestData);
+					$response['status'] = 'ok';
+					return $response;
+				} else {
+					return $unauthorizedResponse;
+				}
+
+			case 'update_baskets':
+				if ($authorized) {
+					$response['data'] = $DataService -> update('Baskets', $requestData);
+					$response['status'] = 'ok';
+					return $response;
+				} else {
+					return $unauthorizedResponse;
+				}
+
+			case 'delete_baskets':
+				if ($authorized) {
+					$response['data'] = $DataService -> delete('Baskets', $requestData);
+					$response['status'] = 'ok';
+					return $response;
+				} else {
+					return $unauthorizedResponse;
+				}
+
 
 			// Installer
 			case 'install_language':

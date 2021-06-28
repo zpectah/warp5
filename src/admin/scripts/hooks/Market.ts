@@ -115,6 +115,32 @@ function useDeliveries() {
 	};
 }
 
+function useOrders() {
+	const { data, error } = useSWR(`/api/get_orders`, api.get);
+
+	return {
+		Orders: data?.data,
+		isOrdersLoading: !data && !error,
+		isOrdersError: error,
+		reloadOrders: () => mutate(`/api/get_orders`),
+		createOrders: (data: any) => api.post('/api/create_orders', data),
+		deleteOrders: (data: any) => api.post('/api/delete_orders', data),
+	};
+}
+
+function useBaskets() {
+	const { data, error } = useSWR(`/api/get_baskets`, api.get);
+
+	return {
+		Baskets: data?.data,
+		isBasketsLoading: !data && !error,
+		isBasketsError: error,
+		reloadBaskets: () => mutate(`/api/get_baskets`),
+		createBaskets: (data: any) => api.post('/api/create_baskets', data),
+		deleteBaskets: (data: any) => api.post('/api/delete_baskets', data),
+	};
+}
+
 export {
 	useProducts,
 	useProductsOptions,
@@ -123,4 +149,6 @@ export {
 	usePayments,
 	useDistributors,
 	useDeliveries,
+	useOrders,
+	useBaskets,
 };
