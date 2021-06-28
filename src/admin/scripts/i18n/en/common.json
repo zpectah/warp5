@@ -50,6 +50,7 @@
 		"deleteConfirm_plural": "Are you sure want to delete these items?",
 		"languageContent": "Language content",
 		"media": "Media",
+		"extraMedia": "Extra Media",
 		"options": "Options",
 		"menuItems": "Menu items",
 		"credentials": "Credentials",
@@ -59,6 +60,9 @@
 		"descriptions": "Descriptions",
 		"product": "Product",
 		"productOptions": "Product options",
-		"status": "Status"
+		"status": "Status",
+		"taxonomy": "Taxonomy",
+		"attachments": "Attachments",
+		"event": "Event"
 	}
 }

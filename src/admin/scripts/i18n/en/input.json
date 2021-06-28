@@ -267,6 +267,22 @@
 		"label": "Authorized",
 		"placeholder": "Set authorized"
 	},
+	"attachments": {
+		"label": "Attachments",
+		"placeholder": "Set attachments"
+	},
+	"media": {
+		"label": "Media",
+		"placeholder": "Set media"
+	},
+	"eventStart": {
+		"label": "Event start",
+		"placeholder": "Set event start"
+	},
+	"eventEnd": {
+		"label": "Event end",
+		"placeholder": "Set event start"
+	},
 	"searchTable": {
 		"label": "Search",
 		"placeholder": "Search in table"

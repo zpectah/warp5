@@ -13,6 +13,7 @@ import MessagesForm from './form/MessagesForm';
 import RequestsForm from './form/RequestsForm';
 import OrdersForm from './form/OrdersForm';
 import BasketsForm from './form/BasketsForm';
+import PostsForm from './form/PostsForm';
 
 interface DetailDialogProps {
 	model:
@@ -56,7 +57,7 @@ const DetailDialog = ({
 	const component = {
 		Tags: TagsForm,
 		Users: UsersForm,
-		Posts: CategoriesForm, // TODO
+		Posts: PostsForm,
 		Translations: TranslationsForm,
 		Categories: CategoriesForm,
 		Pages: PagesForm,

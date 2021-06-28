@@ -1,6 +1,6 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
+import IconButton from '@material-ui/core/IconButton';
 import Chip from '@material-ui/core/Chip';
 import AddIcon from '@material-ui/icons/Add';
 import styled from 'styled-components';
@@ -23,6 +23,7 @@ const ButtonRow = styled.div`
 		flex: 1;
 	}
 	& .button {
+		margin-left: 0.5rem;
 		flex: 0;
 	}
 `;
@@ -44,7 +45,6 @@ const TagPicker = ({
 	inputType = 'text',
 	inputPlaceholder,
 }: TagPickerProps) => {
-	const inputRef = useRef(null);
 	const [inputValue, setInputValue] = useState<string>('');
 	const [selected, setSelected] = useState<string[]>([]);
 
@@ -99,9 +99,15 @@ const TagPicker = ({
 					className="input"
 					// pattern={inputType == 'email' ? EMAIL_REGEX : null}
 				/>
-				<Button color="primary" className="button" onClick={addHandler}>
+				<IconButton
+					color="primary"
+					className="button"
+					onClick={addHandler}
+					size="small"
+					disabled={!inputValue || inputValue.length < 3}
+				>
 					<AddIcon />
-				</Button>
+				</IconButton>
 			</ButtonRow>
 		</Wrapper>
 	);

@@ -7,6 +7,7 @@ import Dialog from './Dialog';
 import Tabs from './Tabs';
 import Preloader from './Preloader';
 import Wysiwyg from './Wysiwyg/Wysiwyg';
+import Map from './Map';
 
 export {
 	Scrollable,
@@ -18,4 +19,5 @@ export {
 	Tabs,
 	Preloader,
 	Wysiwyg,
+	Map,
 };

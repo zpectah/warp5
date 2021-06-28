@@ -91,7 +91,7 @@
 		},
 		"Posts": {
 			"type_default": "article",
-			"type_list": ["article","blog","event","media","reference","attachment","custom_1"]
+			"type_list": ["article","blog","event","reference","custom_1"]
 		},
 		"Menu": {
 			"type_default": "default",
