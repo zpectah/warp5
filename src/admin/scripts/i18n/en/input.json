@@ -235,6 +235,10 @@
 		"label": "Rating",
 		"placeholder": "Set rating"
 	},
+	"gallery": {
+		"label": "Gallery",
+		"placeholder": "Set gallery"
+	},
 	"isNew": {
 		"label": "Is new",
 		"placeholder": "Select option"

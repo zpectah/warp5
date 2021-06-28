@@ -7,15 +7,15 @@ import { useTranslation } from 'react-i18next';
 import { useForm } from 'react-hook-form';
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
-
 import Switch from '@material-ui/core/Switch';
 import styled from 'styled-components';
 
+import { array } from '../../../../../libs/utils';
 import config from '../../../config';
 import { Form, Section, Tabs, Wysiwyg } from '../../ui';
-import { TranslationsItemProps } from '../../../types/App';
+import { UploadsItemProps } from '../../../types/App';
 import Language from '../../Language';
-import { useSettings, useTranslations } from '../../../hooks/App';
+import { useSettings, useUploads } from '../../../hooks/App';
 import Picker from '../../Picker';
 import checkDuplicates from '../checkDuplicates';
 import { string } from '../../../../../libs/utils';
@@ -24,10 +24,10 @@ const LanguageWrapperPanel = styled.div<{ isActive: boolean }>`
 	display: ${(props) => (props.isActive ? 'block' : 'none')};
 `;
 
-interface TranslationsFormProps {
-	detailData: TranslationsItemProps;
+interface UploadsFormProps {
+	detailData: UploadsItemProps;
 	onDelete: (ids: any[]) => void;
-	onSubmit: (data: TranslationsItemProps) => void;
+	onSubmit: (data: UploadsItemProps) => void;
 	onCancel: () => void;
 	allowDelete: boolean;
 	processing?: boolean;
@@ -36,7 +36,7 @@ interface TranslationsFormProps {
 	authorId: number;
 }
 
-const TranslationsForm = ({
+const UploadsForm = ({
 	detailData,
 	onDelete,
 	onSubmit,
@@ -46,7 +46,7 @@ const TranslationsForm = ({
 	loading,
 	languageContent,
 	authorId,
-}: TranslationsFormProps) => {
+}: UploadsFormProps) => {
 	const { t } = useTranslation([
 		'common',
 		'component',
@@ -58,7 +58,7 @@ const TranslationsForm = ({
 	const [lang, setLang] = useState<string>(config.GLOBAL.PROJECT.LANG_DEFAULT);
 	const [duplicates, setDuplicates] = useState<boolean>(false);
 	const { Settings } = useSettings();
-	const { Translations } = useTranslations();
+	const { Uploads } = useUploads();
 
 	// Static variables
 	const langList: string[] = Settings?.language_active;
@@ -81,17 +81,15 @@ const TranslationsForm = ({
 
 	// Check duplicates
 	const checkDupes = (name: string) =>
-		setDuplicates(checkDuplicates(Translations, name, detailData.id));
+		setDuplicates(checkDuplicates(Uploads, name, detailData.id));
 
 	return (
 		<>
 			<DialogTitle>
-				{detailData.id == 'new'
-					? t('btn_new.Translations')
-					: detailData.lang[lang].title}
+				{detailData.id == 'new' ? t('btn_new.Uploads') : detailData.file_name}
 			</DialogTitle>
 			<DialogContent dividers>
-				<Form.Base name="TranslationsForm">
+				<Form.Base name="UploadsForm">
 					<div>
 						<input
 							type="hidden"
@@ -131,6 +129,24 @@ const TranslationsForm = ({
 							)}
 						</Form.RowController>
 					</Section>
+					<Section title={t('common:title.taxonomy')} withBorder>
+						<Form.RowController
+							label={t('input:gallery.label')}
+							name={'category'}
+							control={control}
+							defaultValue={detailData.category || []}
+						>
+							{(row) => (
+								<Picker.Categories
+									id={row.id}
+									value={row.value}
+									onChange={row.onChange}
+									onBlur={row.onBlur}
+									multiple
+								/>
+							)}
+						</Form.RowController>
+					</Section>
 					<Section title={t('common:title.languageContent')} withBorder>
 						{langList.length > 1 && (
 							<Language.Tabs langList={langList} onChange={onLanguageChange} />
@@ -138,17 +154,15 @@ const TranslationsForm = ({
 						{langList?.map((lng) => (
 							<LanguageWrapperPanel key={lng} isActive={lng == lang}>
 								<Form.RowController
-									label={t('input:value.label')}
+									label={t('input:title.label')}
 									control={control}
-									name={`lang.${lng}.value`}
-									rules={{ required: true }}
-									required
+									name={`lang.${lng}.title`}
 									defaultValue={''}
 								>
 									{(row) => (
 										<TextField
 											type="text"
-											placeholder={t('input:value.placeholder')}
+											placeholder={t('input:title.placeholder')}
 											id={row.id}
 											value={row.value}
 											onChange={row.onChange}
@@ -201,4 +215,4 @@ const TranslationsForm = ({
 		</>
 	);
 };
-export default TranslationsForm;
+export default UploadsForm;

@@ -20,7 +20,7 @@ import { useTranslation } from 'react-i18next';
 import styled, { css } from 'styled-components';
 
 import config from '../../config';
-import { array } from '../../../../libs/utils';
+import { array, file } from '../../../../libs/utils';
 import { DATA_TABLE_ROWS_BY_PAGE } from '../../constants';
 import { appProps } from '../../types/types';
 import { getComparator, stableSort, Order } from './utils';
@@ -510,7 +510,7 @@ const DataTable = ({
 				)}
 				{columnsLayout.file_size && (
 					<TableCell>
-						<ItemRowText>{row.file_size}</ItemRowText>
+						<ItemRowText>{file.formatBytes(row.file_size)}</ItemRowText>
 					</TableCell>
 				)}
 				{columnsLayout.tags && (
