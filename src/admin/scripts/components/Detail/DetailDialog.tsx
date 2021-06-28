@@ -16,6 +16,8 @@ import BasketsForm from './form/BasketsForm';
 import PostsForm from './form/PostsForm';
 import DeliveriesForm from './form/DeliveriesForm';
 import PaymentsForm from './form/PaymentsForm';
+import DistributorsForm from './form/DistributorsForm';
+import ProducersForm from './form/ProducersForm';
 
 interface DetailDialogProps {
 	model:
@@ -70,9 +72,9 @@ const DetailDialog = ({
 		Members: MembersForm,
 		Products: CategoriesForm, // TODO
 		Deliveries: DeliveriesForm,
-		Distributors: CategoriesForm, // TODO
+		Distributors: DistributorsForm,
 		Payments: PaymentsForm,
-		Producers: CategoriesForm, // TODO
+		Producers: ProducersForm,
 		Stores: CategoriesForm, // TODO
 		ProductsOptions: CategoriesForm, // TODO
 		Orders: OrdersForm,
@@ -89,11 +91,6 @@ const DetailDialog = ({
 				size={size}
 				onClose={onCancel}
 			>
-				{processing && (
-					<>
-						<Preloader.Page />
-					</>
-				)}
 				{detailData ? (
 					<ComponentName
 						detailData={detailData}
@@ -107,6 +104,11 @@ const DetailDialog = ({
 						authorId={authorId}
 					/>
 				) : (
+					<>
+						<Preloader.Page />
+					</>
+				)}
+				{processing && (
 					<>
 						<Preloader.Page />
 					</>
