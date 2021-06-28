@@ -591,7 +591,7 @@ const PostsForm = ({
 							{(row) => (
 								<Switch
 									checked={row.value == 1}
-									value={moment(row.value, DatePickerFormat)}
+									value={row.value}
 									onChange={(e) => row.onChange(e.target.checked ? 1 : 0)}
 									name={row.name}
 									color="primary"

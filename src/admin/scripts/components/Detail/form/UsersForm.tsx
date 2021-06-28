@@ -17,7 +17,11 @@ import { UsersItemProps } from '../../../types/App';
 import Language from '../../Language';
 import { useProfile, useSettings, useUsers } from '../../../hooks/App';
 import Picker from '../../Picker';
-import { EMAIL_REGEX, USER_LEVEL } from '../../../constants';
+import {
+	EMAIL_REGEX,
+	PASSWORD_MIN_LENGTH,
+	USER_LEVEL,
+} from '../../../constants';
 import checkDuplicates from '../checkDuplicates';
 import { string } from '../../../../../libs/utils';
 
@@ -141,7 +145,10 @@ const UsersForm = ({
 							label={t('input:password.label')}
 							name={'password'}
 							control={control}
-							rules={{ required: detailData.id == 'new' }}
+							rules={{
+								required: detailData.id == 'new',
+								minLength: PASSWORD_MIN_LENGTH,
+							}}
 							required={detailData.id == 'new'}
 							defaultValue={detailData.password || ''}
 						>

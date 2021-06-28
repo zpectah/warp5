@@ -107,6 +107,13 @@ const UploadsForm = ({
 						/>
 					</div>
 					<Section withBorder>
+						{detailData.id == 'new' ? (
+							<>...TODO: uploader...</>
+						) : (
+							<>...TODO: image or icon...</>
+						)}
+					</Section>
+					<Section withBorder>
 						<Form.RowController
 							label={t('input:name.label')}
 							name={'name'}

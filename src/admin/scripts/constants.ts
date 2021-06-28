@@ -8,6 +8,7 @@ export const BREAKPOINTS = {
 	xl: 1200,
 	xxl: 1400,
 };
+export const PASSWORD_MIN_LENGTH = 4;
 export const EMAIL_REGEX =
 	/^(?:(?!.*?[.]{2})[a-zA-Z0-9](?:[a-zA-Z0-9.+!%-]{1,64}|)|\"[a-zA-Z0-9.+!% -]{1,64}\")@[a-zA-Z0-9][a-zA-Z0-9.-]+(.[a-z]{2,}|.[0-9]{1,})$/;
 export const MESSAGE_SUCCESS_DURATION = 2500;
