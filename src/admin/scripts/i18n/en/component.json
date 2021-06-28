@@ -33,12 +33,44 @@
 		"logout_link": "Log out"
 	},
 	"Settings": {
-		"tabs": {
-			"global": {},
-			"web": {},
-			"content": {},
-			"module": {},
-			"maintenance": {}
+		"global": {
+			"title": {
+				"project": "Project",
+				"company": "Company"
+			},
+			"help": {
+				"projectName": "..."
+			}
+		},
+		"web": {
+			"title": {
+				"meta": "Page meta",
+				"mode": "Page mode",
+				"forms": "Forms",
+				"comments": "Comments"
+			},
+			"help": {}
+		},
+		"content": {
+			"title": {
+				"language": "Language",
+				"approval": "Approval"
+			},
+			"help": {}
+		},
+		"module": {
+			"members": {
+				"title": {},
+				"help": {}
+			},
+			"market": {
+				"title": {},
+				"help": {}
+			}
+		},
+		"maintenance": {
+			"title": {},
+			"help": {}
 		}
 	}
 }

@@ -1,0 +1,9 @@
+{
+	"title": "Help",
+	"panel": {
+		"about": {
+			"title": "About",
+			"content": "...."
+		}
+	}
+}
