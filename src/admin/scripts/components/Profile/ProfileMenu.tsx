@@ -4,7 +4,6 @@ import { useSelector } from 'react-redux';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import Divider from '@material-ui/core/Divider';
-import AccountCircle from '@material-ui/icons/AccountCircle';
 import Chip from '@material-ui/core/Chip';
 import { isMobileOnly } from 'react-device-detect';
 import styled from 'styled-components';
@@ -17,8 +16,14 @@ import LocalesDialog from '../Locales/LocalesDialog';
 import ProfileDialog from './ProfileDialog';
 import LogoutConfirm from './LogoutConfirm';
 import HelpDialog from '../Help';
+import ProfileAvatar from './ProfileAvatar';
 
-const Outer = styled.div``;
+const Outer = styled.div`
+	& .profile-avatar {
+		width: 35px;
+		height: 35px;
+	}
+`;
 const Button = styled.button`
 	${buttonTrigger}
 `;
@@ -75,7 +80,7 @@ const ProfileMenu: React.FC<ProfileMenuProps> = ({ id = 'profileMenu' }) => {
 					onClick={openHandler}
 					type="button"
 				>
-					<AccountCircle />
+					<ProfileAvatar />
 				</Button>
 				<Menu
 					id={id}

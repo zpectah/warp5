@@ -15,6 +15,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import CheckIcon from '@material-ui/icons/Check';
 import NotInterestedIcon from '@material-ui/icons/NotInterested';
+import Avatar from '@material-ui/core/Avatar';
 import { useTranslation } from 'react-i18next';
 import styled, { css } from 'styled-components';
 
@@ -43,6 +44,13 @@ const ItemRowLink = styled.span`
 	& > div {
 		display: flex;
 		flex-direction: column;
+	}
+
+	& .profile-avatar {
+		width: 30px;
+		height: 30px;
+		margin-right: 1rem;
+		font-size: inherit;
 	}
 `;
 const ItemRowText = styled.span`
@@ -431,8 +439,14 @@ const DataTable = ({
 				{columnsLayout.email && (
 					<TableCell component="th" id={labelId} scope="row">
 						<ItemRowLink onClick={() => onDetail(row.id)}>
-							{row.img_avatar && (
+							{row.img_avatar ? (
 								<RowLinkAvatar src={row.img_avatar} alt={row.email} />
+							) : (
+								<Avatar className="profile-avatar">
+									{row.first_name && row.last_name
+										? row.first_name.charAt(0) + row.last_name.charAt(0)
+										: row.nickname.charAt(0)}
+								</Avatar>
 							)}
 							<div>{row.email}</div>
 						</ItemRowLink>
