@@ -146,7 +146,7 @@ class Installer {
 			`id` int(11) NOT NULL AUTO_INCREMENT,
 			`name` text NOT NULL,
 			`type` varchar(32) NOT NULL,
-			`option_value` text NOT NULL,
+			`value` text NOT NULL,
 			`active` int(11) NOT NULL,
 			`deleted` int(11) NOT NULL,
 			PRIMARY KEY (`id`)

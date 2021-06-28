@@ -130,12 +130,12 @@ class ProductsOptions {
 		$requestData = json_decode(json_encode($requestData), true);
 
 		// prepare
-		$query = ('INSERT INTO productsoptions (name, type, option_value, active, deleted) VALUES (?,?,?,?,?)');
+		$query = ('INSERT INTO productsoptions (name, type, value, active, deleted) VALUES (?,?,?,?,?)');
 		$types = 'sssii';
 		$args = [
 			$requestData['name'],
 			$requestData['type'],
-			$requestData['option_value'],
+			$requestData['value'],
 			$requestData['active'],
 			0
 		];
@@ -162,12 +162,12 @@ class ProductsOptions {
 		$requestData = json_decode(json_encode($requestData), true);
 
 		// prepare
-		$query = ('UPDATE productsoptions SET name = ?, type = ?, option_value = ?, active = ? WHERE id = ?');
+		$query = ('UPDATE productsoptions SET name = ?, type = ?, value = ?, active = ? WHERE id = ?');
 		$types = 'sssii';
 		$args = [
 			$requestData['name'],
 			$requestData['type'],
-			$requestData['option_value'],
+			$requestData['value'],
 			$requestData['active'],
 			$requestData['id']
 		];

@@ -75,7 +75,7 @@ export interface DeliveriesItemProps extends commonModelProps {
 export interface ProductsOptionsItemProps extends commonModelProps {
 	name: string;
 	type: keyof config.OPTIONS.model.ProductsOptions.type_list;
-	option_value: string;
+	value: string;
 	lang?: {
 		title: string;
 		description?: string;

@@ -163,9 +163,9 @@ const ProductsOptionsForm = ({
 					<Section title={t('common:title.data')} withBorder>
 						<Form.RowController
 							label={t('input:value.label')}
-							name={'option_value'}
+							name={'value'}
 							control={control}
-							defaultValue={detailData.option_value || ''}
+							defaultValue={detailData.value || ''}
 						>
 							{(row) => (
 								<TextField

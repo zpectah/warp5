@@ -107,16 +107,10 @@ const DetailDialog = ({
 						authorId={authorId}
 					/>
 				) : (
-					<>
-						<Preloader.Page />
-					</>
-				)}
-				{processing && (
-					<>
-						<Preloader.Page />
-					</>
+					<Preloader.Block />
 				)}
 			</Dialog.Blank>
+			{processing && <Preloader.Page />}
 		</>
 	);
 };
