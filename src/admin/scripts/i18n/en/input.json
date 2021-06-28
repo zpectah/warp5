@@ -283,6 +283,10 @@
 		"label": "Event end",
 		"placeholder": "Set event start"
 	},
+	"relatedProducts": {
+		"label": "Related products",
+		"placeholder": "Set related"
+	},
 	"searchTable": {
 		"label": "Search",
 		"placeholder": "Search in table"

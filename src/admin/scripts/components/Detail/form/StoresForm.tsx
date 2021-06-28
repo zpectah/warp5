@@ -101,6 +101,12 @@ const StoresForm = ({
 							ref={register({ required: true })}
 							defaultValue={detailData.id}
 						/>
+						<input
+							type="hidden"
+							name="rating"
+							ref={register()}
+							defaultValue={detailData.rating || 0}
+						/>
 					</div>
 					<Section withBorder>
 						<Form.RowController

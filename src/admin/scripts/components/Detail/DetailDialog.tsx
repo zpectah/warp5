@@ -20,6 +20,7 @@ import DistributorsForm from './form/DistributorsForm';
 import ProducersForm from './form/ProducersForm';
 import ProductsOptionsForm from './form/ProductsOptionsForm';
 import StoresForm from './form/StoresForm';
+import ProductsForm from './form/ProductsForm';
 
 interface DetailDialogProps {
 	model:
@@ -72,7 +73,7 @@ const DetailDialog = ({
 		Messages: MessagesForm,
 		Requests: RequestsForm,
 		Members: MembersForm,
-		Products: CategoriesForm, // TODO
+		Products: ProductsForm,
 		Deliveries: DeliveriesForm,
 		Distributors: DistributorsForm,
 		Payments: PaymentsForm,

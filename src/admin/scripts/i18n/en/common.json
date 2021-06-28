@@ -64,6 +64,8 @@
 		"taxonomy": "Taxonomy",
 		"attachments": "Attachments",
 		"event": "Event",
-		"data": "Data"
+		"data": "Data",
+		"dimensions": "Dimensions",
+		"store": "Store"
 	}
 }

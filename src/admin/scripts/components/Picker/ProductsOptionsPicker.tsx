@@ -24,7 +24,7 @@ const ProductsOptionsPicker = ({
 	const { t } = useTranslation(['common', 'input', 'messages']);
 	const { ProductsOptions } = useProductsOptions();
 
-	const placeholder = t('input:select_ProductsOptions.placeholder', {
+	const placeholder = t('input:select_productsOptions.placeholder', {
 		count: multiple ? 2 : 1,
 	});
 

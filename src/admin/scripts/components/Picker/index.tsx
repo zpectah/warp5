@@ -5,7 +5,7 @@ import MenuPicker from './MenuPicker';
 import MenuItemsPicker from './MenuItemsPicker';
 import PagesPicker from './PagesPicker';
 import ProductsOptionsPicker from './ProductsOptionsPicker';
-import ProductsPage from '../../Market/page/ProductsPage';
+import ProductsPicker from './ProductsPicker';
 import LocationPicker from './LocationPicker';
 import TagPicker from './TagPicker';
 
@@ -17,7 +17,7 @@ export default {
 	MenuItems: MenuItemsPicker,
 	Pages: PagesPicker,
 	ProductsOptions: ProductsOptionsPicker,
-	Products: ProductsPage,
+	Products: ProductsPicker,
 	Location: LocationPicker,
 	Tag: TagPicker,
 };
