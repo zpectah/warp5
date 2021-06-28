@@ -36,7 +36,7 @@ export interface StoresItemProps extends commonModelProps {
 	store_city: string;
 	store_country: string;
 	store_zip: string;
-	store_location: string;
+	store_location: any[];
 	store_email: string[];
 	store_phone: string[];
 	img_main?: string;
