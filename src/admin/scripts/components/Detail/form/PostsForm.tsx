@@ -74,7 +74,13 @@ const PostsForm = ({
 	});
 
 	// Submit handler
-	const onSubmitHandler = (data) => onSubmit(data);
+	const onSubmitHandler = (data) => {
+		const master = { ...data };
+
+		master.authorized = getAuthorized(detailData.authorized);
+
+		onSubmit(master);
+	};
 
 	// When language on content changed
 	const onLanguageChange = (lang: string) => {
@@ -84,6 +90,15 @@ const PostsForm = ({
 	// Check duplicates
 	const checkDupes = (name: string) =>
 		setDuplicates(checkDuplicates(Posts, name, detailData.id));
+
+	// Is authorized
+	const getAuthorized = (authorized) => {
+		if (Settings.redactor_content_approval && authorId) {
+			return 0;
+		} else {
+			return authorized ? 1 : 0;
+		}
+	};
 
 	const watchType = watch('type');
 
@@ -105,8 +120,20 @@ const PostsForm = ({
 						/>
 						<input
 							type="hidden"
+							name="author"
+							ref={register()}
+							defaultValue={detailData.author || authorId}
+						/>
+						<input
+							type="hidden"
+							name="post_options"
+							ref={register()}
+							defaultValue={detailData.post_options || ''}
+						/>
+						<input
+							type="hidden"
 							name="rating"
-							ref={register({ required: true })}
+							ref={register()}
 							defaultValue={detailData.rating || 0}
 						/>
 						{watchType !== 'event' && (
@@ -114,43 +141,43 @@ const PostsForm = ({
 								<input
 									type="hidden"
 									name="event_start"
-									ref={register({ required: true })}
+									ref={register()}
 									defaultValue={detailData.event_start || ''}
 								/>
 								<input
 									type="hidden"
 									name="event_end"
-									ref={register({ required: true })}
+									ref={register()}
 									defaultValue={detailData.event_end || ''}
 								/>
 								<input
 									type="hidden"
 									name="event_location"
-									ref={register({ required: true })}
-									defaultValue={detailData.event_location || ''}
+									ref={register()}
+									defaultValue={detailData.event_location || []}
 								/>
 								<input
 									type="hidden"
 									name="event_address"
-									ref={register({ required: true })}
+									ref={register()}
 									defaultValue={detailData.event_address || ''}
 								/>
 								<input
 									type="hidden"
 									name="event_country"
-									ref={register({ required: true })}
+									ref={register()}
 									defaultValue={detailData.event_country || ''}
 								/>
 								<input
 									type="hidden"
 									name="event_city"
-									ref={register({ required: true })}
+									ref={register()}
 									defaultValue={detailData.event_city || ''}
 								/>
 								<input
 									type="hidden"
 									name="event_zip"
-									ref={register({ required: true })}
+									ref={register()}
 									defaultValue={detailData.event_zip || ''}
 								/>
 							</>
@@ -192,7 +219,9 @@ const PostsForm = ({
 							control={control}
 							rules={{ required: true }}
 							required
-							defaultValue={detailData.type || 'article'}
+							defaultValue={
+								detailData.type || config.OPTIONS.model.Posts.type_default
+							}
 						>
 							{(row) => (
 								<Form.Select
@@ -345,7 +374,11 @@ const PostsForm = ({
 									<Picker.Location
 										inputId={row.id}
 										value={row.value}
-										onChange={row.onChange}
+										onChange={(value) => {
+											console.log(row.value, value);
+
+											row.onChange(value);
+										}}
 										rowStyle={{ width: '75%' }}
 									/>
 								)}

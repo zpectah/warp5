@@ -38,18 +38,14 @@ class Posts {
 		foreach ($activeLanguages as $lang) {
 			$table_name = 'posts__' . $lang;
 
-			// For prevent error while column is blank
-			$tmp_perex = $requestData[$lang]['perex'] ? $requestData[$lang]['perex'] : '';
-			$tmp_content = $requestData[$lang]['content'] ? $requestData[$lang]['content'] : '';
-
 			// prepare
 			$query = ('INSERT INTO ' . $table_name . ' (id, title, perex, content) VALUES (?,?,?,?)');
 			$types = 'isss';
 			$args = [
 				$lastId,
 				$requestData[$lang]['title'],
-				$tmp_perex,
-				$tmp_content
+				$requestData[$lang]['perex'],
+				$requestData[$lang]['content']
 			];
 
 			// execute
@@ -140,12 +136,8 @@ class Posts {
 		$type = $requestData['type'];
 
 		if ($type == 'event') {
-			$event_start = $requestData['event_start'];
-			$event_end = $requestData['event_end'];
 			$event_location = $requestData['event_location'] ? implode(",", $requestData['event_location']) : '';
 		} else {
-			$event_start = '';
-			$event_end = '';
 			$event_location = '';
 		}
 
@@ -180,8 +172,8 @@ class Posts {
 			$requestData['name'],
 			$requestData['category'] ? implode(",", $requestData['category']) : '',
 			$requestData['tags'] ? implode(",", $requestData['tags']) : '',
-			$event_start,
-			$event_end,
+			$requestData['event_start'],
+			$requestData['event_end'],
 			$event_location,
 			$requestData['event_address'],
 			$requestData['event_country'],
@@ -224,12 +216,8 @@ class Posts {
 		$type = $requestData['type'];
 
 		if ($type == 'event') {
-			$event_start = $requestData['event_start'];
-			$event_end = $requestData['event_end'];
 			$event_location = $requestData['event_location'] ? implode(",", $requestData['event_location']) : '';
 		} else {
-			$event_start = '';
-			$event_end = '';
 			$event_location = '';
 		}
 
@@ -262,8 +250,8 @@ class Posts {
 			$requestData['name'],
 			$requestData['category'] ? implode(",", $requestData['category']) : '',
 			$requestData['tags'] ? implode(",", $requestData['tags']) : '',
-			$event_start,
-			$event_end,
+			$requestData['event_start'],
+			$requestData['event_end'],
 			$event_location,
 			$requestData['event_address'],
 			$requestData['event_country'],

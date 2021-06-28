@@ -1,8 +1,9 @@
 import { commonModelProps } from './types';
+import config from '../config';
 
 export interface ProductsItemProps extends commonModelProps {
 	name: string;
-	type: 'package' | 'licence';
+	type: keyof config.OPTIONS.model.Products.type_list;
 	category?: string[];
 	tags?: string[];
 	item_price: number;
@@ -30,7 +31,7 @@ export interface ProductsItemProps extends commonModelProps {
 
 export interface StoresItemProps extends commonModelProps {
 	name: string;
-	type: 'default';
+	type: keyof config.OPTIONS.model.Stores.type_list;
 	store_address: string;
 	store_city: string;
 	store_country: string;
@@ -49,7 +50,7 @@ export interface StoresItemProps extends commonModelProps {
 
 export interface PaymentsItemProps extends commonModelProps {
 	name: string;
-	type: 'default';
+	type: keyof config.OPTIONS.model.Payments.type_list;
 	item_price: number;
 	item_weight_limit: number;
 	img_main?: string;
@@ -61,7 +62,7 @@ export interface PaymentsItemProps extends commonModelProps {
 
 export interface DeliveriesItemProps extends commonModelProps {
 	name: string;
-	type: 'default';
+	type: keyof config.OPTIONS.model.Deliveries.type_list;
 	item_price: number;
 	item_weight_limit: number;
 	img_main?: string;
@@ -73,7 +74,7 @@ export interface DeliveriesItemProps extends commonModelProps {
 
 export interface ProductsOptionsItemProps extends commonModelProps {
 	name: string;
-	type: 'default';
+	type: keyof config.OPTIONS.model.ProductsOptions.type_list;
 	option_value: string;
 	lang?: {
 		title: string;
@@ -83,13 +84,13 @@ export interface ProductsOptionsItemProps extends commonModelProps {
 
 export interface ProducersItemProps extends commonModelProps {
 	name: string;
-	type: 'undefined';
+	type: keyof config.OPTIONS.model.Producers.type_list;
 	img_main?: string;
 }
 
 export interface DistributorsItemProps extends commonModelProps {
 	name: string;
-	type: 'undefined';
+	type: keyof config.OPTIONS.model.Distributors.type_list;
 	img_main?: string;
 }
 

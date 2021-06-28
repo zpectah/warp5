@@ -1,4 +1,5 @@
 import { commonModelProps } from './types';
+import config from '../config';
 
 export interface UsersItemProps extends commonModelProps {
 	email: string;
@@ -13,13 +14,13 @@ export interface UsersItemProps extends commonModelProps {
 }
 
 export interface PostsItemProps extends commonModelProps {
-	type: 'article' | 'blog' | 'event' | 'reference' | 'custom_1';
+	type: keyof config.OPTIONS.model.Posts.type_list;
 	name: string;
 	category?: string[];
 	tags?: string[];
 	event_start?: string;
 	event_end?: string;
-	event_location?: string;
+	event_location?: any[];
 	event_address?: string;
 	event_country?: string;
 	event_city?: string;
@@ -52,7 +53,7 @@ export interface TranslationsItemProps extends commonModelProps {
 }
 
 export interface CategoriesItemProps extends commonModelProps {
-	type: 'default' | 'primary' | 'secondary';
+	type: keyof config.OPTIONS.model.Categories.type_list;
 	name: string;
 	parent?: string;
 	img_main?: string;
@@ -65,7 +66,7 @@ export interface CategoriesItemProps extends commonModelProps {
 }
 
 export interface PagesItemProps extends commonModelProps {
-	type: 'default' | 'system' | 'category' | 'tags';
+	type: keyof config.OPTIONS.model.Pages.type_list;
 	type_id: string;
 	name: string;
 	lang?: {
@@ -75,7 +76,7 @@ export interface PagesItemProps extends commonModelProps {
 }
 
 export interface UploadsItemProps extends commonModelProps {
-	type: 'undefined' | 'image' | 'audio' | 'video' | 'document' | 'archive';
+	type: keyof config.OPTIONS.model.Uploads.type_list;
 	name: string;
 	extension: string;
 	file_name: string;
@@ -88,13 +89,13 @@ export interface UploadsItemProps extends commonModelProps {
 }
 
 export interface MenuItemProps extends commonModelProps {
-	type: 'default' | 'primary' | 'secondary' | 'tertiary';
+	type: keyof config.OPTIONS.model.Menu.type_list;
 	name: string;
 	parent?: string;
 }
 
 export interface MenuItemsItemProps extends commonModelProps {
-	type: 'default' | 'external';
+	type: keyof config.OPTIONS.model.MenuItems.type_list;
 	name: string;
 	link: string;
 	parent?: string;
