@@ -445,7 +445,9 @@ const DataTable = ({
 								<Avatar className="profile-avatar">
 									{row.first_name && row.last_name
 										? row.first_name.charAt(0) + row.last_name.charAt(0)
-										: row.nickname.charAt(0)}
+										: row.nickname
+										? row.nickname.charAt(0)
+										: '@'}
 								</Avatar>
 							)}
 							<div>{row.email}</div>
