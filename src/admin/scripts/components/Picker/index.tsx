@@ -7,6 +7,7 @@ import PagesPicker from './PagesPicker';
 import ProductsOptionsPicker from './ProductsOptionsPicker';
 import ProductsPage from '../../Market/page/ProductsPage';
 import LocationPicker from './LocationPicker';
+import TagPicker from './TagPicker';
 
 export default {
 	Categories: CategoriesPicker,
@@ -18,4 +19,5 @@ export default {
 	ProductsOptions: ProductsOptionsPicker,
 	Products: ProductsPage,
 	Location: LocationPicker,
+	Tag: TagPicker,
 };

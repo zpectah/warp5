@@ -106,20 +106,6 @@ const MembersForm = ({
 							ref={register()}
 							defaultValue={detailData.img_avatar}
 						/>
-						{/* */}
-						<input
-							type="hidden"
-							name="member_phone"
-							ref={register()}
-							defaultValue={detailData.member_phone}
-						/>
-						<input
-							type="hidden"
-							name="member_email"
-							ref={register()}
-							defaultValue={detailData.member_email}
-						/>
-						{/* */}
 					</div>
 					<Section withBorder>
 						<Form.RowController
@@ -256,7 +242,40 @@ const MembersForm = ({
 						</Form.RowController>
 					</Section>
 					<Section title={t('common:title.contact')} withBorder>
-						TODO: emails tags picker <br /> TODO: phone tags picker <br />
+						<Form.RowController
+							label={t('input:email.label')}
+							name={'member_email'}
+							control={control}
+							defaultValue={detailData.member_email || []}
+						>
+							{(row) => (
+								<Picker.Tag
+									id={row.id}
+									value={row.value}
+									onChange={row.onChange}
+									rowStyle={{ width: '75%' }}
+									inputType="email"
+									inputPlaceholder={t('input:email.placeholder')}
+								/>
+							)}
+						</Form.RowController>
+						<Form.RowController
+							label={t('input:phone.label')}
+							name={'member_phone'}
+							control={control}
+							defaultValue={detailData.member_phone || []}
+						>
+							{(row) => (
+								<Picker.Tag
+									id={row.id}
+									value={row.value}
+									onChange={row.onChange}
+									rowStyle={{ width: '75%' }}
+									inputType="tel"
+									inputPlaceholder={t('input:phone.placeholder')}
+								/>
+							)}
+						</Form.RowController>
 					</Section>
 					<Section title={t('common:title.address')} withBorder>
 						<Form.RowController
