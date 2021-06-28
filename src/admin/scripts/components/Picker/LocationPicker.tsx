@@ -11,23 +11,14 @@ import styled from 'styled-components';
 import { MAPBOX } from '../../constants';
 import { Map, Dialog } from '../ui';
 import TextField from '@material-ui/core/TextField';
+import { InputRowBase } from '../../styles/mixins';
 
 const Wrapper = styled.div`
 	width: 100%;
 	display: flex;
 `;
 const ButtonRow = styled.div`
-	width: 100%;
-	height: auto;
-	display: flex;
-
-	& .input {
-		flex: 1;
-	}
-	& .button {
-		margin-left: 0.5rem;
-		flex: 0;
-	}
+	${InputRowBase}
 `;
 const StyledMarker = styled(Marker)`
 	width: 50px;

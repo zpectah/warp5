@@ -8,9 +8,10 @@ import GridListTile from '@material-ui/core/GridListTile';
 import GridListTileBar from '@material-ui/core/GridListTileBar';
 import styled from 'styled-components';
 
+import { file } from '../../../../libs/utils';
 import config from '../../config';
 import { useUploads } from '../../hooks/App';
-import { Dialog } from '../ui';
+import { Dialog, FileIcon } from '../ui';
 import getFileTypeFromFilename from '../../utils/getFileTypeFromFilename';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -47,7 +48,25 @@ const GridListTileInner = styled.div<{ selected?: boolean }>`
 	position: absolute;
 	top: 0;
 	left: 0;
-	border: 5px solid ${(props) => (props.selected ? 'red' : 'transparent')};
+	border: 5px solid
+		${(props) => (props.selected ? props.theme.color.red : 'transparent')};
+`;
+const AttachmentItem = styled.div`
+	width: 100%;
+	height: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	background-color: rgba(25, 25, 25, 0.25);
+
+	& .file-icon-avatar {
+		margin-bottom: 0.5rem;
+	}
+`;
+const ThumbnailItem = styled(AttachmentItem)`
+	padding-top: 10%;
+	justify-content: flex-start;
 `;
 
 interface UploadsPickerProps {
@@ -208,7 +227,10 @@ const UploadsPicker = ({
 										className="img"
 									/>
 								) : (
-									<span className="span">{item}</span>
+									<AttachmentItem>
+										<FileIcon type={getFileTypeFromFilename(item)} />
+										<small>{item}</small>
+									</AttachmentItem>
 								)}
 							</GridListTile>
 						))}
@@ -267,11 +289,16 @@ const UploadsPicker = ({
 											className="img"
 										/>
 									) : (
-										<span className="span">{item.file_name}</span>
+										<ThumbnailItem>
+											<FileIcon type={item.type} />
+											<small>{item.file_name}</small>
+										</ThumbnailItem>
 									)}
 									<GridListTileBar
 										title={item.name}
-										subtitle={<span>Size: {item.file_size}</span>}
+										subtitle={
+											<span>Size: {file.formatBytes(item.file_size)}</span>
+										}
 									/>
 									<GridListTileInner
 										selected={isItemSelected(item.file_name)}

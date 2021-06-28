@@ -27,7 +27,7 @@ import { getComparator, stableSort, Order } from './utils';
 import TableHead from './TableHead';
 import { useSettings } from '../../hooks/App';
 import Language from '../Language';
-import { Form, Preloader } from '../ui';
+import { Form, Preloader, FileIcon } from '../ui';
 
 const columnBase = css`
 	display: flex;
@@ -46,11 +46,13 @@ const ItemRowLink = styled.span`
 		flex-direction: column;
 	}
 
-	& .profile-avatar {
+	& .profile-avatar,
+	& .file-icon-avatar {
 		width: 30px;
 		height: 30px;
 		margin-right: 1rem;
-		font-size: inherit;
+		font-size: 1rem;
+		line-height: inherit;
 	}
 `;
 const ItemRowText = styled.span`
@@ -502,7 +504,7 @@ const DataTable = ({
 									alt={row.name}
 								/>
 							) : (
-								<>icon by file type ...</>
+								<FileIcon type={row.type} />
 							)}
 							<div>{row.file_name}</div>
 						</ItemRowLink>

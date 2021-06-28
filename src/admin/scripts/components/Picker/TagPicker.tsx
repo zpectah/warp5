@@ -6,6 +6,7 @@ import AddIcon from '@material-ui/icons/Add';
 import styled from 'styled-components';
 
 import { EMAIL_REGEX } from '../../constants';
+import { InputRowBase } from '../../styles/mixins';
 
 const Wrapper = styled.div`
 	width: 100%;
@@ -15,17 +16,7 @@ const ChipList = styled.div`
 	padding-bottom: 0.5rem;
 `;
 const ButtonRow = styled.div`
-	width: 100%;
-	height: auto;
-	display: flex;
-
-	& .input {
-		flex: 1;
-	}
-	& .button {
-		margin-left: 0.5rem;
-		flex: 0;
-	}
+	${InputRowBase}
 `;
 
 interface TagPickerProps {

@@ -72,7 +72,15 @@ const UploadsForm = ({
 	});
 
 	// Submit handler
-	const onSubmitHandler = (data) => onSubmit(data);
+	const onSubmitHandler = (data) => {
+		const master = {
+			...data,
+		};
+
+		// TODO file data when create ...
+
+		onSubmit(master);
+	};
 
 	// When language on content changed
 	const onLanguageChange = (lang: string) => {
@@ -125,6 +133,8 @@ const UploadsForm = ({
 									style={{ width: '75%' }}
 									variant="outlined"
 									size="small"
+									disabled={!(detailData.id == 'new')}
+									// readOnly={!(detailData.id == 'new')}
 								/>
 							)}
 						</Form.RowController>
@@ -142,6 +152,7 @@ const UploadsForm = ({
 									value={row.value}
 									onChange={row.onChange}
 									onBlur={row.onBlur}
+									mode="gallery"
 									multiple
 								/>
 							)}

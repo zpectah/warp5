@@ -8,6 +8,7 @@ import Tabs from './Tabs';
 import Preloader from './Preloader';
 import Wysiwyg from './Wysiwyg/Wysiwyg';
 import Map from './Map';
+import FileIcon from './FileIcon';
 
 export {
 	Scrollable,
@@ -20,4 +21,5 @@ export {
 	Preloader,
 	Wysiwyg,
 	Map,
+	FileIcon,
 };

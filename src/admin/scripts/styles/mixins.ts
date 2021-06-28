@@ -34,9 +34,16 @@ export const buttonTrigger = css`
 	cursor: pointer;
 `;
 
-export const modalBase = css`
+export const InputRowBase = css`
+	width: 100%;
+	height: auto;
 	display: flex;
-	align-items: center;
-	justify-content: center;
-	overflow: scroll;
+
+	& .input {
+		flex: 1;
+	}
+	& .button {
+		margin-left: 0.5rem;
+		flex: 0;
+	}
 `;
