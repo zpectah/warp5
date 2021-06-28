@@ -21,6 +21,11 @@ export const MAPBOX = {
 		zoom: 10,
 	},
 };
+export const DEFAULT_UNITS = {
+	price: 'EUR',
+	weight: 'Kg',
+	length: 'mm',
+};
 export const USER_LEVEL = {
 	demo: {
 		id: 0,

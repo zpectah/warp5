@@ -63,6 +63,7 @@
 		"status": "Status",
 		"taxonomy": "Taxonomy",
 		"attachments": "Attachments",
-		"event": "Event"
+		"event": "Event",
+		"data": "Data"
 	}
 }

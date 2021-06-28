@@ -14,6 +14,8 @@ import RequestsForm from './form/RequestsForm';
 import OrdersForm from './form/OrdersForm';
 import BasketsForm from './form/BasketsForm';
 import PostsForm from './form/PostsForm';
+import DeliveriesForm from './form/DeliveriesForm';
+import PaymentsForm from './form/PaymentsForm';
 
 interface DetailDialogProps {
 	model:
@@ -67,9 +69,9 @@ const DetailDialog = ({
 		Requests: RequestsForm,
 		Members: MembersForm,
 		Products: CategoriesForm, // TODO
-		Deliveries: CategoriesForm, // TODO
+		Deliveries: DeliveriesForm,
 		Distributors: CategoriesForm, // TODO
-		Payments: CategoriesForm, // TODO
+		Payments: PaymentsForm,
 		Producers: CategoriesForm, // TODO
 		Stores: CategoriesForm, // TODO
 		ProductsOptions: CategoriesForm, // TODO
