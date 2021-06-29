@@ -56,7 +56,6 @@ export interface routeProps {
 }
 
 export interface commonModelProps {
-	is_new?: boolean;
 	id: string | number;
 	active: number | boolean;
 	deleted?: number | boolean;

@@ -94,12 +94,33 @@ export interface DistributorsItemProps extends commonModelProps {
 	img_main?: string;
 }
 
-export interface OrdersItemProps extends commonModelProps {
-	name: string;
+export interface OrdersItemProps {
+	id: string | number;
+	order_no: string;
+	basket_no: string;
 	type: 'default';
+	member_email: string;
+	member_phone: string;
+	member_name: string;
+	member_country?: string;
+	member_city?: string;
+	member_address?: string;
+	member_zip?: string;
+	description: string;
+	delivery: string;
+	payment: string;
+	basket_items: string; // [id:count, id:count, ...]
+	price_items: number;
+	price_total: number;
+	status: number;
 }
 
-export interface BasketsItemProps extends commonModelProps {
-	name: string;
+export interface BasketsItemProps {
+	id: string | number;
+	basket_no: string;
 	type: 'default';
+	member_email: string;
+	basket_items: string; // [id:count, id:count, ...]
+	price: number;
+	status: number;
 }

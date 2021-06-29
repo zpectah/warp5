@@ -10,7 +10,7 @@ class Baskets {
 		$response = [];
 
 		// prepare
-		$query = ('/*' . MYSQLND_QC_ENABLE_SWITCH . '*/' . 'SELECT * FROM messages WHERE status <= ?');
+		$query = ('/*' . MYSQLND_QC_ENABLE_SWITCH . '*/' . 'SELECT * FROM baskets WHERE status <= ?');
 		$types = 'i';
 		$args = [2];
 
@@ -34,14 +34,21 @@ class Baskets {
 		$requestData = json_decode(json_encode($requestData), true);
 
 		// prepare
-		$query = ('INSERT INTO messages (type, sender, recipients, subject, content, status) VALUES (?,?,?,?,?,?)');
-		$types = 'sssssi';
+		$query = ('INSERT INTO baskets (
+                     basket_no,
+                     type,
+                     email,
+                     items,
+                     price,
+                     status
+                     ) VALUES (?,?,?,?,?,?)');
+		$types = 'ssssii';
 		$args = [
+			$requestData['basket_no'],
 			$requestData['type'],
-			$requestData['sender'],
-			$requestData['recipients'],
-			$requestData['subject'],
-			$requestData['content'],
+			$requestData['email'],
+			$requestData['items'],
+			$requestData['price'],
 			$requestData['status'],
 		];
 
@@ -61,6 +68,45 @@ class Baskets {
 		return $response;
 	}
 
+	public function update ($conn, $requestData) {
+		$requestData = json_decode(json_encode($requestData), true);
+
+		// prepare
+		$query = ('UPDATE baskets SET
+                     basket_no = ?,
+                     type = ?,
+                     email = ?,
+                     items = ?,
+                     price = ?,
+                     status = ?
+						WHERE id = ?');
+		$types = 'ssssiii';
+		$args = [
+			$requestData['basket_no'],
+			$requestData['type'],
+			$requestData['email'],
+			$requestData['items'],
+			$requestData['price'],
+			$requestData['status'],
+			$requestData['id']
+		];
+
+		// execute
+		if ($conn -> connect_error) {
+			$response = $conn -> connect_error;
+		} else {
+			$stmt = $conn -> prepare($query);
+			$stmt -> bind_param($types, ...$args);
+			$stmt -> execute();
+			$response = [
+				'rows' => $stmt -> affected_rows
+			];
+			$stmt -> close();
+		}
+
+		return $response;
+	}
+
 	public function delete ($conn, $requestData) {
 		$requestData = json_decode(json_encode($requestData), true);
 		$response = null;
@@ -69,7 +115,7 @@ class Baskets {
 
 		function deleteRow ($conn, $id) {
 			// prepare
-			$query = ('UPDATE messages SET status = 3 WHERE id = ?');
+			$query = ('UPDATE baskets SET status = 3 WHERE id = ?');
 			$types = 'i';
 			$args = [ $id ];
 
@@ -105,7 +151,7 @@ class Baskets {
 
 		function toggleRow ($conn, $id) {
 			// prepare
-			$query = ('UPDATE messages SET status = IF(status=2, 1, 2) WHERE id = ?');
+			$query = ('UPDATE baskets SET status = IF(status=2, 1, 2) WHERE id = ?');
 			$types = 'i';
 			$args = [ $id ];
 

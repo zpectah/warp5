@@ -86,7 +86,7 @@ const BasketsForm = ({
 	return (
 		<>
 			<DialogTitle>
-				{detailData.id == 'new' ? t('btn_new.Baskets') : detailData.name}
+				{detailData.id == 'new' ? t('btn_new.Baskets') : detailData.type}
 			</DialogTitle>
 			<DialogContent dividers>
 				<Form.Base name="BasketsForm">

@@ -46,7 +46,7 @@ const OrdersPage = () => {
 	const modelName = 'Orders';
 	const modelRoute = ROUTES.market.orders;
 	const columnsLayout = {
-		name: true,
+		type: true,
 		active: true,
 	};
 	const allowDetail: boolean = true; // TODO
@@ -209,7 +209,7 @@ const OrdersPage = () => {
 			<Section>
 				<DataTable
 					data={Orders}
-					searchAttrs={['name']}
+					searchAttrs={['type']}
 					model={modelName}
 					selectedRows={selectedRows}
 					columnsLayout={columnsLayout}

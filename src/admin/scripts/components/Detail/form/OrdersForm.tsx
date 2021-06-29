@@ -86,7 +86,7 @@ const OrdersForm = ({
 	return (
 		<>
 			<DialogTitle>
-				{detailData.id == 'new' ? t('btn_new.Orders') : detailData.name}
+				{detailData.id == 'new' ? t('btn_new.Orders') : detailData.type}
 			</DialogTitle>
 			<DialogContent dividers>
 				<Form.Base name="OrdersForm">

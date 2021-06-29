@@ -10,7 +10,7 @@ class Orders {
 		$response = [];
 
 		// prepare
-		$query = ('/*' . MYSQLND_QC_ENABLE_SWITCH . '*/' . 'SELECT * FROM messages WHERE status <= ?');
+		$query = ('/*' . MYSQLND_QC_ENABLE_SWITCH . '*/' . 'SELECT * FROM orders WHERE status <= ?');
 		$types = 'i';
 		$args = [2];
 
@@ -34,15 +34,44 @@ class Orders {
 		$requestData = json_decode(json_encode($requestData), true);
 
 		// prepare
-		$query = ('INSERT INTO messages (type, sender, recipients, subject, content, status) VALUES (?,?,?,?,?,?)');
-		$types = 'sssssi';
+		$query = ('INSERT INTO orders (
+                    order_no,
+                    basket_no,
+                    type,
+                    member_email,
+                    member_phone,
+                    member_name,
+                    member_country,
+                    member_city,
+                    member_address,
+                    member_zip,
+                    description,
+                    delivery,
+                    payment,
+                    basket_items,
+                    price_items,
+                    price_total,
+                    status
+                    ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)');
+		$types = 'ssssssssssssssiii';
 		$args = [
+			$requestData['order_no'],
+			$requestData['basket_no'],
 			$requestData['type'],
-			$requestData['sender'],
-			$requestData['recipients'],
-			$requestData['subject'],
-			$requestData['content'],
-			$requestData['status'],
+			$requestData['member_email'],
+			$requestData['member_phone'],
+			$requestData['member_name'],
+			$requestData['member_country'],
+			$requestData['member_city'],
+			$requestData['member_address'],
+			$requestData['member_zip'],
+			$requestData['description'],
+			$requestData['delivery'],
+			$requestData['payment'],
+			$requestData['basket_items'],
+			$requestData['price_items'],
+			$requestData['price_total'],
+			1,
 		];
 
 		// execute
@@ -61,6 +90,67 @@ class Orders {
 		return $response;
 	}
 
+	public function update ($conn, $requestData) {
+		$requestData = json_decode(json_encode($requestData), true);
+
+		// prepare
+		$query = ('UPDATE orders SET
+										order_no = ?,
+                    basket_no = ?,
+                    type = ?,
+                    member_email = ?,
+                    member_phone = ?,
+                    member_name = ?,
+                    member_country = ?,
+                    member_city = ?,
+                    member_address = ?,
+                    member_zip = ?,
+                    description = ?,
+                    delivery = ?,
+                    payment = ?,
+                    basket_items = ?,
+                    price_items = ?,
+                    price_total = ?,
+                    status = ?
+                  WHERE id = ?');
+		$types = 'ssssssssssssssiiii';
+		$args = [
+			$requestData['order_no'],
+			$requestData['basket_no'],
+			$requestData['type'],
+			$requestData['member_email'],
+			$requestData['member_phone'],
+			$requestData['member_name'],
+			$requestData['member_country'],
+			$requestData['member_city'],
+			$requestData['member_address'],
+			$requestData['member_zip'],
+			$requestData['description'],
+			$requestData['delivery'],
+			$requestData['payment'],
+			$requestData['basket_items'],
+			$requestData['price_items'],
+			$requestData['price_total'],
+			$requestData['status'],
+			$requestData['id']
+		];
+
+		// execute
+		if ($conn -> connect_error) {
+			$response = $conn -> connect_error;
+		} else {
+			$stmt = $conn -> prepare($query);
+			$stmt -> bind_param($types, ...$args);
+			$stmt -> execute();
+			$response = [
+				'rows' => $stmt -> affected_rows
+			];
+			$stmt -> close();
+		}
+
+		return $response;
+	}
+
 	public function delete ($conn, $requestData) {
 		$requestData = json_decode(json_encode($requestData), true);
 		$response = null;
@@ -69,7 +159,7 @@ class Orders {
 
 		function deleteRow ($conn, $id) {
 			// prepare
-			$query = ('UPDATE messages SET status = 3 WHERE id = ?');
+			$query = ('UPDATE orders SET status = 3 WHERE id = ?');
 			$types = 'i';
 			$args = [ $id ];
 
@@ -105,7 +195,7 @@ class Orders {
 
 		function toggleRow ($conn, $id) {
 			// prepare
-			$query = ('UPDATE messages SET status = IF(status=2, 1, 2) WHERE id = ?');
+			$query = ('UPDATE orders SET status = IF(status=2, 1, 2) WHERE id = ?');
 			$types = 'i';
 			$args = [ $id ];
 
