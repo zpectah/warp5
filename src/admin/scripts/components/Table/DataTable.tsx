@@ -95,6 +95,9 @@ const useStyles = makeStyles((theme: Theme) =>
 			marginBottom: theme.spacing(2),
 			position: 'relative',
 		},
+		container: {
+			maxHeight: '70vh',
+		},
 		table: {
 			minWidth: 750,
 		},
@@ -683,9 +686,9 @@ const DataTable = ({
 					</TableHeadingBlock>
 				</TableHeading>
 				<Paper className={classes.paper}>
-					{loading && <Preloader.Block />}
-					<TableContainer>
+					<TableContainer className={classes.container}>
 						<Table
+							stickyHeader
 							className={classes.table}
 							aria-labelledby={prefix}
 							aria-label={ariaLabel}
@@ -718,6 +721,7 @@ const DataTable = ({
 						onChangePage={handleChangePage}
 						onChangeRowsPerPage={handleChangeRowsPerPage}
 					/>
+					{loading && <Preloader.Block />}
 				</Paper>
 			</div>
 		</>
