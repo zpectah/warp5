@@ -24,7 +24,6 @@ const SettingsForm = ({}: SettingsFormProps) => {
 	const history: any = useHistory();
 	const { Settings } = useSettings();
 	const [panelIndex, setPanelIndex] = useState(0);
-	const [tabList, setTabList] = useState([]);
 	const { control, handleSubmit, formState, register } = useForm({
 		mode: 'all',
 		defaultValues: {
@@ -45,6 +44,8 @@ const SettingsForm = ({}: SettingsFormProps) => {
 		return tabs;
 	};
 
+	const tabList = getTabList();
+
 	const panelChangeHandler = (index) => {
 		if (tabList[index].name)
 			history.replace(ROUTES.app.settings.path + '/' + tabList[index].name);
@@ -53,10 +54,6 @@ const SettingsForm = ({}: SettingsFormProps) => {
 	const onSubmitHandler = (data) => {
 		console.log('onSubmit', data);
 	};
-
-	useEffect(() => {
-		setTabList(getTabList());
-	}, [SETTINGS_PANEL]);
 
 	useEffect(() => {
 		if (params.panel) {

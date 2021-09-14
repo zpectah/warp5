@@ -46,8 +46,9 @@ const BasketsPage = () => {
 	const modelName = 'Baskets';
 	const modelRoute = ROUTES.market.baskets;
 	const columnsLayout = {
+		member_email: true,
 		type: true,
-		active: true,
+		price: true,
 	};
 	const allowDetail: boolean = true; // TODO
 	const allowSelect: boolean = true; // TODO

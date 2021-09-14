@@ -46,8 +46,9 @@ const OrdersPage = () => {
 	const modelName = 'Orders';
 	const modelRoute = ROUTES.market.orders;
 	const columnsLayout = {
+		member_email: true,
 		type: true,
-		active: true,
+		price_total: true,
 	};
 	const allowDetail: boolean = true; // TODO
 	const allowSelect: boolean = true; // TODO

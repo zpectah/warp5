@@ -6,6 +6,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import { useTranslation } from 'react-i18next';
 
 import { Form } from '../ui';
+import { useProfile } from '../../hooks/App';
 
 interface ProfileFormProps {
 	afterSubmit: (method: string) => void;
@@ -13,6 +14,7 @@ interface ProfileFormProps {
 
 const ProfileForm = ({ afterSubmit }: ProfileFormProps) => {
 	const { t } = useTranslation(['common', 'component', 'input']);
+	const { Profile } = useProfile();
 
 	const cancelHandler = () => {
 		afterSubmit('cancel');
@@ -24,7 +26,7 @@ const ProfileForm = ({ afterSubmit }: ProfileFormProps) => {
 
 	return (
 		<>
-			<DialogTitle>title</DialogTitle>
+			<DialogTitle>{Profile.nickname}</DialogTitle>
 			<DialogContent dividers>
 				<Form.Base>...ProfileForm elements...</Form.Base>
 			</DialogContent>

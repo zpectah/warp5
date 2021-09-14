@@ -48,6 +48,7 @@ const PostsPage = () => {
 		title_lang: true,
 		type: true,
 		active: true,
+		authorized: true,
 	};
 	const allowDetail: boolean = true; // TODO
 	const allowSelect: boolean = true; // TODO

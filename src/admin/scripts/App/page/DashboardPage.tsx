@@ -1,19 +1,19 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-// import { useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import { ROUTES } from '../../constants';
 import Layout from '../../components/Layout';
 import { Section } from '../../components/ui';
-// import useUiToasts from '../../hooks/useUiToasts';
-// import useUiMessages from '../../hooks/useUiMessages';
+import useUiToasts from '../../hooks/useUiToasts';
+import useUiMessages from '../../hooks/useUiMessages';
 import Dashboard from '../../components/Dashboard';
 
 const DashboardPage = () => {
 	const { t } = useTranslation('page');
-	// const dispatch = useDispatch();
-	// const { createToasts } = useUiToasts(dispatch);
-	// const { createMessage } = useUiMessages(dispatch);
+	const dispatch = useDispatch();
+	const { createToasts } = useUiToasts(dispatch);
+	const { createMessage } = useUiMessages(dispatch);
 
 	return (
 		<Layout.Default
@@ -24,7 +24,7 @@ const DashboardPage = () => {
 			<Section>
 				<Dashboard.App />
 			</Section>
-			{/*
+
 			<Section>
 				<div>
 					<button
@@ -66,8 +66,8 @@ const DashboardPage = () => {
 					</button>
 				</div>
 			</Section>
-			*/}
-			{/*
+			{/**/}
+
 			<Section>
 				<div>
 					<button
@@ -101,7 +101,7 @@ const DashboardPage = () => {
 					</button>
 				</div>
 			</Section>
-			*/}
+			{/**/}
 		</Layout.Default>
 	);
 };
