@@ -17,6 +17,7 @@ import { UploadsItemProps } from '../../../types/App';
 import Language from '../../Language';
 import { useSettings, useUploads } from '../../../hooks/App';
 import Picker from '../../Picker';
+import Uploader from '../../Uploader';
 import checkDuplicates from '../checkDuplicates';
 import { string } from '../../../../../libs/utils';
 
@@ -108,7 +109,16 @@ const UploadsForm = ({
 					</div>
 					<Section withBorder>
 						{detailData.id == 'new' ? (
-							<>...TODO: uploader...</>
+							<>
+								<Uploader
+									onChange={(blob, name, ext, mime, size, type) => {
+										console.log('on change');
+									}}
+									onReset={() => {
+										console.log('on change');
+									}}
+								/>
+							</>
 						) : (
 							<>...TODO: image or icon...</>
 						)}

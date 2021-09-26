@@ -67,6 +67,10 @@
 		"event": "Event",
 		"data": "Data",
 		"dimensions": "Dimensions",
-		"store": "Store"
+		"store": "Store",
+		"dropYourFile": "Drop your file here",
+		"dropYourImage": "Drop your image here",
+		"selectYourFile": "Select your file",
+		"dropOrSelectYourFile": "Drop or select your file"
 	}
 }
