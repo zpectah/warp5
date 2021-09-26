@@ -140,12 +140,15 @@ interface DataTableProps {
 		type?: boolean;
 		user_group?: boolean;
 		member_group?: boolean;
+		member_email?: boolean;
 		value?: boolean;
 		t_value?: boolean; // TODO: delete
 		r_value?: boolean; // TODO: delete
 		context?: boolean;
 		authorized?: boolean;
 		subject?: boolean;
+		price?: boolean;
+		price_total?: boolean;
 		// TODO: new columns
 	};
 	onRowDetailCallback?: (id: number) => void;
@@ -247,16 +250,9 @@ const DataTable = ({
 		if (columnsLayout.file_size)
 			columns.push({
 				id: 'file_size',
-				numeric: true,
-				disablePadding: true,
-				label: 'Size',
-			});
-		if (columnsLayout.active)
-			columns.push({
-				id: 'active',
 				numeric: false,
 				disablePadding: true,
-				label: 'Active',
+				label: 'Size',
 			});
 		if (columnsLayout.tags)
 			columns.push({
@@ -286,6 +282,13 @@ const DataTable = ({
 				disablePadding: true,
 				label: 'Group',
 			});
+		if (columnsLayout.member_email)
+			columns.push({
+				id: 'member_email',
+				numeric: false,
+				disablePadding: true,
+				label: 'Email',
+			});
 		if (columnsLayout.member_group)
 			columns.push({
 				id: 'member_group',
@@ -302,7 +305,7 @@ const DataTable = ({
 			});
 		if (columnsLayout.t_value)
 			columns.push({
-				id: 'value',
+				id: `lang[${lang}].value`,
 				numeric: false,
 				disablePadding: true,
 				label: 'Value',
@@ -321,12 +324,33 @@ const DataTable = ({
 				disablePadding: true,
 				label: 'Context',
 			});
+		if (columnsLayout.active)
+			columns.push({
+				id: 'active',
+				numeric: false,
+				disablePadding: true,
+				label: 'Active',
+			});
 		if (columnsLayout.authorized)
 			columns.push({
 				id: 'authorized',
 				numeric: false,
 				disablePadding: true,
 				label: 'Authorized',
+			});
+		if (columnsLayout.price)
+			columns.push({
+				id: 'price',
+				numeric: false,
+				disablePadding: true,
+				label: 'Price',
+			});
+		if (columnsLayout.price_total)
+			columns.push({
+				id: 'price_total',
+				numeric: false,
+				disablePadding: true,
+				label: 'Price total',
 			});
 
 		return columns;
@@ -514,7 +538,7 @@ const DataTable = ({
 					</TableCell>
 				)}
 				{columnsLayout.file_size && (
-					<TableCell>
+					<TableCell align="left">
 						<ItemRowText>{file.formatBytes(row.file_size)}</ItemRowText>
 					</TableCell>
 				)}
@@ -531,6 +555,13 @@ const DataTable = ({
 				{columnsLayout.user_group && (
 					<TableCell>
 						<ItemRowText>{row.user_group}</ItemRowText>
+					</TableCell>
+				)}
+				{columnsLayout.member_email && (
+					<TableCell>
+						<ItemRowLink onClick={() => onDetail(row.id)}>
+							{row.member_email}
+						</ItemRowLink>
 					</TableCell>
 				)}
 				{columnsLayout.member_group && (
@@ -559,7 +590,27 @@ const DataTable = ({
 				)}
 				{columnsLayout.active && (
 					<TableCell>
-						<ItemRowText>{row.active}</ItemRowText>
+						{(row.active == 1 || row.active == 0) && (
+							<IconButton
+								onClick={() => onToggle([row.id])}
+								title={row.active == 1 ? t('btn.active') : t('btn.disabled')}
+							>
+								{row.active == 1 ? (
+									<CheckIcon fontSize="small" />
+								) : (
+									<NotInterestedIcon fontSize="small" />
+								)}
+							</IconButton>
+						)}
+					</TableCell>
+				)}
+				{columnsLayout.authorized && (
+					<TableCell>
+						{row.authorized == 1 ? (
+							<CheckIcon fontSize="small" />
+						) : (
+							<span></span>
+						)}
 					</TableCell>
 				)}
 				{columnsLayout.subject && (
@@ -572,28 +623,22 @@ const DataTable = ({
 						<ItemRowText>{row.context}</ItemRowText>
 					</TableCell>
 				)}
-				{columnsLayout.authorized && (
+				{columnsLayout.price && (
 					<TableCell>
-						<ItemRowText>{row.authorized}</ItemRowText>
+						<ItemRowText>{row.price}</ItemRowText>
+					</TableCell>
+				)}
+				{columnsLayout.price_total && (
+					<TableCell>
+						<ItemRowText>{row.price_total}</ItemRowText>
 					</TableCell>
 				)}
 				{allowDetail && (
 					<TableCell align="right">
-						{(row.active == 1 || row.active == 0) && (
-							<IconButton
-								onClick={() => onToggle([row.id])}
-								title={row.active == 1 ? t('btn.disable') : t('btn.active')}
-							>
-								{row.active == 1 ? (
-									<NotInterestedIcon fontSize="small" />
-								) : (
-									<CheckIcon fontSize="small" />
-								)}
-							</IconButton>
-						)}
 						<IconButton
 							onClick={() => onDelete([row.id])}
 							title={t('btn.delete')}
+							color="secondary"
 						>
 							<DeleteIcon fontSize="small" />
 						</IconButton>

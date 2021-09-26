@@ -17,6 +17,7 @@
 		"detail": "Detail",
 		"active": "Active",
 		"disable": "Disable",
+		"disabled": "Disabled",
 		"saveChanges": "Save changes",
 		"updateChanges": "Update changes",
 		"clear": "Clear",

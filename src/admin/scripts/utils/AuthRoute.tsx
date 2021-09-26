@@ -42,7 +42,7 @@ const AuthRoute: React.FC<AuthRouteProps> = (props) => {
 	useEffect(authorizeAccess, [Profile, auth]);
 
 	// if (isProfileLoading) return <Preloader />;
-	if (isProfileLoading) return <div>preloader</div>;
+	if (isProfileLoading) return <div>preloader A</div>;
 
 	if (redirect) {
 		return <Redirect to={redirect} />;
@@ -50,7 +50,7 @@ const AuthRoute: React.FC<AuthRouteProps> = (props) => {
 		return <Route exact={exact} path={path} component={component} />;
 	} else {
 		// return <Preloader />;
-		return <div>preloader</div>;
+		return <div>preloader B</div>;
 	}
 };
 export default AuthRoute;

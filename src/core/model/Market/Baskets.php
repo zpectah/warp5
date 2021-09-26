@@ -37,7 +37,7 @@ class Baskets {
 		$query = ('INSERT INTO baskets (
                      basket_no,
                      type,
-                     email,
+                     member_email,
                      items,
                      price,
                      status
@@ -46,7 +46,7 @@ class Baskets {
 		$args = [
 			$requestData['basket_no'],
 			$requestData['type'],
-			$requestData['email'],
+			$requestData['member_email'],
 			$requestData['items'],
 			$requestData['price'],
 			$requestData['status'],
@@ -75,7 +75,7 @@ class Baskets {
 		$query = ('UPDATE baskets SET
                      basket_no = ?,
                      type = ?,
-                     email = ?,
+                     member_email = ?,
                      items = ?,
                      price = ?,
                      status = ?
@@ -84,7 +84,7 @@ class Baskets {
 		$args = [
 			$requestData['basket_no'],
 			$requestData['type'],
-			$requestData['email'],
+			$requestData['member_email'],
 			$requestData['items'],
 			$requestData['price'],
 			$requestData['status'],

@@ -10,11 +10,12 @@ import gulpReplace from 'gulp-replace';
 import gulpRename from 'gulp-rename';
 import gulpHtmlMin from 'gulp-htmlmin';
 import gulpJsonMinify from 'gulp-jsonminify';
-import gulpImageMin from 'gulp-imagemin';
+// import gulpImageMin from 'gulp-imagemin';
+import gulpImageMin from 'gulp-image';
 import babelify from 'babelify';
 import gulpUglify from 'gulp-uglify';
 import gulpSourceMaps from 'gulp-sourcemaps';
-import gulpSass from 'gulp-sass';
+const sass = require('gulp-sass')(require('sass'));
 import gulpCleanCss from 'gulp-clean-css';
 import gulpCssImport from 'gulp-cssimport';
 
@@ -270,7 +271,7 @@ const task = {
 					CFG.FOLDER_STYLES_INPUT +
 					CFG.STYLES_INPUT_FILE,
 			)
-				.pipe(gulpSass({}).on('error', gulpSass.logError))
+				.pipe(sass({}).on('error', sass.logError))
 				.pipe(gulpCssImport({}))
 				.pipe(dest(path));
 		}
@@ -284,7 +285,7 @@ const task = {
 					CFG.FOLDER_STYLES_INPUT +
 					CFG.STYLES_INPUT_FILE,
 			)
-				.pipe(gulpSass({}).on('error', gulpSass.logError))
+				.pipe(sass({}).on('error', sass.logError))
 				.pipe(gulpCssImport({}))
 				.pipe(dest(path));
 		}
@@ -299,7 +300,7 @@ const task = {
 					CFG.STYLES_INPUT_FILE,
 			)
 				.pipe(gulpSourceMaps.init({}))
-				.pipe(gulpSass({}).on('error', gulpSass.logError))
+				.pipe(sass({}).on('error', sass.logError))
 				.pipe(gulpCssImport({}))
 				.pipe(dest(path))
 				.pipe(gulpCleanCss(options.Styles.cleanCss))
@@ -318,7 +319,7 @@ const task = {
 					CFG.STYLES_INPUT_FILE,
 			)
 				.pipe(gulpSourceMaps.init({}))
-				.pipe(gulpSass({}).on('error', gulpSass.logError))
+				.pipe(sass({}).on('error', sass.logError))
 				.pipe(gulpCssImport({}))
 				.pipe(dest(path))
 				.pipe(gulpCleanCss(options.Styles.cleanCss))
@@ -388,29 +389,29 @@ const Common = {
 		src(PATH_SRC + CFG.FOLDER_STYLES_IMAGES + '**/*').pipe(
 			dest(PATH_DEV + CFG.FOLDER_STYLES_IMAGES),
 		);
-		src(PATH_SRC + CFG.FOLDER_STATIC_IMAGES + '**/*').pipe(
-			dest(PATH_DEV + CFG.FOLDER_STATIC_IMAGES),
+		src(PATH_SRC + CFG.FOLDER_STYLES_IMAGES + '**/*').pipe(
+			dest(PATH_DEV + CFG.FOLDER_STYLES_IMAGES),
 		);
 		cb();
 	},
 	images_test: function (cb) {
 		progress.increment();
 		src(PATH_SRC + CFG.FOLDER_STYLES_IMAGES + '**/*')
-			.pipe(gulpImageMin({}))
+			.pipe(gulpImageMin())
 			.pipe(dest(PATH_TEST + CFG.FOLDER_STYLES_IMAGES));
-		src(PATH_SRC + CFG.FOLDER_STATIC_IMAGES + '**/*')
-			.pipe(gulpImageMin({}))
-			.pipe(dest(PATH_TEST + CFG.FOLDER_STATIC_IMAGES));
+		src(PATH_SRC + CFG.FOLDER_STYLES_IMAGES + '**/*')
+			.pipe(gulpImageMin())
+			.pipe(dest(PATH_TEST + CFG.FOLDER_STYLES_IMAGES));
 		cb();
 	},
 	images_prod: function (cb) {
 		progress.increment();
 		src(PATH_SRC + CFG.FOLDER_STYLES_IMAGES + '**/*')
-			.pipe(gulpImageMin({}))
+			.pipe(gulpImageMin())
 			.pipe(dest(PATH_PROD + CFG.FOLDER_STYLES_IMAGES));
-		src(PATH_SRC + CFG.FOLDER_STATIC_IMAGES + '**/*')
-			.pipe(gulpImageMin({}))
-			.pipe(dest(PATH_PROD + CFG.FOLDER_STATIC_IMAGES));
+		src(PATH_SRC + CFG.FOLDER_STYLES_IMAGES + '**/*')
+			.pipe(gulpImageMin())
+			.pipe(dest(PATH_PROD + CFG.FOLDER_STYLES_IMAGES));
 		cb();
 	},
 	static_dev: () => task.commonStatic(PATH_DEV + CFG.FOLDER_STATIC),
