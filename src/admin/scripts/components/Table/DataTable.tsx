@@ -759,12 +759,12 @@ const DataTable = ({
 					</TableContainer>
 					<TablePagination
 						rowsPerPageOptions={DATA_TABLE_ROWS_BY_PAGE}
-						component="div"
+						component={'div'}
 						count={items.length}
 						rowsPerPage={rowsPerPage}
 						page={page}
-						onChangePage={handleChangePage}
-						onChangeRowsPerPage={handleChangeRowsPerPage}
+						onPageChange={handleChangePage}
+						onRowsPerPageChange={handleChangeRowsPerPage}
 					/>
 					{loading && <Preloader.Block />}
 				</Paper>
