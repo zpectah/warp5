@@ -134,6 +134,7 @@ interface DataTableProps {
 		sender?: boolean;
 		file_name?: boolean;
 		file_size?: boolean;
+		file_format?: boolean;
 		active?: boolean;
 		tags?: boolean;
 		category?: boolean;
@@ -253,6 +254,13 @@ const DataTable = ({
 				numeric: false,
 				disablePadding: true,
 				label: 'Size',
+			});
+		if (columnsLayout.file_format)
+			columns.push({
+				id: 'extension',
+				numeric: false,
+				disablePadding: true,
+				label: 'Format',
 			});
 		if (columnsLayout.tags)
 			columns.push({
@@ -528,18 +536,23 @@ const DataTable = ({
 							{row.type == 'image' ? (
 								<RowLinkImage
 									src={config.UPLOADS_PATH.image.thumbnail + row.file_name}
-									alt={row.name}
+									alt={row.file_name}
 								/>
 							) : (
 								<FileIcon type={row.type} />
 							)}
-							<div>{row.file_name}</div>
+							<div>{row.name}</div>
 						</ItemRowLink>
 					</TableCell>
 				)}
 				{columnsLayout.file_size && (
 					<TableCell align="left">
 						<ItemRowText>{file.formatBytes(row.file_size)}</ItemRowText>
+					</TableCell>
+				)}
+				{columnsLayout.file_format && (
+					<TableCell align="left">
+						<ItemRowText>{row.extension}</ItemRowText>
 					</TableCell>
 				)}
 				{columnsLayout.tags && (

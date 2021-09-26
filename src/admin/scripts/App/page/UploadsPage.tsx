@@ -47,6 +47,7 @@ const UploadsPage = () => {
 	const columnsLayout = {
 		file_name: true,
 		file_size: true,
+		file_format: true,
 		active: true,
 	};
 	const allowDetail: boolean = true; // TODO

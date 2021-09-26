@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback, useEffect, useRef } from 'react';
 import Button from '@material-ui/core/Button';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -12,7 +12,7 @@ import styled from 'styled-components';
 
 import { array } from '../../../../../libs/utils';
 import config from '../../../config';
-import { Form, Section, Tabs, Wysiwyg } from '../../ui';
+import { Form, Section, Tabs, Wysiwyg, FileIcon } from '../../ui';
 import { UploadsItemProps } from '../../../types/App';
 import Language from '../../Language';
 import { useSettings, useUploads } from '../../../hooks/App';
@@ -23,6 +23,26 @@ import { string } from '../../../../../libs/utils';
 
 const LanguageWrapperPanel = styled.div<{ isActive: boolean }>`
 	display: ${(props) => (props.isActive ? 'block' : 'none')};
+`;
+
+const MediaContainer = styled.div`
+	height: 250px;
+	position: relative;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: rgba(250, 250, 250, 0.9);
+`;
+const StyledImage = styled.img`
+	width: auto;
+	max-height: 100%;
+`;
+const MediaTemporary = styled.div`
+	width: 100%;
+	height: 200px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 `;
 
 interface UploadsFormProps {
@@ -58,19 +78,30 @@ const UploadsForm = ({
 	]);
 	const [lang, setLang] = useState<string>(config.GLOBAL.PROJECT.LANG_DEFAULT);
 	const [duplicates, setDuplicates] = useState<boolean>(false);
+	const [tmp_blob, setTmp_Blob] = useState<any>(null);
+	const [tmp_meta, setTmp_meta] = useState({
+		ext: '',
+		name: '',
+		mime: '',
+		size: 0,
+		type: 'undefined',
+	});
 	const { Settings } = useSettings();
 	const { Uploads } = useUploads();
+
+	const inputName = useRef(null);
 
 	// Static variables
 	const langList: string[] = Settings?.language_active;
 
 	// Form controller
-	const { control, handleSubmit, formState, register } = useForm({
-		mode: 'all',
-		defaultValues: {
-			...detailData,
-		},
-	});
+	const { control, handleSubmit, formState, register, watch, setValue } =
+		useForm({
+			mode: 'all',
+			defaultValues: {
+				...detailData,
+			},
+		});
 
 	// Submit handler
 	const onSubmitHandler = (data) => {
@@ -92,6 +123,33 @@ const UploadsForm = ({
 	const checkDupes = (name: string) =>
 		setDuplicates(checkDuplicates(Uploads, name, detailData.id));
 
+	const uploaderHandler = (blob, name, ext, mime, size, type) => {
+		setDuplicates(false);
+		setTmp_Blob(blob);
+		setTmp_meta({
+			ext: ext,
+			name: name,
+			mime: mime,
+			size: size,
+			type: type,
+		});
+
+		inputName.current.focus();
+
+		return setValue('name', name.split('.').slice(0, -1).join('.'));
+	};
+
+	const onUploadReset = () => {
+		setTmp_Blob(null);
+		setTmp_meta({
+			ext: '',
+			name: '',
+			mime: '',
+			size: 0,
+			type: 'undefined',
+		});
+	};
+
 	return (
 		<>
 			<DialogTitle>
@@ -110,17 +168,27 @@ const UploadsForm = ({
 					<Section withBorder>
 						{detailData.id == 'new' ? (
 							<>
-								<Uploader
-									onChange={(blob, name, ext, mime, size, type) => {
-										console.log('on change');
-									}}
-									onReset={() => {
-										console.log('on change');
-									}}
-								/>
+								<Uploader onChange={uploaderHandler} onReset={onUploadReset} />
 							</>
 						) : (
-							<>...TODO: image or icon...</>
+							<>
+								<MediaContainer>
+									{detailData.type == 'image' ? (
+										<StyledImage
+											src={
+												config.UPLOADS_PATH.image.default + detailData.file_name
+											}
+											alt={detailData.name}
+										/>
+									) : (
+										<MediaTemporary>
+											<FileIcon type={detailData.type} />
+											&nbsp;&nbsp;
+											{detailData.file_name}
+										</MediaTemporary>
+									)}
+								</MediaContainer>
+							</>
 						)}
 					</Section>
 					<Section withBorder>
@@ -152,6 +220,7 @@ const UploadsForm = ({
 									size="small"
 									disabled={!(detailData.id == 'new')}
 									// readOnly={!(detailData.id == 'new')}
+									ref={inputName}
 								/>
 							)}
 						</Form.RowController>
