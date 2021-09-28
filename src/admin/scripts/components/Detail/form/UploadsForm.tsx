@@ -48,7 +48,7 @@ const MediaTemporary = styled.div`
 interface UploadsFormProps {
 	detailData: UploadsItemProps;
 	onDelete: (ids: any[]) => void;
-	onSubmit: (data: UploadsItemProps) => void;
+	onSubmit: (data: UploadsItemProps, response?: any) => void;
 	onCancel: () => void;
 	allowDelete: boolean;
 	processing?: boolean;
@@ -78,6 +78,7 @@ const UploadsForm = ({
 	]);
 	const [lang, setLang] = useState<string>(config.GLOBAL.PROJECT.LANG_DEFAULT);
 	const [duplicates, setDuplicates] = useState<boolean>(false);
+	const [uploading, setUploading] = useState(false);
 	const [tmp_blob, setTmp_Blob] = useState<any>(null);
 	const [tmp_meta, setTmp_meta] = useState({
 		ext: '',
@@ -87,7 +88,7 @@ const UploadsForm = ({
 		type: 'undefined',
 	});
 	const { Settings } = useSettings();
-	const { Uploads } = useUploads();
+	const { Uploads, updateUploads, createUploads } = useUploads();
 
 	const inputName = useRef(null);
 
@@ -105,13 +106,30 @@ const UploadsForm = ({
 
 	// Submit handler
 	const onSubmitHandler = (data) => {
-		const master = {
+		let master = {
+			...detailData,
 			...data,
 		};
 
-		// TODO file data when create ...
+		setUploading(true);
 
+		if (detailData.id == 'new') {
+			master = {
+				...data,
+				name: string.replaceSpaces(data.name),
+				fileBase64: tmp_blob,
+				fileBase64Cropped: null, // TODO
+				extension: tmp_meta.ext,
+				file_name: string.replaceSpaces(tmp_meta.name),
+				file_mime: tmp_meta.mime,
+				file_size: tmp_meta.size,
+				type: tmp_meta.type,
+			};
+		}
+
+		setUploading(false);
 		onSubmit(master);
+		onCancel();
 	};
 
 	// When language on content changed

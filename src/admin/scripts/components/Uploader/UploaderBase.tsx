@@ -11,7 +11,8 @@ import { file as fileUtils } from '../../../../libs/utils';
 import getFileType from '../../utils/getFileType';
 import ImageCrop from './ImageCrop';
 
-const Wrapper = styled.div`
+const Wrapper = styled.div<{ height: number }>`
+	min-height: ${(props) => props.height}px;
 	position: relative;
 `;
 
@@ -36,6 +37,7 @@ const DropArea = styled.div`
 	align-items: center;
 	justify-content: center;
 	flex-direction: column;
+	cursor: pointer;
 `;
 
 const DropAreaDescription = styled.div`
@@ -56,6 +58,10 @@ const Label = styled.label`
 	background-color: transparent;
 	border: 5px dashed rgba(200, 200, 200, 0.75);
 	border-radius: 1rem;
+
+	&:hover {
+		border-color: rgba(175, 175, 175, 1);
+	}
 `;
 const Input = styled.input`
 	width: 1px;
@@ -67,11 +73,13 @@ const Input = styled.input`
 	opacity: 0;
 `;
 
-const InputOuterWrapper = styled.div`
+const InputChildrenBlock = styled.div``;
+
+const InputOuterWrapper = styled.div<{ height: number }>`
 	width: 100%;
 	height: auto;
+	min-height: ${(props) => props.height}px;
 	padding: 1rem 0;
-	min-height: 100px;
 	position: relative;
 `;
 
@@ -109,8 +117,9 @@ const UploaderBase: React.FC<UploaderBaseProps> = ({
 	onChange,
 	accept,
 	onReset,
-	height = 250,
+	height = 100,
 	aspect,
+	children,
 }) => {
 	const { t } = useTranslation(['common', 'component', 'message']);
 	const [dragOver, setDragOver] = useState(false);
@@ -248,7 +257,7 @@ const UploaderBase: React.FC<UploaderBaseProps> = ({
 					</DropArea>
 				</DraggableLayer>
 			)}
-			<Wrapper>
+			<Wrapper height={height}>
 				<>
 					{file ? (
 						<>
@@ -263,7 +272,7 @@ const UploaderBase: React.FC<UploaderBaseProps> = ({
 							)}
 						</>
 					) : (
-						<InputOuterWrapper>
+						<InputOuterWrapper height={height}>
 							<Label>
 								<Input
 									type="file"
@@ -275,6 +284,7 @@ const UploaderBase: React.FC<UploaderBaseProps> = ({
 									<CloudUpload fontSize="large" />
 									<DropAreaDescription>
 										{t('title.dropOrSelectYourFile')}
+										<InputChildrenBlock>{children}</InputChildrenBlock>
 									</DropAreaDescription>
 								</DropArea>
 							</Label>

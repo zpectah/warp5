@@ -1,6 +1,6 @@
 {
 	"development": {
-		"ROOT_PATH": "http://skeleton-php-cms/",
+		"ROOT_PATH": "http://warp5/",
 		"ADMIN": {
 			"STYLES": "/admin/styles/css/index.css",
 			"SCRIPTS": "/admin/scripts/index.js"
@@ -11,7 +11,7 @@
 		}
 	},
 	"test": {
-		"ROOT_PATH": "http://test.skeleton-php-cms/",
+		"ROOT_PATH": "http://test.warp5/",
 		"ADMIN": {
 			"STYLES": "/admin/styles/css/index.min.css",
 			"SCRIPTS": "/admin/scripts/index.min.js"

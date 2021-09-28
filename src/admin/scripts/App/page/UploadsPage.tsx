@@ -155,7 +155,7 @@ const UploadsPage = () => {
 
 		if (data.id == 'new') {
 			createUploads(master).then((response) => {
-				// console.log('createUploads', response);
+				console.log('createUploads', response);
 
 				onDetailClose();
 				createToasts({
@@ -169,7 +169,7 @@ const UploadsPage = () => {
 			});
 		} else {
 			updateUploads(master).then((response) => {
-				// console.log('updateUploads', response);
+				console.log('updateUploads', response);
 
 				onDetailClose();
 				createToasts({
