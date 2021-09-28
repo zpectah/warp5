@@ -17,6 +17,7 @@ import { MenuItemProps } from '../../../types/App';
 import Language from '../../Language';
 import { useSettings, useMenu } from '../../../hooks/App';
 import Picker from '../../Picker';
+import MenuItemsManager from '../../Manager/MenuItems';
 import checkDuplicates from '../checkDuplicates';
 import { string } from '../../../../../libs/utils';
 
@@ -190,7 +191,14 @@ const MenuForm = ({
 					</Section>
 					<Section title={t('common:title.menuItems')}>
 						{detailData.id !== 'new' ? (
-							<> TODO: menu items manager ... </>
+							<>
+								<MenuItemsManager
+									menuId={detailData.id}
+									onUpdate={() => {
+										console.log('onUpdate menu items');
+									}}
+								/>
+							</>
 						) : (
 							<>{t('messages:info.menuItemsCreateAfter')}</>
 						)}
