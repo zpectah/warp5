@@ -53,7 +53,7 @@ const MenuItemsManager: React.FC<MenuItemsManagerProps> = ({
 	const [detailOpen, setDetailOpen] = useState(false);
 	const [listItems, setListItems] = useState([]);
 	const [listOrphans, setListOrphans] = useState([]);
-	const [detailData, setDetailData] = useState<any>({ id: 'new' });
+	const [detailData, setDetailData] = useState<MenuItemsItemProps | null>(null);
 
 	const getItemChildren = (id: number | string) => {
 		let a = [];
@@ -160,7 +160,7 @@ const MenuItemsManager: React.FC<MenuItemsManagerProps> = ({
 							variant="contained"
 							startIcon={<AddIcon fontSize="small" />}
 						>
-							{t('btn.create')}
+							{t('btn.createNew')}
 						</Button>
 						<Button onClick={() => setDialogOpen(false)}>
 							{t('btn.cancel')}
@@ -168,17 +168,21 @@ const MenuItemsManager: React.FC<MenuItemsManagerProps> = ({
 					</DialogActionsBlock>
 				</DialogActions>
 			</ManagerDialog>
-			<MenuItemDetail
-				open={detailOpen}
-				onToggle={(open) => setDetailOpen(open)}
-				onSubmit={(data) => {
-					console.log('onSubmit', data);
-				}}
-				onDelete={(id) => {
-					console.log('onDelete', id);
-				}}
-				detailData={detailData}
-			/>
+			{detailData && (
+				<>
+					<MenuItemDetail
+						open={detailOpen}
+						onToggle={(open) => setDetailOpen(open)}
+						onSubmit={(data) => {
+							console.log('onSubmit detail', data);
+						}}
+						onDelete={(id) => itemDeleteHandler(id)}
+						detailData={detailData}
+						onClose={() => setDetailData(null)}
+						menuId={menuId}
+					/>
+				</>
+			)}
 		</>
 	);
 };

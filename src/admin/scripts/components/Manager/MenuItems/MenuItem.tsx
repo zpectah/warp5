@@ -21,19 +21,19 @@ const Wrapper = styled.li`
 	align-items: center;
 	justify-content: center;
 	flex-direction: column;
-
 	background-color: rgba(225, 225, 225, 0.5);
 	border-radius: 0.35rem;
+	transition: background-color 0.25s ease-in-out 0s;
 
 	&:last-of-type {
 		margin-bottom: 0;
 	}
 
 	&:hover {
-		background-color: rgba(56, 142, 60, 0.5);
+		background-color: rgba(2, 136, 209, 0.5);
 	}
 	&:hover ul li:hover {
-		background-color: rgba(245, 124, 0, 0.5);
+		background-color: rgba(25, 118, 210, 0.35);
 	}
 `;
 const Heading = styled.div`

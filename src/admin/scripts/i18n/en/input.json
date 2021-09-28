@@ -326,5 +326,19 @@
 	"select_uploads": {
 		"placeholder": "Select upload",
 		"placeholder_plural": "Select uploads"
+	},
+	"page": {
+		"label": "Page",
+		"placeholder": "Select page",
+		"placeholder_plural": "Select pages"
+	},
+	"link": {
+		"label": "Link",
+		"placeholder": "Select link",
+		"placeholder_plural": "Select links"
+	},
+	"order": {
+		"label": "Order",
+		"placeholder": "Select order"
 	}
 }

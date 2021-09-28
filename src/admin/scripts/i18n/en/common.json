@@ -24,6 +24,7 @@
 		"install": "Install",
 		"new": "New",
 		"newItem": "New item",
+		"createNew": "Create new",
 		"select": "Select"
 	},
 	"btn_new": {

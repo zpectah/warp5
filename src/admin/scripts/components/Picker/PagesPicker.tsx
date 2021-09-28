@@ -24,7 +24,7 @@ const PagesPicker = ({
 	const { t } = useTranslation(['common', 'input', 'messages']);
 	const { Pages } = usePages();
 
-	const placeholder = t('input:select_Pages.placeholder', {
+	const placeholder = t('input:select_pages.placeholder', {
 		count: multiple ? 2 : 1,
 	});
 
