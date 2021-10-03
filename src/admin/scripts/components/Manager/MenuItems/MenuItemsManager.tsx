@@ -14,6 +14,11 @@ import ManagerDialog from '../ManagerDialog';
 import MenuItem from './MenuItem';
 import MenuItemDetail from './MenuItemDetail';
 import { MenuItemsItemProps } from '../../../types/App';
+import { Dialog, Section } from '../../../components/ui';
+import { string } from '../../../../../libs/utils';
+import { useDispatch } from 'react-redux';
+import useUiToasts from '../../../hooks/useUiToasts';
+import { MESSAGE_SUCCESS_DURATION } from '../../../constants';
 
 const Wrapper = styled.div``;
 
@@ -38,7 +43,6 @@ const DialogActionsBlock = styled.div`
 
 interface MenuItemsManagerProps {
 	menuId: number | string;
-	onUpdate?: () => void;
 	showOrphans?: boolean;
 }
 
@@ -47,13 +51,24 @@ const MenuItemsManager: React.FC<MenuItemsManagerProps> = ({
 	showOrphans,
 }) => {
 	const { t } = useTranslation(['common', 'message', 'component', 'types']);
-	const { MenuItems, toggleMenuItems, deleteMenuItems, reloadMenuItems } =
-		useMenuItems();
+	const {
+		MenuItems,
+		toggleMenuItems,
+		deleteMenuItems,
+		reloadMenuItems,
+		createMenuItems,
+		updateMenuItems,
+	} = useMenuItems();
 	const [dialogOpen, setDialogOpen] = useState(false);
 	const [detailOpen, setDetailOpen] = useState(false);
 	const [listItems, setListItems] = useState([]);
 	const [listOrphans, setListOrphans] = useState([]);
 	const [detailData, setDetailData] = useState<MenuItemsItemProps | null>(null);
+	const [confirmOpen, setConfirmOpen] = useState<boolean>(false);
+	const [confirmData, setConfirmData] = useState([]);
+	const [processing, setProcessing] = useState<boolean>(false);
+	const dispatch = useDispatch();
+	const { createToasts } = useUiToasts(dispatch);
 
 	const getItemChildren = (id: number | string) => {
 		let a = [];
@@ -80,23 +95,102 @@ const MenuItemsManager: React.FC<MenuItemsManagerProps> = ({
 		if (showOrphans) setListOrphans(b);
 	};
 
-	const itemSelectHandler = (item) => {
-		// TODO: open dialog and set data
-
-		console.log('itemSelectHandler', item);
-
+	const itemSelectHandler = (item: any) => {
 		setDetailData(item);
 		setDetailOpen(true);
 	};
-	const itemToggleHandler = (id) => {
-		// TODO: toggle active
-
-		console.log('itemToggleHandler', id);
+	const itemDeleteHandler = (id: number | string) => {
+		setConfirmData([id]);
+		setConfirmOpen(true);
 	};
-	const itemDeleteHandler = (id) => {
-		// TODO: open confirm dialog
+	const itemToggleHandler = (id: number | string) => {
+		// console.log('itemToggleHandler', [id]);
 
-		console.log('itemDeleteHandler', id);
+		let master = [id];
+
+		setProcessing(true);
+
+		toggleMenuItems(master).then((response) => {
+			// console.log('toggleMenuItems', response);
+
+			reloadMenuItems();
+			createToasts({
+				title: t('messages:success.items.update', { count: 1 }),
+				context: 'success',
+				timeout: MESSAGE_SUCCESS_DURATION,
+			});
+
+			setProcessing(false);
+		});
+	};
+	const itemSubmitHandler = (data: MenuItemsItemProps) => {
+		// console.log('onSubmit detail', data);
+
+		const master = {
+			...data,
+			name: string.replaceSpaces(data.name),
+			menu: menuId,
+		};
+
+		setProcessing(true);
+
+		console.log('master', master);
+
+		if (data.id == 'new') {
+			// create
+			createMenuItems(master).then((response) => {
+				// console.log('createMenuItems', response);
+
+				reloadMenuItems();
+				createToasts({
+					title: t('messages:success.items.create', { count: 1 }),
+					context: 'success',
+					timeout: MESSAGE_SUCCESS_DURATION,
+				});
+
+				setProcessing(false);
+				setDetailData(null);
+				setDetailOpen(false);
+			});
+		} else {
+			// update
+			updateMenuItems(master).then((response) => {
+				// console.log('updateMenuItems', response);
+
+				reloadMenuItems();
+				createToasts({
+					title: t('messages:success.items.update', { count: 1 }),
+					context: 'success',
+					timeout: MESSAGE_SUCCESS_DURATION,
+				});
+
+				setProcessing(false);
+				setDetailData(null);
+				setDetailOpen(false);
+			});
+		}
+	};
+	const onDeleteConfirm = (ids: number[]) => {
+		// console.log('onDeleteConfirm', ids);
+
+		let master = [...ids];
+
+		setProcessing(true);
+
+		deleteMenuItems(master).then((response) => {
+			reloadMenuItems();
+			createToasts({
+				title: t('messages:success.items.delete', { count: 1 }),
+				context: 'success',
+				timeout: MESSAGE_SUCCESS_DURATION,
+			});
+
+			setProcessing(false);
+			setConfirmData([]);
+			setConfirmOpen(false);
+			setDetailData(null);
+			setDetailOpen(false);
+		});
 	};
 
 	const renderMenuItem = (item, children) => (
@@ -111,6 +205,15 @@ const MenuItemsManager: React.FC<MenuItemsManagerProps> = ({
 	);
 
 	const renderMenuList = (itemsList: any[]) => {
+		itemsList.sort(function (a, b) {
+			let valA = a.item_order;
+			let valB = b.item_order;
+
+			if (valA < valB) return -1;
+			if (valA > valB) return 1;
+			return 0;
+		});
+
 		return itemsList.map((item) =>
 			renderMenuItem(item, renderMenuList(getItemChildren(item.id))),
 		);
@@ -173,9 +276,7 @@ const MenuItemsManager: React.FC<MenuItemsManagerProps> = ({
 					<MenuItemDetail
 						open={detailOpen}
 						onToggle={(open) => setDetailOpen(open)}
-						onSubmit={(data) => {
-							console.log('onSubmit detail', data);
-						}}
+						onSubmit={(data) => itemSubmitHandler(data)}
 						onDelete={(id) => itemDeleteHandler(id)}
 						detailData={detailData}
 						onClose={() => setDetailData(null)}
@@ -183,6 +284,17 @@ const MenuItemsManager: React.FC<MenuItemsManagerProps> = ({
 					/>
 				</>
 			)}
+			<Dialog.Confirm
+				open={confirmOpen}
+				onToggle={(open) => setConfirmOpen(open)}
+				onConfirm={onDeleteConfirm}
+				onCancel={() => {
+					setConfirmData([]);
+					setConfirmOpen(false);
+				}}
+				title={t('title.deleteConfirm', { count: 1 })}
+				items={confirmData}
+			/>
 		</>
 	);
 };

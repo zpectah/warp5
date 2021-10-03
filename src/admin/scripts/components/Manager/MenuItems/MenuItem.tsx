@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import Button from '@material-ui/core/Button';
+import Chip from '@material-ui/core/Chip';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
@@ -46,7 +47,11 @@ const Title = styled.div`
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	flex-direction: column;
+	flex-direction: row;
+	cursor: pointer;
+`;
+const TitleLabel = styled.div`
+	padding-left: 0.5rem;
 `;
 const Actions = styled.div``;
 const SubWrapper = styled.div`
@@ -82,8 +87,9 @@ const MenuItem: React.FC<MenuItemProps> = ({
 	return (
 		<Wrapper>
 			<Heading>
-				<Title>
-					({item.item_order}) {item.name}
+				<Title onClick={() => onSelect(item)}>
+					<Chip label={item.item_order} size="small" />
+					<TitleLabel>{item.name}</TitleLabel>
 				</Title>
 				<Actions>
 					<IconButton onClick={() => onToggle(item.id)} title={t('btn.toggle')}>

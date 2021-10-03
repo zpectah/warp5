@@ -21,14 +21,14 @@ export default {
 		},
 	},
 	messages: {
-		zIndex: 200,
+		zIndex: 1990,
 		default: {
 			color: palette.white,
 			bg: palette.grey,
 		},
 	},
 	toasts: {
-		zIndex: 250,
+		zIndex: 1995,
 		default: {
 			color: palette.white,
 			bg: palette.grey,

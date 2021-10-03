@@ -97,7 +97,7 @@ class MenuItems {
 		$active_languages = $languages['active'];
 
 		// prepare
-		$query = ('/*' . MYSQLND_QC_ENABLE_SWITCH . '*/' . 'SELECT * FROM menuitems WHERE deleted = ?');
+		$query = ('/*' . MYSQLND_QC_ENABLE_SWITCH . '*/' . 'SELECT * FROM menuItems WHERE deleted = ?');
 		$types = 'i';
 		$args = [ 0 ];
 
@@ -125,7 +125,7 @@ class MenuItems {
 		$requestData = json_decode(json_encode($requestData), true);
 
 		// prepare
-		$query = ('INSERT INTO menuitems (type, name, link, parent, menu, item_order, active, deleted) VALUES (?,?,?,?,?,?,?,?)');
+		$query = ('INSERT INTO menuItems (type, name, link, parent, menu, item_order, active, deleted) VALUES (?,?,?,?,?,?,?,?)');
 		$types = 'sssssiii';
 		$args = [
 			$requestData['type'],
@@ -160,7 +160,7 @@ class MenuItems {
 		$requestData = json_decode(json_encode($requestData), true);
 
 		// prepare
-		$query = ('UPDATE menuitems SET type = ?, name = ?, link = ?, parent = ?, menu = ?, item_order = ?, active = ? WHERE id = ?');
+		$query = ('UPDATE menuItems SET type = ?, name = ?, link = ?, parent = ?, menu = ?, item_order = ?, active = ? WHERE id = ?');
 		$types = 'sssssiii';
 		$args = [
 			$requestData['type'],
@@ -198,7 +198,7 @@ class MenuItems {
 
 		function toggleRow ($conn, $id) {
 			// prepare
-			$query = ('UPDATE menuitems SET active = IF(active=1, 0, 1) WHERE id = ?');
+			$query = ('UPDATE menuItems SET active = IF(active=1, 0, 1) WHERE id = ?');
 			$types = 'i';
 			$args = [ $id ];
 
@@ -233,7 +233,7 @@ class MenuItems {
 
 		function deleteRow ($conn, $id) {
 			// prepare
-			$query = ('UPDATE menuitems SET deleted = 1 WHERE id = ?');
+			$query = ('UPDATE menuItems SET deleted = 1 WHERE id = ?');
 			$types = 'i';
 			$args = [ $id ];
 

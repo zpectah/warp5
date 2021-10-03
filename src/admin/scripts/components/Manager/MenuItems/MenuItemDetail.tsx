@@ -299,7 +299,11 @@ const MenuItemDetail: React.FC<MenuItemDetailProps> = ({
 							{t('btn.delete')}
 						</Button>
 					)}
-					<Button onClick={handleSubmit(onSubmitHandler)} color="primary">
+					<Button
+						onClick={handleSubmit(onSubmitHandler)}
+						color="primary"
+						disabled={!formState.isValid}
+					>
 						{detailData.id == 'new' ? t('btn.create') : t('btn.update')}
 					</Button>
 				</DialogActions>

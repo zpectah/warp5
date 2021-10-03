@@ -191,14 +191,7 @@ const MenuForm = ({
 					</Section>
 					<Section title={t('common:title.menuItems')}>
 						{detailData.id !== 'new' ? (
-							<>
-								<MenuItemsManager
-									menuId={detailData.id}
-									onUpdate={() => {
-										console.log('onUpdate menu items');
-									}}
-								/>
-							</>
+							<MenuItemsManager menuId={detailData.id} />
 						) : (
 							<>{t('messages:info.menuItemsCreateAfter')}</>
 						)}
