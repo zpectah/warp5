@@ -8,6 +8,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import Chip from '@material-ui/core/Chip';
 import AddIcon from '@material-ui/icons/Add';
+import { useHistory, useParams } from 'react-router-dom';
 
 import { useMenuItems } from '../../../hooks/App';
 import ManagerDialog from '../ManagerDialog';
@@ -18,7 +19,14 @@ import { Dialog, Section } from '../../../components/ui';
 import { string } from '../../../../../libs/utils';
 import { useDispatch } from 'react-redux';
 import useUiToasts from '../../../hooks/useUiToasts';
-import { MESSAGE_SUCCESS_DURATION } from '../../../constants';
+import {
+	MESSAGE_SUCCESS_DURATION,
+	ROUTE_PATH_ATTR_DETAIL_ID,
+	ROUTE_PATH_ATTR_MENU,
+	ROUTE_PATH_ATTR_MENUITEM,
+	ROUTE_PATH_SUFFIX_DETAIL,
+	ROUTES,
+} from '../../../constants';
 
 const Wrapper = styled.div``;
 
@@ -69,6 +77,8 @@ const MenuItemsManager: React.FC<MenuItemsManagerProps> = ({
 	const [processing, setProcessing] = useState<boolean>(false);
 	const dispatch = useDispatch();
 	const { createToasts } = useUiToasts(dispatch);
+	const params: any = useParams();
+	const history: any = useHistory();
 
 	const getItemChildren = (id: number | string) => {
 		let a = [];
@@ -94,10 +104,61 @@ const MenuItemsManager: React.FC<MenuItemsManagerProps> = ({
 		setListItems(a);
 		if (showOrphans) setListOrphans(b);
 	};
+	const checkUrlParams = () => {
+		console.log('params:', params);
 
-	const itemSelectHandler = (item: any) => {
+		setDetailData(null);
+		setDetailOpen(false);
+
+		if (params.menu) {
+			console.log('open menu dialog', params.menu);
+			setDialogOpen(true);
+
+			if (params.menuItem) {
+				MenuItems.map((itm) => {
+					if (itm.id == params.menuItem) {
+						console.log('open menu item detail dialog', itm);
+
+						setTimeout(() => {
+							setDetailData(itm);
+							setDetailOpen(true);
+						}, 1000);
+					}
+				});
+			}
+		}
+	};
+
+	const detailOpenHandler = (item: any) => {
 		setDetailData(item);
 		setDetailOpen(true);
+		// history.push(
+		// 	ROUTES.app.menu.path +
+		// 		ROUTE_PATH_SUFFIX_DETAIL +
+		// 		'/' +
+		// 		menuId +
+		// 		ROUTE_PATH_ATTR_MENU +
+		// 		'/default' +
+		// 		ROUTE_PATH_ATTR_MENUITEM +
+		// 		'/' +
+		// 		item.id,
+		// );
+	};
+	const detailCloseHandler = () => {
+		setDetailData(null);
+		setDetailOpen(false);
+		// history.push(
+		// 	ROUTES.app.menu.path +
+		// 		ROUTE_PATH_SUFFIX_DETAIL +
+		// 		'/' +
+		// 		menuId +
+		// 		ROUTE_PATH_ATTR_MENU +
+		// 		'/default',
+		// );
+	};
+
+	const itemSelectHandler = (item: any) => {
+		detailOpenHandler(item);
 	};
 	const itemDeleteHandler = (id: number | string) => {
 		setConfirmData([id]);
@@ -147,10 +208,9 @@ const MenuItemsManager: React.FC<MenuItemsManagerProps> = ({
 					context: 'success',
 					timeout: MESSAGE_SUCCESS_DURATION,
 				});
+				detailCloseHandler();
 
 				setProcessing(false);
-				setDetailData(null);
-				setDetailOpen(false);
 			});
 		} else {
 			// update
@@ -163,10 +223,9 @@ const MenuItemsManager: React.FC<MenuItemsManagerProps> = ({
 					context: 'success',
 					timeout: MESSAGE_SUCCESS_DURATION,
 				});
+				detailCloseHandler();
 
 				setProcessing(false);
-				setDetailData(null);
-				setDetailOpen(false);
 			});
 		}
 	};
@@ -221,6 +280,9 @@ const MenuItemsManager: React.FC<MenuItemsManagerProps> = ({
 
 	useEffect(() => {
 		if (MenuItems) setItemsList();
+
+		// TODO: fix
+		// if (MenuItems && params) checkUrlParams();
 	}, [MenuItems]);
 
 	return (
@@ -228,7 +290,17 @@ const MenuItemsManager: React.FC<MenuItemsManagerProps> = ({
 			<Wrapper>
 				<TriggerBlock>
 					<Button
-						onClick={() => setDialogOpen(true)}
+						onClick={() => {
+							setDialogOpen(true);
+							// history.push(
+							// 	ROUTES.app.menu.path +
+							// 		ROUTE_PATH_SUFFIX_DETAIL +
+							// 		'/' +
+							// 		menuId +
+							// 		ROUTE_PATH_ATTR_MENU +
+							// 		'/default',
+							// );
+						}}
 						color="primary"
 						variant="contained"
 					>
@@ -246,7 +318,12 @@ const MenuItemsManager: React.FC<MenuItemsManagerProps> = ({
 			<ManagerDialog
 				open={dialogOpen}
 				onToggle={(open) => setDialogOpen(open)}
-				onCancel={() => setDialogOpen(false)}
+				onCancel={() => {
+					setDialogOpen(false);
+					// history.push(
+					// 	ROUTES.app.menu.path + ROUTE_PATH_SUFFIX_DETAIL + '/' + menuId,
+					// );
+				}}
 			>
 				<DialogTitle>Menu Items Manager</DialogTitle>
 				<DialogContent dividers>
@@ -265,7 +342,17 @@ const MenuItemsManager: React.FC<MenuItemsManagerProps> = ({
 						>
 							{t('btn.createNew')}
 						</Button>
-						<Button onClick={() => setDialogOpen(false)}>
+						<Button
+							onClick={() => {
+								setDialogOpen(false);
+								// history.push(
+								// 	ROUTES.app.menu.path +
+								// 		ROUTE_PATH_SUFFIX_DETAIL +
+								// 		'/' +
+								// 		menuId,
+								// );
+							}}
+						>
 							{t('btn.cancel')}
 						</Button>
 					</DialogActionsBlock>
@@ -275,11 +362,34 @@ const MenuItemsManager: React.FC<MenuItemsManagerProps> = ({
 				<>
 					<MenuItemDetail
 						open={detailOpen}
-						onToggle={(open) => setDetailOpen(open)}
+						onToggle={(open) => {
+							setDetailOpen(open);
+							// if (open == false) {
+							// 	history.push(
+							// 		ROUTES.app.menu.path +
+							// 			ROUTE_PATH_SUFFIX_DETAIL +
+							// 			'/' +
+							// 			menuId +
+							// 			ROUTE_PATH_ATTR_MENU +
+							// 			'/default',
+							// 	);
+							// }
+						}}
 						onSubmit={(data) => itemSubmitHandler(data)}
 						onDelete={(id) => itemDeleteHandler(id)}
 						detailData={detailData}
-						onClose={() => setDetailData(null)}
+						onClose={() => {
+							setDetailData(null);
+							setDetailOpen(false);
+							// history.push(
+							// 	ROUTES.app.menu.path +
+							// 		ROUTE_PATH_SUFFIX_DETAIL +
+							// 		'/' +
+							// 		menuId +
+							// 		ROUTE_PATH_ATTR_MENU +
+							// 		'/default',
+							// );
+						}}
 						menuId={menuId}
 					/>
 				</>

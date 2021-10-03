@@ -60,6 +60,10 @@ export const ROUTE_PATH_SUFFIX_DETAIL = '/detail';
 export const ROUTE_PATH_ATTR_DETAIL_ID = ROUTE_PATH_SUFFIX_DETAIL + '/:id';
 export const ROUTE_PATH_ATTR_PANEL = '/:panel';
 export const ROUTE_PATH_ATTR_TOKEN = '/token/:token';
+export const ROUTE_PATH_ATTR_MENU = '/menu';
+export const ROUTE_PATH_ATTR_MENU_MENU = '/menu/:menu';
+export const ROUTE_PATH_ATTR_MENUITEM = '/menuItem';
+export const ROUTE_PATH_ATTR_MENUITEM_MENUITEM = '/menuItem/:menuItem';
 export const IMAGE_CROP_OPTIONS = [
 	{
 		label: '1:1',

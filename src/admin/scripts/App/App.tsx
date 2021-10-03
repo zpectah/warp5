@@ -12,6 +12,10 @@ import {
 	ROUTE_PATH_ATTR_PANEL,
 	ROUTE_PATH_ATTR_TOKEN,
 	ROUTES,
+	ROUTE_PATH_ATTR_MENU,
+	ROUTE_PATH_ATTR_MENUITEM,
+	ROUTE_PATH_ATTR_MENUITEM_MENUITEM,
+	ROUTE_PATH_ATTR_MENU_MENU,
 } from '../constants';
 import ThemeService from '../service/ThemeService';
 import HelpService from '../service/HelpService';
@@ -169,6 +173,13 @@ const App = () => {
 								path={[
 									ROUTES.app.menu.path,
 									ROUTES.app.menu.path + ROUTE_PATH_ATTR_DETAIL_ID,
+									ROUTES.app.menu.path +
+										ROUTE_PATH_ATTR_DETAIL_ID +
+										ROUTE_PATH_ATTR_MENU_MENU,
+									ROUTES.app.menu.path +
+										ROUTE_PATH_ATTR_DETAIL_ID +
+										ROUTE_PATH_ATTR_MENU_MENU +
+										ROUTE_PATH_ATTR_MENUITEM_MENUITEM,
 								]}
 								component={MenuPage}
 								auth={ROUTES.app.menu.auth}
