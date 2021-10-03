@@ -223,6 +223,7 @@ const BasketsPage = () => {
 					authorId={authorId}
 					processing={processing}
 					loading={loading}
+					allowActive={false}
 				/>
 				<DetailDialog
 					model={modelName}

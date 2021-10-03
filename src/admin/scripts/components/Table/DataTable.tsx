@@ -158,6 +158,7 @@ interface DataTableProps {
 	onSelect: (ids: string[] | number[]) => void;
 	allowSelect?: boolean;
 	allowDetail?: boolean;
+	allowActive?: boolean;
 	prefix?: string;
 	ariaLabel?: string;
 	languageContent?: boolean;
@@ -177,6 +178,7 @@ const DataTable = ({
 	onSelect,
 	allowSelect = false,
 	allowDetail = false,
+	allowActive = true,
 	prefix = 'data-table',
 	ariaLabel = 'data table',
 	model,
@@ -714,14 +716,16 @@ const DataTable = ({
 					<TableHeadingBlock>
 						<div>
 							<ButtonGroup>
-								<Button
-									disabled={selected.length == 0}
-									onClick={() => onToggle(selected)}
-									startIcon={<NotInterestedIcon />}
-									title={t('btn.toggle')}
-								>
-									{selected.length}
-								</Button>
+								{allowActive && (
+									<Button
+										disabled={selected.length == 0}
+										onClick={() => onToggle(selected)}
+										startIcon={<NotInterestedIcon />}
+										title={t('btn.toggle')}
+									>
+										{selected.length}
+									</Button>
+								)}
 								<Button
 									disabled={selected.length == 0}
 									onClick={() => onDelete(selected)}
