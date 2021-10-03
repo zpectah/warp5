@@ -29,7 +29,58 @@ $ss = new \core\service\SessionService;
 <body class="page">
 
 <div class="app" id="App">
-	...Loading
+	<div style="
+		width: 100vw;
+		height: 100vh;
+		position: fixed;
+		top: 0;
+		left: 0;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	">
+		<div style="
+			width: auto;
+			height: auto;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			flex-direction: column;
+		">
+			<svg
+				version="1.1"
+				id="Layer_1"
+				xmlns="http://www.w3.org/2000/svg"
+				x="0px"
+				y="0px"
+				width="125px"
+				height="125px"
+				viewBox="0 0 150 150"
+				enable-background="new 0 0 150 150"
+			>
+				<circle opacity="0.75" fill="rgb(194,24,91)" cx="75" cy="75" r="12.404">
+					<animateTransform
+						attributeName="transform"
+						attributeType="XML"
+						type="translate"
+						dur=".7s"
+						values="50,0;0,0;50,0;"
+						repeatCount="indefinite"
+					/>
+				</circle>
+				<circle opacity="0.75" fill="rgb(81,45,168)" cx="75" cy="75" r="12.404">
+					<animateTransform
+						attributeName="transform"
+						attributeType="XML"
+						type="translate"
+						dur=".7s"
+						values="-50,0;0,0;-50,0;"
+						repeatCount="indefinite"
+					/>
+				</circle>
+			</svg>
+		</div>
+	</div>
 </div>
 
 <script src="<?=(VIEW['ADMIN']['scripts'] . '?v=' . TIMESTAMP) ?>"></script>

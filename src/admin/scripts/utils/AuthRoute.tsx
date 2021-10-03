@@ -4,6 +4,7 @@ import { Route, Redirect } from 'react-router-dom';
 
 import config from '../config';
 import { useProfile } from '../hooks/App';
+import { Preloader } from '../components/ui';
 
 // import Preloader from '../layout/common/Preloader';
 
@@ -41,16 +42,23 @@ const AuthRoute: React.FC<AuthRouteProps> = (props) => {
 
 	useEffect(authorizeAccess, [Profile, auth]);
 
-	// if (isProfileLoading) return <Preloader />;
-	if (isProfileLoading) return <div>preloader A</div>;
+	if (isProfileLoading)
+		return (
+			<div>
+				<Preloader.Page />
+			</div>
+		);
 
 	if (redirect) {
 		return <Redirect to={redirect} />;
 	} else if (userReady) {
 		return <Route exact={exact} path={path} component={component} />;
 	} else {
-		// return <Preloader />;
-		return <div>preloader B</div>;
+		return (
+			<div>
+				<Preloader.Page />
+			</div>
+		);
 	}
 };
 export default AuthRoute;

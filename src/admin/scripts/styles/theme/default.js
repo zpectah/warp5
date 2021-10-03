@@ -43,6 +43,11 @@ export default {
 		},
 	},
 	preloader: {
+		page: {
+			color: palette.white,
+			bg: 'rgba(25,25,25,.25)',
+			zIndex: 1090,
+		},
 		block: {
 			color: palette.black,
 			bg: 'rgba(250,250,250,.25)',
